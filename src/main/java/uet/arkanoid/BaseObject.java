@@ -44,46 +44,69 @@ public class BaseObject {
         }
     }
 
-    public Node getView() { return view; }
-    public void setView(Node view) { this.view = view; }
+    public Node getView() {
+        return view;
+    }
 
-    public double getX() { return x; }
+    public void setView(Node view) {
+        this.view = view;
+    }
+
+    public double getX() {
+        return x;
+    }
+
     public void setX(double x) {
         this.x = x;
-        if (view != null) view.setLayoutX(x);
+        if (view != null)
+            view.setLayoutX(x);
     }
 
-    public double getY() { return y; }
+    public double getY() {
+        return y;
+    }
+
     public void setY(double y) {
         this.y = y;
-        if (view != null) view.setLayoutY(y);
+        if (view != null)
+            view.setLayoutY(y);
     }
 
-    public double getWidth() { return width; }
+    public double getWidth() {
+        return width;
+    }
+
     public void setWidth(double width) {
         this.width = width;
-        if (view instanceof Rectangle) ((Rectangle) view).setWidth(width);
+        if (view instanceof Rectangle)
+            ((Rectangle) view).setWidth(width);
     }
 
-    public double getHeight() { return height; }
+    public double getHeight() {
+        return height;
+    }
+
     public void setHeight(double height) {
         this.height = height;
-        if (view instanceof Rectangle) ((Rectangle) view).setHeight(height);
+        if (view instanceof Rectangle)
+            ((Rectangle) view).setHeight(height);
     }
 
-    public void update() { }
+    public void update(Pane pane) {
+    }
 
     public void loadImage(String imagePath, Pane pane) {
         Image img = new Image("file:" + imagePath);
         ImageView imageView = new ImageView(img);
-        
+
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
-        
-        if (view != null) pane.getChildren().remove(view);
-        
+
+        if (view != null)
+            pane.getChildren().remove(view);
+
         view = imageView;
         pane.getChildren().add(view);
     }
