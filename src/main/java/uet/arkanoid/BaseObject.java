@@ -92,7 +92,7 @@ public class BaseObject {
             ((Rectangle) view).setHeight(height);
     }
 
-    public void update(Pane pane) {
+    public void update() {
     }
 
     public void loadImage(String imagePath, Pane pane) {

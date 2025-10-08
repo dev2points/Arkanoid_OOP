@@ -13,9 +13,8 @@ public class App extends Application {
         Scene scene = new Scene(gamePane, 400, 300);
 
         // BaseObject obj = new BaseObject(50, 50, 100, 100, gamePane);
-        Brick brick = new Brick(10, 10, Gameconfig.width_brick, Gameconfig.height_brick, gamePane, 1);
-        brick.update(gamePane);
-
+        Brick brick = new Brick(10, 10, gamePane, 3);
+        brick.update();
         primaryStage.setTitle("GameLOL");
         primaryStage.setScene(scene);
         primaryStage.show();
