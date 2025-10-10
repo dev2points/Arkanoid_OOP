@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 public class Powerups extends BaseObject {
+
     public Powerups(double x, double y, double width, double height, Pane pane, String type_powerup) {
         super(x, y, width, height, pane);
         loadpowerup(type_powerup);
@@ -48,4 +49,5 @@ public class Powerups extends BaseObject {
     public void update() {
         this.setY(this.getY() + Gameconfig.speed_powerup);
     }
+
 }

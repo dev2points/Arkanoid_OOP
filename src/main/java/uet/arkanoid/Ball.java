@@ -19,6 +19,38 @@ public class Ball extends BaseObject {
         loadImage();
     }
 
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+    public double getDx() {
+        return dx;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
+    }
+
+    public double getDy() {
+            return dy;
+        }
+
+    public double getscreenWidth() {
+        return screenWidth;
+    }
+
+     public void setscreenWidth(double screenWidth) {
+        this.screenWidth = screenWidth;
+    }
+
+     public void setscreenHeight(double screenHeight) {
+        this.screenHeight= screenHeight;
+    }
+
+    public double getscreenHeight() {
+        return screenHeight;
+    }
+
     private void loadImage() {
         Image ballImg = new Image("file:assets/image/balls/ball_1.png");
         ImageView imageView = new ImageView(ballImg);
