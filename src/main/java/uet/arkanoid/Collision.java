@@ -28,8 +28,10 @@ public class Collision {
             && ball.getY() - r <= paddle.getY() + paddle.getHeight()) {
 
                 ball.setY(paddle.getY() - ball.getHeight());
-                ball.setDy(ball.getDy() * -1);
-                ball.setDx(ball.getDx() * -1);
+                double hitPos = (ball.getX() - paddle.getX()) / paddle.getWidth() - 0.5; // -0.5 -> +0.5
+                ball.setDx(hitPos * 6);
+                ball.setDy(-Math.abs(ball.getDy()));
+
         }
 
     }
@@ -71,8 +73,11 @@ public class Collision {
                 ballY + ballR >= brickY &&
                 ballY <= brickY + brickH) {
 
-                ball.setDy(-ball.getDy());
-
+                if (Math.abs((ballY + ballR) - brickY) < 5 || Math.abs(ballY - (brickY + brickH)) < 5)
+                    ball.setDy(-ball.getDy());
+                else
+                    ball.setDx(-ball.getDx());
+                    
                 brick.update();
 
                 if (brick.frames.isEmpty()) {
