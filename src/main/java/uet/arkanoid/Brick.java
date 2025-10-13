@@ -7,7 +7,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
-import javafx.scene.Node;
 
 public class Brick extends BaseObject {
     Queue<Image> frames = new LinkedList<>();
@@ -18,7 +17,7 @@ public class Brick extends BaseObject {
      * Tự động load các hình ảnh dựa trên type_brick.
      */
     public Brick(double x, double y, Pane pane, int type_brick) {
-        super(x, y, Gameconfig.width_brick, Gameconfig.height_brick, pane);
+        super(x, y, Gameconfig.width_brick * 3, Gameconfig.height_brick * 3, pane);
         loadbricks(type_brick);
         this.pane = pane;
         update();
@@ -95,9 +94,10 @@ public class Brick extends BaseObject {
         } else {
             // Nếu không còn frame -> hủy đối tượng
             // System.out.println("Destroy brick");
-            if (view != null && view.getParent() instanceof Pane p) {
-                destroy(p);
-            }
+            // if (view != null && view.getParent() instanceof Pane p) {
+            // destroy(p);
+            // }
+            destroy(pane);
         }
     }
 

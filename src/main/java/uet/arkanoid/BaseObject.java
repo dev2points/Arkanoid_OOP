@@ -4,26 +4,26 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 public class BaseObject {
 
     protected double x, y, width, height;
     protected Node view;
+    protected Pane pane;
 
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        this.pane = pane;
+        // Rectangle rect = new Rectangle(width, height, Color.BLUE);
+        // rect.setLayoutX(x);
+        // rect.setLayoutY(y);
 
-        Rectangle rect = new Rectangle(width, height, Color.BLUE);
-        rect.setLayoutX(x);
-        rect.setLayoutY(y);
-
-        this.view = rect;
-        pane.getChildren().add(view);
+        // this.view = rect;
+        // pane.getChildren().add(view);
     }
 
     public void removeFromPane(Pane pane) {
