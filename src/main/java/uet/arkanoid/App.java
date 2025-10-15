@@ -21,7 +21,7 @@ public class App extends Application {
         List<Brick> bricks = new ArrayList<>();
         Brick brick = new Brick(Gameconfig.screen_width / 2, 100, pane, 3);
         bricks.add(brick);
-        Ball ball = new Ball(Gameconfig.screen_width / 2, 2, pane, screenWidth, screenHeight);
+        Ball ball = new Ball(Gameconfig.screen_width / 2, screenHeight -50 , pane, screenWidth, screenHeight);
 
         // Tạo paddle ở giữa màn hình
         Paddle paddle = new Paddle(
@@ -31,10 +31,15 @@ public class App extends Application {
                 screenWidth);
 
         // Game loop đơn giản để update liên tục
+        Timer timer = new Timer();
+
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                ball.update();
+                timer.update();
+                double dt = timer.getDeltaTime();
+                ball.update(dt);
+                paddle.update(dt);
                 Collision.checkPaddleCollision(ball, paddle);
                 Collision.checkBrickCollision(ball, bricks);
                 HandleInput.check_input(paddle, ball, scene);

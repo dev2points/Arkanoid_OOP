@@ -5,8 +5,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Ball extends BaseObject {
-    private double dx = 0; // hướng di chuyển X
-    private double dy = Gameconfig.speed_ball; // hướng di chuyển Y
+    private double dx = 0; // vận tốc trục X (pixel/giây)
+    private double dy = Gameconfig.speed_ball; // vận tốc trục Y (pixel/giây)
     private Pane pane;
 
     public Ball(double x, double y, Pane pane, double screenWidth, double screenHeight) {
@@ -26,10 +26,10 @@ public class Ball extends BaseObject {
         pane.getChildren().add(imageView);
     }
 
-    @Override
-    public void update() {
-        x += dx;
-        y += dy;
+    /** Cập nhật vị trí bóng theo deltaTime (giây) */
+    public void update(double deltaTime) {
+        x += dx * deltaTime;
+        y += dy * deltaTime;
 
         // Va chạm tường
         if (x <= 0 || x + width >= Gameconfig.screen_width) {
@@ -55,33 +55,24 @@ public class Ball extends BaseObject {
     private void resetPosition() {
         x = Gameconfig.screen_width / 2 - width / 2;
         y = Gameconfig.screen_height / 2;
-        dx = Gameconfig.speed_ball;
+        dx = 0;
         dy = Gameconfig.speed_ball;
     }
 
-    public double getDx() {
-        return dx;
-    }
+    public double getDx() { return dx; }
+    public void setDx(double dx) { this.dx = dx ; }
 
-    public void setDx(double dx) {
-        this.dx = dx;
-    }
-
-    public double getDy() {
-        return dy;
-    }
-
-    public void setDy(double dy) {
-        this.dy = dy;
-    }
+    public double getDy() { return dy; }
+    public void setDy(double dy) { this.dy = dy; }
 
     public void slow() {
-        this.dx -= 2;
-        this.dy -= 2;
+        this.dx *= 0.8;
+        this.dy *= 0.8;
     }
 
     public void fast() {
-        this.dx += 2;
-        this.dy += 2;
+        this.dx *= 1.2;
+        this.dy *= 1.2;
     }
+    public double getSpeed() { return Math.sqrt(dx * dx + dy * dy); } // thêm dòng này
 }

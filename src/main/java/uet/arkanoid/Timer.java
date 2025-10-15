@@ -1,27 +1,25 @@
 package uet.arkanoid;
 
-/**
- * Lớp Timer dùng để quản lý thời gian và tính FPS.
- * Nhật phụ trách.
- */
 public class Timer {
     private long lastTime;
     private double deltaTime;
     private int fps;
     private long fpsTimer;
     private int frameCount;
-
+    private double fpsti; 
     public Timer() {
         lastTime = System.nanoTime();
         fpsTimer = System.currentTimeMillis();
-        deltaTime = 0;
+        fpsti = 1_000_000_000.0;
     }
 
     public void update() {
         long now = System.nanoTime();
-        deltaTime = (now - lastTime) / 1_000_000_000.0;
+        deltaTime = (now - lastTime) / fpsti * Gameconfig.FPS/60; // giây thực giữa 2 frame
         lastTime = now;
 
+        
+        // Tính FPS thực tế
         frameCount++;
         if (System.currentTimeMillis() - fpsTimer >= 1000) {
             fps = frameCount;
