@@ -5,11 +5,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Paddle extends BaseObject {
-    private double speed = Gameconfig.speed_paddle; // pixel/giây
-    private double moveDir = 0; // -1 = trái, 1 = phải, 0 = đứng yên
+    private static int screen_width = Gameconfig.screen_width;
+    private static int screen_height = Gameconfig.screen_height;
 
-    public Paddle(double x, double y, Pane pane, double screenWidth) {
-        super(x, y, Gameconfig.width_paddle, Gameconfig.height_paddle, pane);
+    private double speed = Gameconfig.speed_paddle;
+    private double moveDir = 0;
+
+    public Paddle(Pane pane) {
+        super(screen_width / 2 - Gameconfig.width_paddle / 2, screen_height - 50, Gameconfig.width_paddle, Gameconfig.height_paddle, pane);
         loadImage();
     }
 
