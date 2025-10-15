@@ -1,50 +1,20 @@
 package uet.arkanoid;
 
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import java.util.ArrayList;
-import java.util.List;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import java.io.IOException;
+
 
 public class App extends Application {
-
     @Override
-    public void start(Stage stage) {
-        // Kích thước cửa sổ
-        double screenWidth = Gameconfig.screen_width;
-        double screenHeight = Gameconfig.screen_height;
-
-        Pane pane = new Pane();
-        Scene scene = new Scene(pane, screenWidth, screenHeight);
-        List<Brick> bricks = new ArrayList<>();
-        Brick brick = new Brick(Gameconfig.screen_width / 2, 100, pane, 3);
-        bricks.add(brick);
-        Ball ball = new Ball(Gameconfig.screen_width / 2, screenHeight -50 , pane, screenWidth, screenHeight);
-
-        // Tạo paddle ở giữa màn hình
-        Paddle paddle = new Paddle(
-                screenWidth / 2 - Gameconfig.width_paddle / 2,
-                screenHeight - 50,
-                pane,
-                screenWidth);
-
-        // Game loop đơn giản để update liên tục
-        Timer timer = new Timer();
-
-        new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                timer.update();
-                double dt = timer.getDeltaTime();
-                ball.update(dt);
-                paddle.update(dt);
-                Collision.checkPaddleCollision(ball, paddle);
-                Collision.checkBrickCollision(ball, bricks);
-                HandleInput.check_input(paddle, ball, scene);
-            }
-        }.start();
+    public void start(Stage stage) throws IOException {       
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/assets/maps/main.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        GameController controller = loader.getController();
 
         stage.setScene(scene);
         stage.setTitle("Test Paddle");

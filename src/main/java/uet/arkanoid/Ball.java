@@ -9,7 +9,8 @@ public class Ball extends BaseObject {
     private double dy = Gameconfig.speed_ball; // vận tốc trục Y (pixel/giây)
     private Pane pane;
 
-    public Ball(double x, double y, Pane pane, double screenWidth, double screenHeight) {
+
+    public Ball(double x, double y, Pane pane) {
         super(x, y, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.pane = pane;
         loadImage();

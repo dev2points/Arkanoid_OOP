@@ -33,7 +33,6 @@ public class Collision {
             ball.setDy(-Math.abs(ball.getDy()));
 
         }
-
     }
 
     public static void checkPowerUpCollision(Paddle paddle, List<Powerups> powerUps) {

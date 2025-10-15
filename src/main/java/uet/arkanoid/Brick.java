@@ -9,6 +9,8 @@ import javafx.scene.image.PixelReader;
 import javafx.scene.image.WritableImage;
 
 public class Brick extends BaseObject {
+
+
     Queue<Image> frames = new LinkedList<>();
     private Pane pane;
 
