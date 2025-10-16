@@ -24,13 +24,6 @@ public class HandleInput {
         } else {
             paddle.stop();
         }
-
-        if (pressedKeys.contains(KeyCode.UP)) {
-            paddle.extend();
-        }
-        if (pressedKeys.contains(KeyCode.DOWN)) {
-            paddle.shrink();
-        }
         if (pressedKeys.contains(KeyCode.S)) {
             ball.slow();
         }

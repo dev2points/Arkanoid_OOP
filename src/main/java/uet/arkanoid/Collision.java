@@ -29,7 +29,8 @@ public class Collision {
 
             ball.setY(paddle.getY() - ball.getHeight());
             double hitPos = (ball.getX() - paddle.getX()) / paddle.getWidth() - 0.5; // -0.5 -> +0.5
-            ball.setDx(hitPos * 6);
+            System.out.println(hitPos);
+            ball.setDx(hitPos * 6+60);
             ball.setDy(-Math.abs(ball.getDy()));
 
         }

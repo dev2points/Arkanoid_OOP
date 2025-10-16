@@ -15,7 +15,7 @@ public class App extends Application {
         Parent root = loader.load();
         Scene scene = new Scene(root);
         GameController controller = loader.getController();
-
+        controller.setScene(scene); 
         stage.setScene(scene);
         stage.setTitle("Test Paddle");
         stage.show();

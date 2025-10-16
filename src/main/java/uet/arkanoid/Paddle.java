@@ -16,8 +16,8 @@ public class Paddle extends BaseObject {
         loadImage();
     }
 
-    private void loadImage() {
-        Image paddleImg = new Image("file:assets/image/paddles/paddle_1.png");
+    public void loadImage() {
+        Image paddleImg = new Image(getClass().getResource("/assets/image/paddles/paddle_1.png").toExternalForm());
         ImageView imageView = new ImageView(paddleImg);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);

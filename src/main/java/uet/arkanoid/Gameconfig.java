@@ -11,7 +11,7 @@ public class Gameconfig {
 
     public static final double width_paddle = 200;
     public static final double height_paddle = 30;
-    public static final int speed_paddle = 200;
+    public static final int speed_paddle = 300;
 
     public static final int size_ball = 30;
     public static final int speed_ball = 500;

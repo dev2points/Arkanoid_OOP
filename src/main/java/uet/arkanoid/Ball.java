@@ -15,9 +15,15 @@ public class Ball extends BaseObject {
         this.pane = pane;
         loadImage();
     }
+    public Ball(Pane pane) {
+        super(140, 140, Gameconfig.size_ball, Gameconfig.size_ball, pane);
+        this.pane = pane;
+        loadImage();
+    }
 
     private void loadImage() {
-        Image ballImg = new Image("file:assets/image/balls/ball_1.png");
+        Image ballImg =  new Image(getClass().getResource("/assets/image/balls/ball_1.png").toExternalForm());
+        
         ImageView imageView = new ImageView(ballImg);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
