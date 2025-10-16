@@ -16,11 +16,13 @@ public class GameController {
 
     private Paddle paddle;
     private Ball ball;
-    private long lastTime;
+    private long lastUpdate = 0;
     private Scene scene;
 
     @FXML
     public void initialize() {
+        root.setPrefWidth(Gameconfig.screen_width);
+        root.setPrefHeight(Gameconfig.screen_height);
         LevelLoader (1);
         MainLoop();
       
@@ -41,17 +43,21 @@ public class GameController {
     
     private void MainLoop() {
         // loop, update, timer gi day viet vao day
-         Timer time = new Timer();
+        //  Timer time = new Timer();
         new AnimationTimer() {
             @Override
             public void handle(long now) {
-                time.update();
-                if (scene != null) {
-                    HandleInput.check_input(paddle, ball, scene);
+                if (lastUpdate > 0) {
+                    double deltaTime = (now - lastUpdate) / 1e9; // convert ns → seconds
+                    if (scene != null) {
+                        HandleInput.check_input(paddle, ball, scene);
+                    }
+                    paddle.update(deltaTime);
+                    ball.update(deltaTime);
+                    Collision.checkPaddleCollision(ball, paddle);
                 }
-                paddle.update(time.getDeltaTime());
-                ball.update(time.getDeltaTime());
-                Collision.checkPaddleCollision(ball, paddle);
+                lastUpdate = now;
+
 
             }
         }.start();
