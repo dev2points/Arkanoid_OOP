@@ -7,10 +7,18 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class BaseObject {
+abstract class BaseObject {
 
     protected double x, y, width, height;
     protected Node view;
+<<<<<<< Updated upstream
+=======
+    protected Pane pane;
+  
+
+     public BaseObject() {
+         }
+>>>>>>> Stashed changes
 
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
@@ -110,4 +118,10 @@ public class BaseObject {
         view = imageView;
         pane.getChildren().add(view);
     }
+<<<<<<< Updated upstream
+=======
+
+    
+  
+>>>>>>> Stashed changes
 }

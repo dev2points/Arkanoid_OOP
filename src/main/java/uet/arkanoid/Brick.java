@@ -10,6 +10,13 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.Node;
 
 public class Brick extends BaseObject {
+<<<<<<< Updated upstream
+=======
+    public static void initialize_bricks() {
+        
+    }
+
+>>>>>>> Stashed changes
     Queue<Image> frames = new LinkedList<>();
     private Pane pane;
 
@@ -32,19 +39,19 @@ public class Brick extends BaseObject {
         Image sheet;
         switch (type_brick) {
             case 1:
-                sheet = new Image("file:assets/image/bricks/brick_1.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_1.png").toExternalForm());
                 break;
             case 2:
-                sheet = new Image("file:assets/image/bricks/brick_2.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_2.png").toExternalForm());
                 break;
             case 3:
-                sheet = new Image("file:assets/image/bricks/brick_3.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_3.png").toExternalForm());
                 break;
             case 4:
-                sheet = new Image("file:assets/image/bricks/brick_4.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_4.png").toExternalForm());
                 break;
             case 5:
-                sheet = new Image("file:assets/image/bricks/brick_5.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_5.png").toExternalForm());
                 break;
             // Thêm các bricks khác
             default:
