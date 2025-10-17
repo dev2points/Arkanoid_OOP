@@ -31,6 +31,8 @@ public class Brick extends BaseObject {
     private void loadbricks(int type_brick) {
         Image sheet;
         switch (type_brick) {
+            case 0:
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_0.png").toExternalForm());
             case 1:
                 sheet = new Image(getClass().getResource("/assets/image/bricks/brick_1.png").toExternalForm());
                 break;

@@ -39,11 +39,17 @@ public class Ball extends BaseObject {
         y += dy * deltaTime;
 
         // Va chạm tường
-        if (x <= 0 || x + width >= Gameconfig.screen_width) {
+        if (x <= 0) {
+            x = 0;
+            dx = -dx;
+        }
+        if (x + width >= Gameconfig.screen_width) {
+            x = Gameconfig.screen_width - width;
             dx = -dx;
         }
 
         if (y <= 0) {
+            y = 0;
             dy = -dy;
         }
 

@@ -22,17 +22,35 @@ public class Collision {
     public static void checkPaddleCollision(Ball ball, Paddle paddle) {
         double r = ball.getWidth() / 2;
 
+        // Kiểm tra va chạm
         if (ball.getX() + r >= paddle.getX()
                 && ball.getX() - r <= paddle.getX() + paddle.getWidth()
                 && ball.getY() + r >= paddle.getY()
                 && ball.getY() - r <= paddle.getY() + paddle.getHeight()) {
 
+            // Set lại vị trí ball
             ball.setY(paddle.getY() - ball.getHeight());
-            double hitPos = (ball.getX() - paddle.getX()) / paddle.getWidth() - 0.5; // -0.5 -> +0.5
-            System.out.println(hitPos);
-            ball.setDx(hitPos * 6);
-            ball.setDy(-Math.abs(ball.getDy()));
 
+            // Tính vị trí va chạm tương đối
+            double relativeIntersectX = (ball.getX() + r - (paddle.getX() + paddle.getWidth() / 2))
+                    / (paddle.getWidth() / 2);
+
+            // Giới hạn để không quá mạnh
+            relativeIntersectX = Math.max(-1.0, Math.min(1.0, relativeIntersectX));
+
+            // Góc phản xạ (radians): 75° max lệch sang 2 bên
+            double bounceAngle = relativeIntersectX * Math.toRadians(60);
+
+            // Tốc độ bóng hiện tại
+            double speed = Math.sqrt(ball.getDx() * ball.getDx() + ball.getDy() * ball.getDy());
+
+            // Cập nhật vận tốc theo góc bật
+            ball.setDx(speed * Math.sin(bounceAngle));
+            ball.setDy(-Math.abs(speed * Math.cos(bounceAngle))); // luôn đi lên
+
+            // Tuỳ chọn: tăng nhẹ tốc độ sau mỗi lần đập
+            // ball.setDx(ball.getDx() * 1.05);
+            // ball.setDy(ball.getDy() * 1.05);
         }
     }
 
@@ -73,10 +91,19 @@ public class Collision {
                     ballY + ballR >= brickY &&
                     ballY <= brickY + brickH) {
 
-                if (Math.abs((ballY + ballR) - brickY) < 5 || Math.abs(ballY - (brickY + brickH)) < 5)
-                    ball.setDy(-ball.getDy());
-                else
-                    ball.setDx(-ball.getDx());
+                double overlapX1 = (brickX + brickW) - (ballX - ballR); // chồng bên trái
+                double overlapX2 = (ballX + ballR) - brickX; // chồng bên phải
+                double overlapY1 = (brickY + brickH) - (ballY - ballR); // chồng phía trên
+                double overlapY2 = (ballY + ballR) - brickY; // chồng phía dưới
+
+                double minOverlapX = Math.min(overlapX1, overlapX2);
+                double minOverlapY = Math.min(overlapY1, overlapY2);
+
+                if (minOverlapX < minOverlapY) {
+                    ball.setDx(-ball.getDx()); // va chạm bên trái/phải
+                } else {
+                    ball.setDy(-ball.getDy()); // va chạm trên/dưới
+                }
 
                 if (brick.frames.isEmpty()) {
                     iterator.remove();
