@@ -51,6 +51,8 @@ public class Collision {
             // Tuỳ chọn: tăng nhẹ tốc độ sau mỗi lần đập
             // ball.setDx(ball.getDx() * 1.05);
             // ball.setDy(ball.getDy() * 1.05);
+
+            PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
     }
 
@@ -108,6 +110,7 @@ public class Collision {
                 if (brick.frames.isEmpty()) {
                     iterator.remove();
                 }
+                PlaySound.soundEffect("/assets/sound/ballSound.mp3");
                 brick.update();
 
             }

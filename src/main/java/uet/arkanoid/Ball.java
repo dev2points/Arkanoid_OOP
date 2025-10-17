@@ -42,15 +42,18 @@ public class Ball extends BaseObject {
         if (x <= 0) {
             x = 0;
             dx = -dx;
+            PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
         if (x + width >= Gameconfig.screen_width) {
             x = Gameconfig.screen_width - width;
             dx = -dx;
+            PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
 
         if (y <= 0) {
             y = 0;
             dy = -dy;
+            PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
 
         // Nếu rơi khỏi màn hình
