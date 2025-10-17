@@ -10,7 +10,6 @@ import javafx.scene.image.WritableImage;
 
 public class Brick extends BaseObject {
 
-
     Queue<Image> frames = new LinkedList<>();
     private Pane pane;
 
@@ -19,7 +18,7 @@ public class Brick extends BaseObject {
      * Tự động load các hình ảnh dựa trên type_brick.
      */
     public Brick(double x, double y, Pane pane, int type_brick) {
-        super(x, y, Gameconfig.width_brick * 3, Gameconfig.height_brick * 3, pane);
+        super(x, y, Gameconfig.width_brick, Gameconfig.height_brick, pane);
         loadbricks(type_brick);
         this.pane = pane;
         update();
@@ -33,19 +32,19 @@ public class Brick extends BaseObject {
         Image sheet;
         switch (type_brick) {
             case 1:
-                sheet = new Image("file:assets/image/bricks/brick_1.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_1.png").toExternalForm());
                 break;
             case 2:
-                sheet = new Image("file:assets/image/bricks/brick_2.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_2.png").toExternalForm());
                 break;
             case 3:
-                sheet = new Image("file:assets/image/bricks/brick_3.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_3.png").toExternalForm());
                 break;
             case 4:
-                sheet = new Image("file:assets/image/bricks/brick_4.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_4.png").toExternalForm());
                 break;
             case 5:
-                sheet = new Image("file:assets/image/bricks/brick_5.png");
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_5.png").toExternalForm());
                 break;
             // Thêm các bricks khác
             default:
@@ -59,9 +58,9 @@ public class Brick extends BaseObject {
             WritableImage frame = new WritableImage(
                     reader,
                     0, // vị trí X trong sheet chỉ có 1 column
-                    y * Gameconfig.height_brick, // vị trí Y trong sheet
-                    Gameconfig.width_brick, // chiều rộng của frame
-                    Gameconfig.height_brick // chiều cao của frame
+                    y * Gameconfig.height_brick_frame, // vị trí Y trong sheet
+                    Gameconfig.width_brick_frame, // chiều rộng của frame
+                    Gameconfig.height_brick_frame // chiều cao của frame
             );
             frames.add(frame);
             // System.out.println("Add frame to brick queue");

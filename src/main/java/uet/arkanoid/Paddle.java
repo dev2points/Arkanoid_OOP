@@ -10,9 +10,11 @@ public class Paddle extends BaseObject {
 
     private double speed = Gameconfig.speed_paddle;
     private double moveDir = 0;
+    private double dx;
 
     public Paddle(Pane pane) {
-        super(screen_width / 2 - Gameconfig.width_paddle / 2, screen_height - 50, Gameconfig.width_paddle, Gameconfig.height_paddle, pane);
+        super(screen_width / 2 - Gameconfig.width_paddle / 2, screen_height - 50, Gameconfig.width_paddle,
+                Gameconfig.height_paddle, pane);
         loadImage();
     }
 
@@ -45,6 +47,10 @@ public class Paddle extends BaseObject {
 
     public void shrink() {
         view.setScaleX(0.7);
+    }
+
+    public double getDx() {
+        return speed * moveDir;
     }
 
     /** Cập nhật vị trí paddle theo thời gian deltaTime (giây) */

@@ -6,15 +6,15 @@ import javafx.scene.layout.Pane;
 
 public class Ball extends BaseObject {
     private double dx = 0; // vận tốc trục X (pixel/giây)
-    private double dy = Gameconfig.speed_ball; // vận tốc trục Y (pixel/giây)
+    private double dy = -Gameconfig.speed_ball; // vận tốc trục Y (pixel/giây)
     private Pane pane;
-
 
     public Ball(double x, double y, Pane pane) {
         super(x, y, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.pane = pane;
         loadImage();
     }
+
     public Ball(Pane pane) {
         super(140, 140, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.pane = pane;
@@ -22,8 +22,8 @@ public class Ball extends BaseObject {
     }
 
     private void loadImage() {
-        Image ballImg =  new Image(getClass().getResource("/assets/image/balls/ball_1.png").toExternalForm());
-        
+        Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball_1.png").toExternalForm());
+
         ImageView imageView = new ImageView(ballImg);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
@@ -63,14 +63,24 @@ public class Ball extends BaseObject {
         x = Gameconfig.screen_width / 2 - width / 2;
         y = Gameconfig.screen_height / 2;
         dx = 0;
-        dy = Gameconfig.speed_ball;
+        dy = -Gameconfig.speed_ball;
     }
 
-    public double getDx() { return dx; }
-    public void setDx(double dx) { this.dx = dx ; }
+    public double getDx() {
+        return dx;
+    }
 
-    public double getDy() { return dy; }
-    public void setDy(double dy) { this.dy = dy; }
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+    public double getDy() {
+        return dy;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
+    }
 
     public void slow() {
         this.dx *= 0.8;
@@ -81,5 +91,8 @@ public class Ball extends BaseObject {
         this.dx *= 1.2;
         this.dy *= 1.2;
     }
-    public double getSpeed() { return Math.sqrt(dx * dx + dy * dy); } // thêm dòng này
+
+    public double getSpeed() {
+        return Math.sqrt(dx * dx + dy * dy);
+    } // thêm dòng này
 }

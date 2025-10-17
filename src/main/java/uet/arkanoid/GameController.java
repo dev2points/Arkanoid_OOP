@@ -7,13 +7,15 @@ import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+import java.util.List;
+
 public class GameController {
 
-     @FXML
+    @FXML
     private Pane root;
     @FXML
     private Label score;
-
+    List<Brick> bricks;
     private Paddle paddle;
     private Ball ball;
     private long lastUpdate = 0;
@@ -23,27 +25,25 @@ public class GameController {
     public void initialize() {
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
-        LevelLoader (1);
+        LevelLoader(1);
         MainLoop();
-      
-    
+
     }
-    
-    
+
     private void LevelLoader(int level) {
         paddle = new Paddle(root);
-        ball =new Ball(root);
-        // score.setText("Score: 1000000");
-        // Viet logic spawn gi day vao day
-        
-    }    
+        ball = new Ball(root);
+        bricks = ReadMapFile.readMapFile(level, root);
+
+    }
+
     public void setScene(Scene scene) {
         this.scene = scene;
     }
-    
+
     private void MainLoop() {
         // loop, update, timer gi day viet vao day
-        //  Timer time = new Timer();
+        // Timer time = new Timer();
         new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -54,15 +54,15 @@ public class GameController {
                     }
                     paddle.update(deltaTime);
                     ball.update(deltaTime);
+                    // Check va chạm
                     Collision.checkPaddleCollision(ball, paddle);
+                    Collision.checkBrickCollision(ball, bricks);
                 }
                 lastUpdate = now;
-
 
             }
         }.start();
     }
-   
 
     private void PauseGame() {
 
@@ -76,8 +76,4 @@ public class GameController {
 
     }
 
-    
 }
-
-
-
