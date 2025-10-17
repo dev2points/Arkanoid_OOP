@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefWidth="1200"
+            prefHeight="400">
+
+    <!-- 5 -->
+    <Rectangle layoutX="172" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="250" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="328" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="406" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="484" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="562" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="640" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="718" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="796" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="874" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="952" layoutY="20" width="70" height="20" styleClass="brick5"/>
+    <Rectangle layoutX="1030" layoutY="20" width="70" height="20" styleClass="brick5"/>
+
+    <!-- 4 -->
+    <Rectangle layoutX="172" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="250" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="328" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="406" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="484" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="562" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="640" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="718" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="796" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="874" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="952" layoutY="56" width="70" height="20" styleClass="brick4"/>
+    <Rectangle layoutX="1030" layoutY="56" width="70" height="20" styleClass="brick4"/>
+
+    <!-- 3 -->
+    <Rectangle layoutX="172" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="250" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="328" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="406" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="484" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="562" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="640" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="718" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="796" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="874" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="952" layoutY="92" width="70" height="20" styleClass="brick3"/>
+    <Rectangle layoutX="1030" layoutY="92" width="70" height="20" styleClass="brick3"/>
+
+    <!-- 2 -->
+    <Rectangle layoutX="172" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="250" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="328" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="406" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="484" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="562" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="640" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="718" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="796" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="874" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="952" layoutY="128" width="70" height="20" styleClass="brick2"/>
+    <Rectangle layoutX="1030" layoutY="128" width="70" height="20" styleClass="brick2"/>
+
+    <!-- 1 -->
+    <Rectangle layoutX="172" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="250" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="328" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="406" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="484" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="562" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="640" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="718" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="796" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="874" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="952" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="1030" layoutY="164" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="172" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="250" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="328" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="406" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="484" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="562" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="640" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="718" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="796" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="874" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="952" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="1030" layoutY="200" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="172" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="250" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="328" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="406" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="484" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="562" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="640" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="718" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="796" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="874" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="952" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="1030" layoutY="236" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="172" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="250" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="328" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="406" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="484" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="562" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="640" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="718" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="796" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="874" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="952" layoutY="272" width="70" height="20" styleClass="brick1"/>
+    <Rectangle layoutX="1030" layoutY="272" width="70" height="20" styleClass="brick1"/>
+
+</AnchorPane>

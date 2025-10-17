@@ -33,7 +33,7 @@ public class GameController {
     private void LevelLoader(int level) {
         paddle = new Paddle(root);
         ball = new Ball(root);
-        bricks = ReadMapFile.readMapFile(level, root);
+        bricks = ReadMapFile.readMapFXML(level, root);
 
     }
 
