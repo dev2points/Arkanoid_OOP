@@ -13,6 +13,9 @@ public class Paddle extends BaseObject {
     /**
      * Khởi tạo Paddle – thanh đỡ bóng
      */
+    // public Paddle(Pane pane) {
+    //     this.pane = pane;
+    // }
     public Paddle(double x, double y, Pane pane, double screenWidth) {
         super(x, y, Gameconfig.width_paddle, Gameconfig.height_paddle, pane);
         this.pane = pane;
@@ -21,7 +24,8 @@ public class Paddle extends BaseObject {
     }
 
     private void loadImage() {
-        Image paddleImg = new Image(getClass().getResource("/assets/image/paddles/paddle_1.png").toExternalForm());
+        if(view!=null) return;
+        Image paddleImg = new Image(getClass().getResource("/assets/image/paddles/paddle_2.png").toExternalForm());
         ImageView imageView = new ImageView(paddleImg);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);

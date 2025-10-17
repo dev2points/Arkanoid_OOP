@@ -20,6 +20,12 @@
             <artifactId>javafx-fxml</artifactId>
             <version>25</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>25</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -42,6 +48,10 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>uet.arkanoid.App</mainClass>
+                            <options>
+                                <option>--add-modules</option>
+                                <option>javafx.controls,javafx.fxml,javafx.media</option>
+                            </options>
                         </configuration>
                     </execution>
                 </executions>

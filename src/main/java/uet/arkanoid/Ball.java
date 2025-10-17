@@ -16,6 +16,8 @@ public class Ball extends BaseObject {
         this.pane = pane;
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+        
+
         loadImage();
     }
 
@@ -52,7 +54,8 @@ public class Ball extends BaseObject {
     }
 
     private void loadImage() {
-        Image ballImg = new Image("file:assets/image/balls/ball_1.png");
+        if(view!=null) return;
+        Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball_1.png").toExternalForm());
         ImageView imageView = new ImageView(ballImg);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);

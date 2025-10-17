@@ -1,24 +1,18 @@
 package uet.arkanoid;
 
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class App extends Application {
-
     @Override
-    public void start(Stage primaryStage) {
-        Pane gamePane = new Pane();
-        Scene scene = new Scene(gamePane, 400, 300);
-
-        // BaseObject obj = new BaseObject(50, 50, 100, 100, gamePane);
-        Brick brick = new Brick(10, 10, gamePane, 3);
-        brick.update();
-        primaryStage.setTitle("GameLOL");
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/assets/maps/main.fxml"));
+        Scene scene = new Scene(loader.load());
         primaryStage.setScene(scene);
+        primaryStage.setTitle("Arkanoid FX");
         primaryStage.show();
-
     }
 
     public static void main(String[] args) {

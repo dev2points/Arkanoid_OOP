@@ -10,13 +10,11 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.Node;
 
 public class Brick extends BaseObject {
-<<<<<<< Updated upstream
-=======
+
     public static void initialize_bricks() {
         
     }
 
->>>>>>> Stashed changes
     Queue<Image> frames = new LinkedList<>();
     private Pane pane;
 
@@ -36,6 +34,7 @@ public class Brick extends BaseObject {
      * Mỗi loại gạch có số lượng hình ảnh tương ứng với type_brick.
      */
     private void loadbricks(int type_brick) {
+    
         Image sheet;
         switch (type_brick) {
             case 1:

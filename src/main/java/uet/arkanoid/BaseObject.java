@@ -11,14 +11,8 @@ abstract class BaseObject {
 
     protected double x, y, width, height;
     protected Node view;
-<<<<<<< Updated upstream
-=======
-    protected Pane pane;
-  
-
-     public BaseObject() {
-         }
->>>>>>> Stashed changes
+    public BaseObject() {
+            }
 
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
@@ -26,12 +20,12 @@ abstract class BaseObject {
         this.width = width;
         this.height = height;
 
-        Rectangle rect = new Rectangle(width, height, Color.BLUE);
-        rect.setLayoutX(x);
-        rect.setLayoutY(y);
+        // Rectangle rect = new Rectangle(width, height, Color.BLUE);
+        // rect.setLayoutX(x);
+        // rect.setLayoutY(y);
 
-        this.view = rect;
-        pane.getChildren().add(view);
+        // this.view = rect;
+        // pane.getChildren().add(view);
     }
 
     public void removeFromPane(Pane pane) {
@@ -86,8 +80,8 @@ abstract class BaseObject {
 
     public void setWidth(double width) {
         this.width = width;
-        if (view instanceof Rectangle)
-            ((Rectangle) view).setWidth(width);
+        // if (view instanceof Rectangle)
+        //     ((Rectangle) view).setWidth(width);
     }
 
     public double getHeight() {
@@ -96,15 +90,15 @@ abstract class BaseObject {
 
     public void setHeight(double height) {
         this.height = height;
-        if (view instanceof Rectangle)
-            ((Rectangle) view).setHeight(height);
+        // if (view instanceof Rectangle)
+        //     ((Rectangle) view).setHeight(height);
     }
 
     public void update() {
     }
 
     public void loadImage(String imagePath, Pane pane) {
-        Image img = new Image("file:" + imagePath);
+        Image img = new Image(getClass().getResourceAsStream(imagePath));
         ImageView imageView = new ImageView(img);
 
         imageView.setFitWidth(width);
@@ -118,10 +112,4 @@ abstract class BaseObject {
         view = imageView;
         pane.getChildren().add(view);
     }
-<<<<<<< Updated upstream
-=======
-
-    
-  
->>>>>>> Stashed changes
 }
