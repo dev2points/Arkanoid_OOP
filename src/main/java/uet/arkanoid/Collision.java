@@ -107,13 +107,17 @@ public class Collision {
                     ball.setDy(-ball.getDy()); // va chạm trên/dưới
                 }
 
-                if (brick.frames.isEmpty()) {
+                if (brick.frames_isEmpty()) {
                     iterator.remove();
                 }
                 PlaySound.soundEffect("/assets/sound/ballSound.mp3");
-                brick.update();
+                if (!brick.is_block())
+                    brick.update();
+                else
+                    brick.setActive_block_brick();
 
             }
+            brick.block_update();
         }
     }
 }

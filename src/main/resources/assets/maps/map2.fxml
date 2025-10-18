@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="960" prefWidth="1280" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Hàng 1 (1 viên) -->
+    <Rectangle width="78" height="36" layoutX="601" layoutY="120" styleClass="brick1" />
+
+    <!-- Hàng 2 (3 viên) -->
+    <Rectangle width="78" height="36" layoutX="523" layoutY="161" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="601" layoutY="161" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="679" layoutY="161" styleClass="brick2" />
+
+    <!-- Hàng 3 (5 viên) -->
+    <Rectangle width="78" height="36" layoutX="445" layoutY="202" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="523" layoutY="202" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="601" layoutY="202" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="679" layoutY="202" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="757" layoutY="202" styleClass="brick3" />
+
+    <!-- Hàng 4 (7 viên) -->
+    <Rectangle width="78" height="36" layoutX="367" layoutY="243" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="445" layoutY="243" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="523" layoutY="243" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="601" layoutY="243" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="679" layoutY="243" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="757" layoutY="243" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="835" layoutY="243" styleClass="brick4" />
+
+    <!-- Hàng 5 (9 viên) -->
+    <Rectangle width="78" height="36" layoutX="289" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="367" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="445" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="523" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="601" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="679" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="757" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="835" layoutY="284" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="913" layoutY="284" styleClass="brick5" />
+
+    <!-- Hàng 6 (10 viên) -->
+    <Rectangle width="78" height="36" layoutX="289" layoutY="325" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="367" layoutY="325" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="445" layoutY="325" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="523" layoutY="325" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="601" layoutY="325" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="679" layoutY="325" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="757" layoutY="325" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="835" layoutY="325" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="913" layoutY="325" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="991" layoutY="325" styleClass="brick3" />
+
+    <!-- Hàng 7 (6 viên hai bên) -->
+    <Rectangle width="78" height="36" layoutX="150" layoutY="366" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="228" layoutY="366" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="306" layoutY="366" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="970" layoutY="366" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="1048" layoutY="366" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="1126" layoutY="366" styleClass="brick5" />
+
+    <!-- Hàng 8 (6 viên hai bên) -->
+    <Rectangle width="78" height="36" layoutX="150" layoutY="407" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="228" layoutY="407" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="306" layoutY="407" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="970" layoutY="407" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="1048" layoutY="407" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="1126" layoutY="407" styleClass="brick4" />
+
+    <!-- Hàng 9 (6 viên hai bên) -->
+    <Rectangle width="78" height="36" layoutX="150" layoutY="448" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="228" layoutY="448" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="306" layoutY="448" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="970" layoutY="448" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="1048" layoutY="448" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="1126" layoutY="448" styleClass="brick3" />
+
+    <!-- Hàng 10 (6 viên hai bên) -->
+    <Rectangle width="78" height="36" layoutX="150" layoutY="489" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="228" layoutY="489" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="306" layoutY="489" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="970" layoutY="489" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="1048" layoutY="489" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="1126" layoutY="489" styleClass="brick2" />
+
+    <!-- Hàng sàn 40 viên (2 hàng) -->
+    <!-- Hàng 11 -->
+    <Rectangle width="78" height="36" layoutX="150" layoutY="530" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="228" layoutY="530" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="306" layoutY="530" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="384" layoutY="530" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="462" layoutY="530" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="540" layoutY="530" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="618" layoutY="530" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="696" layoutY="530" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="774" layoutY="530" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="852" layoutY="530" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="930" layoutY="530" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="1008" layoutY="530" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="1086" layoutY="530" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="1164" layoutY="530" styleClass="brick5" />
+
+    <!-- Hàng 12 -->
+    <Rectangle width="78" height="36" layoutX="150" layoutY="571" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="228" layoutY="571" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="306" layoutY="571" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="384" layoutY="571" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="462" layoutY="571" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="540" layoutY="571" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="618" layoutY="571" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="696" layoutY="571" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="774" layoutY="571" styleClass="brick4" />
+    <Rectangle width="78" height="36" layoutX="852" layoutY="571" styleClass="brick3" />
+    <Rectangle width="78" height="36" layoutX="930" layoutY="571" styleClass="brick2" />
+    <Rectangle width="78" height="36" layoutX="1008" layoutY="571" styleClass="brick1" />
+    <Rectangle width="78" height="36" layoutX="1086" layoutY="571" styleClass="brick5" />
+    <Rectangle width="78" height="36" layoutX="1164" layoutY="571" styleClass="brick4" />
+
+</AnchorPane>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane prefHeight="960" prefWidth="1280" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1">
+
+    <!-- Hàng 1 (1 viên) -->
+    <Rectangle width="78" height="36" layoutX="601" layoutY="120" styleClass="brick11" />
+
+    
+
+</AnchorPane>

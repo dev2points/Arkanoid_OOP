@@ -22,3 +22,4 @@ Thumbs.db
 *.gitignore
 *.docx
 src/main/java/uet/arkanoid/test.java
+src/test

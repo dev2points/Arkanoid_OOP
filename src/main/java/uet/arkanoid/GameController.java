@@ -26,7 +26,7 @@ public class GameController {
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
-        LevelLoader(1);
+        LevelLoader(4);
         MainLoop();
 
     }

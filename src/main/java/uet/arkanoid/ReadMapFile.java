@@ -28,6 +28,8 @@ public class ReadMapFile {
                 if (node instanceof Rectangle rect) {
                     double x = rect.getLayoutX();
                     double y = rect.getLayoutY();
+                    double width = rect.getWidth();
+                    double height = rect.getHeight();
 
                     // Lấy type_brick
                     int type = 1;
@@ -41,9 +43,10 @@ public class ReadMapFile {
                             break;
                         }
                     }
+                    System.out.println(type);
 
                     // Tạo brick
-                    Brick brick = new Brick(x, y, pane, type);
+                    Brick brick = new Brick(x, y, width, height, pane, type);
                     bricks.add(brick);
                     // rect.setVisible(false);
                 }

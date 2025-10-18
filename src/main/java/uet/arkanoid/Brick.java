@@ -10,18 +10,53 @@ import javafx.scene.image.WritableImage;
 
 public class Brick extends BaseObject {
 
-    Queue<Image> frames = new LinkedList<>();
+    private Queue<Image> frames = new LinkedList<>();
     private Pane pane;
+    private int width_frame;
+    private int height_frame;
+    private int frame_count;
+    private int type_brick;
+    private boolean active_block_brick;
+    // private int block_frame_count;
 
     /**
      * Khởi tạo brick gồm Queue frames để lưu trữ các hình ảnh của viên gạch.
      * Tự động load các hình ảnh dựa trên type_brick.
      */
-    public Brick(double x, double y, Pane pane, int type_brick) {
-        super(x, y, Gameconfig.width_brick, Gameconfig.height_brick, pane);
+    public Brick(double x, double y, double width, double height, Pane pane, int type_brick) {
+        super(x, y, width, height, pane);
+        setType_brick(type_brick);
+        check_type(type_brick);
         loadbricks(type_brick);
         this.pane = pane;
-        update();
+        if (is_block())
+            block_update();
+        else
+            update();
+    }
+
+    private void setType_brick(int type_brick) {
+        this.type_brick = type_brick;
+    }
+
+    public boolean frames_isEmpty() {
+        return frames.isEmpty();
+    }
+
+    private void check_type(int type_brick) {
+        if (type_brick < 10) {
+            frame_count = type_brick;
+            width_frame = Gameconfig.width_brick;
+            height_frame = Gameconfig.height_brick;
+        } else if (type_brick < 20) {
+            frame_count = 2;
+            width_frame = Gameconfig.width_block_brick_1;
+            height_frame = Gameconfig.height_block_brick_1;
+        } else {
+            frame_count = 2;
+            width_frame = Gameconfig.width_block_brick_2;
+            height_frame = Gameconfig.height_block_brick_2;
+        }
     }
 
     /*
@@ -31,8 +66,6 @@ public class Brick extends BaseObject {
     private void loadbricks(int type_brick) {
         Image sheet;
         switch (type_brick) {
-            case 0:
-                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_0.png").toExternalForm());
             case 1:
                 sheet = new Image(getClass().getResource("/assets/image/bricks/brick_1.png").toExternalForm());
                 break;
@@ -48,21 +81,32 @@ public class Brick extends BaseObject {
             case 5:
                 sheet = new Image(getClass().getResource("/assets/image/bricks/brick_5.png").toExternalForm());
                 break;
+            case 11:
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_11.png").toExternalForm());
+                break;
+            case 12:
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_12.png").toExternalForm());
+                break;
+            case 21:
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_21.png").toExternalForm());
+                break;
+            case 22:
+                sheet = new Image(getClass().getResource("/assets/image/bricks/brick_22.png").toExternalForm());
+                break;
             // Thêm các bricks khác
             default:
-                System.out.println("Invalid brick type");
+                System.out.println("Invalid brick type: " + type_brick);
                 sheet = new Image("file:assets/image/bricks/brick_1.png");
                 break;
         }
         PixelReader reader = sheet.getPixelReader();
-
-        for (int y = 0; y < type_brick; y++) {
+        for (int y = 0; y < frame_count; y++) {
             WritableImage frame = new WritableImage(
                     reader,
                     0, // vị trí X trong sheet chỉ có 1 column
-                    y * Gameconfig.height_brick_frame, // vị trí Y trong sheet
-                    Gameconfig.width_brick_frame, // chiều rộng của frame
-                    Gameconfig.height_brick_frame // chiều cao của frame
+                    y * height_frame, // vị trí Y trong sheet
+                    width_frame, // chiều rộng của frame
+                    height_frame // chiều cao của frame
             );
             frames.add(frame);
             // System.out.println("Add frame to brick queue");
@@ -85,7 +129,6 @@ public class Brick extends BaseObject {
                 // System.out.println("Update brick image");
             } else {
                 // Nếu chưa có view thì tạo mới
-                System.out.println("Create new brick imageView");
                 ImageView imageView = new ImageView(currentFrame);
                 imageView.setFitWidth(width);
                 imageView.setFitHeight(height);
@@ -104,4 +147,39 @@ public class Brick extends BaseObject {
         }
     }
 
+    public void setActive_block_brick() {
+        active_block_brick = true;
+    }
+
+    public boolean is_block() {
+        if (type_brick > 10)
+            return true;
+        return false;
+    }
+
+    public void block_update() {
+        if (active_block_brick) {
+            if (view instanceof ImageView imageView) {
+                // Nếu view đã tồn tại thì chỉ thay đổi ảnh
+                imageView.setImage(frames.peek());
+                // System.out.println("Update brick image");
+            } else {
+                // Nếu chưa có view thì tạo mới
+                ImageView imageView = new ImageView(frames.peek());
+                imageView.setFitWidth(width);
+                imageView.setFitHeight(height);
+                imageView.setLayoutX(x);
+                imageView.setLayoutY(y);
+                setView(imageView);
+                pane.getChildren().add(imageView);
+            }
+            frames.add(frames.poll());
+            frame_count--;
+            if (frame_count == 0) {
+                active_block_brick = false;
+                frame_count = 2;
+            }
+
+        }
+    }
 }
