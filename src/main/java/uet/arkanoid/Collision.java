@@ -103,21 +103,28 @@ public class Collision {
 
                 if (minOverlapX < minOverlapY) {
                     ball.setDx(-ball.getDx()); // va chạm bên trái/phải
+                    // Đẩy bóng ra ngoài brick để tránh dính
+                    if (overlapX2 < overlapX1)
+                        ball.setX(brickX - ballR - 0.1);
+                    else
+                        ball.setX(brickX + brickW + ballR + 0.1);
                 } else {
                     ball.setDy(-ball.getDy()); // va chạm trên/dưới
+                    // Đẩy bóng ra ngoài brick để tránh dính
+                    if (overlapY2 < overlapY1)
+                        ball.setY(brickY - ballR - 0.1);
+                    else
+                        ball.setY(brickY + brickH + ballR + 0.1);
                 }
 
                 if (brick.frames_isEmpty()) {
                     iterator.remove();
                 }
                 PlaySound.soundEffect("/assets/sound/ballSound.mp3");
-                if (!brick.is_block())
-                    brick.update();
-                else
-                    brick.setActive_block_brick();
+                brick.update();
 
             }
-            brick.block_update();
+
         }
     }
 }

@@ -16,7 +16,7 @@ public class Ball extends BaseObject {
     }
 
     public Ball(Pane pane) {
-        super(140, 140, Gameconfig.size_ball, Gameconfig.size_ball, pane);
+        super(140, 300, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.pane = pane;
         loadImage();
     }

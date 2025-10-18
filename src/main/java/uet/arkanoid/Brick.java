@@ -16,7 +16,6 @@ public class Brick extends BaseObject {
     private int height_frame;
     private int frame_count;
     private int type_brick;
-    private boolean active_block_brick;
     // private int block_frame_count;
 
     /**
@@ -29,10 +28,7 @@ public class Brick extends BaseObject {
         check_type(type_brick);
         loadbricks(type_brick);
         this.pane = pane;
-        if (is_block())
-            block_update();
-        else
-            update();
+        update();
     }
 
     private void setType_brick(int type_brick) {
@@ -49,11 +45,11 @@ public class Brick extends BaseObject {
             width_frame = Gameconfig.width_brick;
             height_frame = Gameconfig.height_brick;
         } else if (type_brick < 20) {
-            frame_count = 2;
+            frame_count = 4;
             width_frame = Gameconfig.width_block_brick_1;
             height_frame = Gameconfig.height_block_brick_1;
         } else {
-            frame_count = 2;
+            frame_count = 4;
             width_frame = Gameconfig.width_block_brick_2;
             height_frame = Gameconfig.height_block_brick_2;
         }
@@ -120,9 +116,15 @@ public class Brick extends BaseObject {
      */
     public void update() {
         if (frames != null && !frames.isEmpty()) {
-            // Lấy frame hiện tại và loại bỏ khỏi queue
-            Image currentFrame = frames.poll();
+            Image currentFrame;
+            if (!is_block())
+                // Lấy frame hiện tại và loại bỏ khỏi queue
+                currentFrame = frames.poll();
+            else {
+                currentFrame = frames.peek();
+                frames.add(frames.poll());
 
+            }
             if (view instanceof ImageView imageView) {
                 // Nếu view đã tồn tại thì chỉ thay đổi ảnh
                 imageView.setImage(currentFrame);
@@ -147,9 +149,9 @@ public class Brick extends BaseObject {
         }
     }
 
-    public void setActive_block_brick() {
-        active_block_brick = true;
-    }
+    // public void setActive_block_brick() {
+    // active_block_brick = true;
+    // }
 
     public boolean is_block() {
         if (type_brick > 10)
@@ -157,29 +159,35 @@ public class Brick extends BaseObject {
         return false;
     }
 
-    public void block_update() {
-        if (active_block_brick) {
-            if (view instanceof ImageView imageView) {
-                // Nếu view đã tồn tại thì chỉ thay đổi ảnh
-                imageView.setImage(frames.peek());
-                // System.out.println("Update brick image");
-            } else {
-                // Nếu chưa có view thì tạo mới
-                ImageView imageView = new ImageView(frames.peek());
-                imageView.setFitWidth(width);
-                imageView.setFitHeight(height);
-                imageView.setLayoutX(x);
-                imageView.setLayoutY(y);
-                setView(imageView);
-                pane.getChildren().add(imageView);
-            }
-            frames.add(frames.poll());
-            frame_count--;
-            if (frame_count == 0) {
-                active_block_brick = false;
-                frame_count = 2;
-            }
+    // public void block_update(double deltaTime) {
+    // if (!active_block_brick)
+    // return;
+    // eslaped += deltaTime;
+    // if (eslaped > 0.3) {
 
-        }
-    }
+    // if (view instanceof ImageView imageView) {
+    // // Nếu view đã tồn tại thì chỉ thay đổi ảnh
+    // imageView.setImage(frames.peek());
+    // // System.out.println("Update brick image");
+    // } else {
+    // // Nếu chưa có view thì tạo mới
+    // ImageView imageView = new ImageView(frames.peek());
+    // imageView.setFitWidth(width);
+    // imageView.setFitHeight(height);
+    // imageView.setLayoutX(x);
+    // imageView.setLayoutY(y);
+    // setView(imageView);
+    // pane.getChildren().add(imageView);
+    // active_block_brick = false;
+    // }
+    // frames.add(frames.poll());
+    // block_frame_count++;
+    // if (block_frame_count == frame_count) {
+    // active_block_brick = false;
+    // block_frame_count = 0;
+    // }
+    // eslaped = 0;
+    // }
+
+    // }
 }
