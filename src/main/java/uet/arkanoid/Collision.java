@@ -122,6 +122,7 @@ public class Collision {
                 }
                 PlaySound.soundEffect("/assets/sound/ballSound.mp3");
                 brick.update();
+                Powerups.maybeDrop( brickX + brickW / 2, brickY + brickH / 2);
 
             }
 

@@ -7,7 +7,6 @@ import javafx.scene.layout.Pane;
 public class Ball extends BaseObject {
     private double dx = 0; // vận tốc trục X (pixel/giây)
     private double dy = -Gameconfig.speed_ball; // vận tốc trục Y (pixel/giây)
-    private Pane pane;
 
     public Ball(double x, double y, Pane pane) {
         super(x, y, Gameconfig.size_ball, Gameconfig.size_ball, pane);
@@ -15,7 +14,7 @@ public class Ball extends BaseObject {
         loadImage();
     }
 
-    public Ball(Pane pane) {
+    public Ball() {
         super(140, 300, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.pane = pane;
         loadImage();

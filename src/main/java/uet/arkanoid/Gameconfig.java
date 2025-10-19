@@ -14,7 +14,7 @@ public class Gameconfig {
     public static final int height_block_brick_2 = 52;
 
     // Powerups config
-    public static final int speed_powerup = 2;
+    public static final int speed_powerup = 50;
 
     // Paddle config
     public static final double width_paddle = 200;

@@ -12,9 +12,9 @@ public class Paddle extends BaseObject {
     private double moveDir = 0;
     private double dx;
 
-    public Paddle(Pane pane) {
+    public Paddle() {
         super(screen_width / 2 - Gameconfig.width_paddle / 2, screen_height - 50, Gameconfig.width_paddle,
-                Gameconfig.height_paddle, pane);
+                Gameconfig.height_paddle);
         loadImage();
     }
 

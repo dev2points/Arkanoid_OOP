@@ -7,6 +7,8 @@ import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameController {
@@ -26,14 +28,15 @@ public class GameController {
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
-        LevelLoader(4);
+        LevelLoader(3);
         MainLoop();
 
     }
 
     private void LevelLoader(int level) {
-        paddle = new Paddle(root);
-        ball = new Ball(root);
+        BaseObject.setRootPane(root);
+        paddle = new Paddle();
+        ball = new Ball();
         bricks = ReadMapFile.readMapFXML(level, root);
 
     }
@@ -50,6 +53,7 @@ public class GameController {
             public void handle(long now) {
                 if (lastUpdate > 0) {
                     double deltaTime = (now - lastUpdate) / 1e9; // convert ns → seconds
+                    BaseObject.setDeltatime(deltaTime);
                     if (scene != null) {
                         HandleInput.check_input(paddle, ball, scene);
                     }
@@ -58,6 +62,7 @@ public class GameController {
                     // Check va chạm
                     Collision.checkPaddleCollision(ball, paddle);
                     Collision.checkBrickCollision(ball, bricks);
+                    Powerups.updateListPowerups();
                 }
                 lastUpdate = now;
 

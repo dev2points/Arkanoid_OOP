@@ -10,7 +10,8 @@ public class BaseObject {
 
     protected double x, y, width, height;
     protected Node view;
-    protected Pane pane;
+    protected static Pane pane;
+    protected static double deltatime ;
 
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
@@ -25,6 +26,27 @@ public class BaseObject {
         // this.view = rect;
         // pane.getChildren().add(view);
     }
+    public BaseObject(double x, double y, double width, double height) {
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        // Rectangle rect = new Rectangle(width, height, Color.BLUE);
+        // rect.setLayoutX(x);
+        // rect.setLayoutY(y);
+
+        // this.view = rect;
+        // pane.getChildren().add(view);
+    }
+    public static void setRootPane(Pane _pane) {// set màn hình chính để hiển thị
+        pane = _pane;
+    }
+    public static void setDeltatime(double _deltatime){// set thời gian mỗi 
+        deltatime = _deltatime;
+
+    }
+    
+
 
     public void removeFromPane(Pane pane) {
         pane.getChildren().remove(view);
