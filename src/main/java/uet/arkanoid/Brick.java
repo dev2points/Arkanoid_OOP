@@ -11,7 +11,6 @@ import javafx.scene.image.WritableImage;
 public class Brick extends BaseObject {
 
     private Queue<Image> frames = new LinkedList<>();
-    private Pane pane;
     private int width_frame;
     private int height_frame;
     private int frame_count;
@@ -27,7 +26,6 @@ public class Brick extends BaseObject {
         setType_brick(type_brick);
         check_type(type_brick);
         loadbricks(type_brick);
-        this.pane = pane;
         update();
     }
 

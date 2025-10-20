@@ -11,7 +11,7 @@ public class BaseObject {
     protected double x, y, width, height;
     protected Node view;
     protected static Pane pane;
-    protected static double deltatime ;
+    protected static double deltatime;
 
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
@@ -26,6 +26,7 @@ public class BaseObject {
         // this.view = rect;
         // pane.getChildren().add(view);
     }
+
     public BaseObject(double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
@@ -38,15 +39,15 @@ public class BaseObject {
         // this.view = rect;
         // pane.getChildren().add(view);
     }
+
     public static void setRootPane(Pane _pane) {// set màn hình chính để hiển thị
         pane = _pane;
     }
-    public static void setDeltatime(double _deltatime){// set thời gian mỗi 
+
+    public static void setDeltatime(double _deltatime) {// set thời gian mỗi
         deltatime = _deltatime;
 
     }
-    
-
 
     public void removeFromPane(Pane pane) {
         pane.getChildren().remove(view);
@@ -118,7 +119,7 @@ public class BaseObject {
     }
 
     public void loadImage(String imagePath, Pane pane) {
-        Image img = new Image("file:" + imagePath);
+        Image img = new Image(getClass().getResource(imagePath).toExternalForm());
         ImageView imageView = new ImageView(img);
 
         imageView.setFitWidth(width);

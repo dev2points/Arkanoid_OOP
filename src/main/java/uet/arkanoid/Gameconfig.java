@@ -22,8 +22,8 @@ public class Gameconfig {
     public static final int speed_paddle = 500;
 
     // Ball config
-    public static final int size_ball = 30;
-    public static final int speed_ball = 400;
+    public static final double size_ball = 30;
+    public static final double speed_ball = 400;
 
     // Time config
     public static final double FPS = 60.0;

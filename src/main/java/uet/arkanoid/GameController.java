@@ -16,6 +16,7 @@ public class GameController {
     @FXML
     private Pane root;
     @FXML
+    private Background background;
     private Label score;
     List<Brick> bricks;
     private Paddle paddle;
@@ -35,6 +36,7 @@ public class GameController {
 
     private void LevelLoader(int level) {
         BaseObject.setRootPane(root);
+        background = new Background(3);
         paddle = new Paddle();
         ball = new Ball();
         bricks = ReadMapFile.readMapFXML(level, root);

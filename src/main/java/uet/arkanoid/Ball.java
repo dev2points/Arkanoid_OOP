@@ -7,10 +7,12 @@ import javafx.scene.layout.Pane;
 public class Ball extends BaseObject {
     private double dx = 0; // vận tốc trục X (pixel/giây)
     private double dy = -Gameconfig.speed_ball; // vận tốc trục Y (pixel/giây)
+    private double radius;
 
     public Ball(double x, double y, Pane pane) {
         super(x, y, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.pane = pane;
+        this.radius = Gameconfig.size_ball / 2;
         loadImage();
     }
 
@@ -21,7 +23,7 @@ public class Ball extends BaseObject {
     }
 
     private void loadImage() {
-        Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball_1.png").toExternalForm());
+        Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball_2.png").toExternalForm());
 
         ImageView imageView = new ImageView(ballImg);
         imageView.setFitWidth(width);
@@ -103,4 +105,16 @@ public class Ball extends BaseObject {
     public double getSpeed() {
         return Math.sqrt(dx * dx + dy * dy);
     } // thêm dòng này
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getCenterX() {
+        return x + radius;
+    }
+
+    public double getCenterY() {
+        return y + radius;
+    }
 }
