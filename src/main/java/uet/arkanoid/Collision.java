@@ -92,10 +92,10 @@ public class Collision {
                     ballX <= brickX + brickW &&
                     ballY + ballR >= brickY &&
                     ballY <= brickY + brickH) {
-
-                double overlapX1 = (brickX + brickW) - (ballX - ballR); // chồng bên trái
+                // Xác định độ chồng trên quả bóng
+                double overlapX1 = (brickX + brickW) - (ballX); // chồng bên trái
                 double overlapX2 = (ballX + ballR) - brickX; // chồng bên phải
-                double overlapY1 = (brickY + brickH) - (ballY - ballR); // chồng phía trên
+                double overlapY1 = (brickY + brickH) - (ballY); // chồng phía trên
                 double overlapY2 = (ballY + ballR) - brickY; // chồng phía dưới
 
                 double minOverlapX = Math.min(overlapX1, overlapX2);
@@ -105,16 +105,16 @@ public class Collision {
                     ball.setDx(-ball.getDx()); // va chạm bên trái/phải
                     // Đẩy bóng ra ngoài brick để tránh dính
                     if (overlapX2 < overlapX1)
-                        ball.setX(brickX - ballR - 0.1);
+                        ball.setX(brickX - ballR);
                     else
-                        ball.setX(brickX + brickW + ballR + 0.1);
+                        ball.setX(brickX + brickW);
                 } else {
                     ball.setDy(-ball.getDy()); // va chạm trên/dưới
                     // Đẩy bóng ra ngoài brick để tránh dính
                     if (overlapY2 < overlapY1)
-                        ball.setY(brickY - ballR - 0.1);
+                        ball.setY(brickY - ballR);
                     else
-                        ball.setY(brickY + brickH + ballR + 0.1);
+                        ball.setY(brickY + brickH);
                 }
 
                 if (brick.frames_isEmpty()) {
