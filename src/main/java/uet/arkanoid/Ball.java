@@ -23,7 +23,7 @@ public class Ball extends BaseObject {
     }
 
     private void loadImage() {
-        Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball_2.png").toExternalForm());
+        Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball_3.png").toExternalForm());
 
         ImageView imageView = new ImageView(ballImg);
         imageView.setFitWidth(width);

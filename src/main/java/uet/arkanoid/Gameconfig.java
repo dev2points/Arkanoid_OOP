@@ -4,8 +4,8 @@ import java.util.concurrent.StructuredTaskScope.FailedException;
 
 public class Gameconfig {
     // Screen config
-    public static final int screen_width = 1280;
-    public static final int screen_height = 760;
+    public static final int screen_width = 800;
+    public static final int screen_height = 600;
 
     // Brick config
     public static final int width_brick = 26;
