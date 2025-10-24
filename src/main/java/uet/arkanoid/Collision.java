@@ -1,23 +1,12 @@
 package uet.arkanoid;
 
 import java.util.List;
+
+import uet.arkanoid.Powerups.*;
+
 import java.util.Iterator;
 
 public class Collision {
-
-    // public static void checkWallCollision(Ball ball, Paddle paddle) {
-    // double r = ball.getWidth() / 2;
-
-    // if (ball.getX() - r <= 0 ||
-    // ball.getX() + r >= ball.()) {
-    // ball.setDx(ball.getDx() * -1);
-    // }
-
-    // if (ball.getY() - r <= 0) {
-    // ball.setDy(ball.getDy() * -1);
-
-    // }
-    // }
 
     public static void checkPaddleCollision(Ball ball, Paddle paddle) {
         double r = ball.getWidth() / 2;
@@ -48,33 +37,11 @@ public class Collision {
             ball.setDx(speed * Math.sin(bounceAngle));
             ball.setDy(-Math.abs(speed * Math.cos(bounceAngle))); // luôn đi lên
 
-            // Tuỳ chọn: tăng nhẹ tốc độ sau mỗi lần đập
-            // ball.setDx(ball.getDx() * 1.05);
-            // ball.setDy(ball.getDy() * 1.05);
-
             PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
     }
 
-    public static void checkPowerUpCollision(Paddle paddle, List<Powerups> powerUps) {
-        Iterator<Powerups> iterator = powerUps.iterator();
-
-        while (iterator.hasNext()) {
-            Powerups p = iterator.next();
-            double px = p.getX(), py = p.getY(), pw = p.getWidth(), ph = p.getHeight();
-            double padX = paddle.getX(), padY = paddle.getY(), padW = paddle.getWidth(), padH = paddle.getHeight();
-
-            if (px + pw >= padX && px <= padX + padW &&
-                    py + ph >= padY && py <= padY + padH) {
-
-                // applyPowerUp(paddle, p.getTypePowerup());
-                // p.destroy(paddle.getPane());
-                iterator.remove();
-            }
-        }
-    }
-
-    public static void checkBrickCollision(Ball ball, List<Brick> bricks) {
+    public static void checkBrickCollision(Ball ball, List<Brick> bricks, GameController gameController) {
         Iterator<Brick> iterator = bricks.iterator();
 
         while (iterator.hasNext()) {
@@ -116,16 +83,84 @@ public class Collision {
                     else
                         ball.setY(brickY + brickH);
                 }
-
+                PlaySound.soundEffect("/assets/sound/ballSound.mp3");
                 if (brick.frames_isEmpty()) {
                     iterator.remove();
+                    Powerup newPowerup = dropPowerup(brickX + brickW / 2, brickY + brickH / 2,
+                            gameController.getPaddle());
+                    if (newPowerup != null)
+                        gameController.addPowerup(newPowerup);
                 }
-                PlaySound.soundEffect("/assets/sound/ballSound.mp3");
+
                 brick.update();
-                Powerups.maybeDrop(brickX + brickW / 2, brickY + brickH / 2);
 
             }
 
         }
     }
+
+    public static Powerup dropPowerup(double x, double y, Paddle paddle) {
+        double dropRate = Gameconfig.dropRate; // xác suất rơi power-up
+        if (Math.random() < dropRate) {
+            return null; // không rơi gì
+        }
+
+        // Danh sách các loại Powerup có thể rơi
+        String[] types = {
+                "Extend paddle",
+                "Shrink paddle"
+        };
+
+        // Chọn ngẫu nhiên một loại
+        int index = (int) (Math.random() * types.length);
+        String randomType = types[index];
+        System.out.println("Powerup dropped: " + randomType);
+
+        double width = Gameconfig.width_powerup;
+        double height = Gameconfig.height_powerup;
+        // Khởi tạo powerup tương ứng
+        Powerup newPowerup = null;
+        switch (randomType) {
+            case "Extend paddle":
+                newPowerup = new ExtendPaddlePowerup(x, y, width, height, paddle);
+                break;
+            case "Shrink paddle":
+                newPowerup = new ShrinkPaddlePowerup(x, y, width, height, paddle);
+                break;
+            // bạn có thể thêm các loại khác ở đây
+            default:
+                System.out.println("Unknown powerup type: " + randomType);
+                return null;
+        }
+        return newPowerup;
+    }
+
+    public static void checkPowerUpCollision(Paddle paddle, List<Powerup> Powerup, GameController gameController) {
+        Iterator<Powerup> iterator = Powerup.iterator();
+
+        while (iterator.hasNext()) {
+            Powerup p = iterator.next();
+            double px = p.getX(),
+                    py = p.getY(),
+                    pw = p.getWidth(),
+                    ph = p.getHeight();
+
+            double padX = paddle.getX(),
+                    padY = paddle.getY(),
+                    padW = paddle.getWidth(),
+                    padH = paddle.getHeight();
+
+            if (px + pw >= padX && px <= padX + padW &&
+                    py + ph >= padY && py <= padY + padH) {
+
+                p.active();
+                p.destroy();
+                iterator.remove();
+                gameController.deletePowerup(p);
+            } else {
+                p.update();
+            }
+        }
+    }
+
 }

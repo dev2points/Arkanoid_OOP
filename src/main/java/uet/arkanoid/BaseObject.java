@@ -53,7 +53,7 @@ public class BaseObject {
         pane.getChildren().remove(view);
     }
 
-    public void destroy(Pane pane) {
+    public void destroy() {
         removeFromPane(pane);
         view = null;
     }

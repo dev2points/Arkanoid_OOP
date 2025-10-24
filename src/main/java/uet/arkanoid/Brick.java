@@ -143,7 +143,7 @@ public class Brick extends BaseObject {
             // if (view != null && view.getParent() instanceof Pane p) {
             // destroy(p);
             // }
-            destroy(pane);
+            destroy();
         }
     }
 

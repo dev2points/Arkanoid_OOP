@@ -2,7 +2,6 @@ package uet.arkanoid;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 
 public class Paddle extends BaseObject {
     private static int screen_width = Gameconfig.screen_width;
@@ -10,12 +9,48 @@ public class Paddle extends BaseObject {
 
     private double speed = Gameconfig.speed_paddle;
     private double moveDir = 0;
-    private double dx;
 
     public Paddle() {
         super(screen_width / 2 - Gameconfig.width_paddle / 2, screen_height - 50, Gameconfig.width_paddle,
                 Gameconfig.height_paddle);
         loadImage();
+    }
+
+    public void extend() {
+        // Chiều dài mới của paddle
+        double newWidth = width * Gameconfig.extend_ratio;
+        // Vị trí X mới
+        double newX = x - (newWidth - width) / 2;
+        // Set lại X và width
+        width = newWidth;
+        x = newX;
+        // Giới hạn không ra khỏi màn hình
+        if (x < 0)
+            x = 0;
+        if (x + width > screen_width)
+            x = screen_width - width;
+        // Set lại hình ảnh của paddle
+        if (view instanceof ImageView img) {
+            img.setFitWidth(width);
+            img.setLayoutX(x);
+        }
+
+    }
+
+    public void shrink() {
+        // Chiều dài mới của paddle
+        double newWidth = width * Gameconfig.shrink_ratio;
+        // Vị trí X mới
+        double newX = x - (newWidth - width) / 2;
+        // Set lại X và width
+        width = newWidth;
+        x = newX;
+        // Set lại hình ảnh của paddle
+        if (view instanceof ImageView img) {
+            img.setFitWidth(width);
+            img.setLayoutX(x);
+        }
+
     }
 
     public void loadImage() {
@@ -39,14 +74,6 @@ public class Paddle extends BaseObject {
 
     public void stop() {
         moveDir = 0;
-    }
-
-    public void extend() {
-        view.setScaleX(1.5);
-    }
-
-    public void shrink() {
-        view.setScaleX(0.7);
     }
 
     public double getDx() {

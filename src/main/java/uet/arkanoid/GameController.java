@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Pane;
+import uet.arkanoid.Powerups.Powerup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,8 @@ public class GameController {
     @FXML
     private Background background;
     private Label score;
-    List<Brick> bricks;
+    List<Brick> bricks = new ArrayList<>();
+    List<Powerup> powerups = new ArrayList<>();
     private Paddle paddle;
     private Ball ball;
     private long lastUpdate = 0;
@@ -63,13 +65,89 @@ public class GameController {
                     ball.update(deltaTime);
                     // Check va chạm
                     Collision.checkPaddleCollision(ball, paddle);
-                    Collision.checkBrickCollision(ball, bricks);
-                    Powerups.updateListPowerups();
+                    Collision.checkBrickCollision(ball, bricks, GameController.this);
+                    Collision.checkPowerUpCollision(paddle, powerups, GameController.this);
                 }
                 lastUpdate = now;
 
             }
         }.start();
+    }
+
+    public Pane getRoot() {
+        return this.root;
+    }
+
+    public void setRoot(Pane root) {
+        this.root = root;
+    }
+
+    public Background getBackground() {
+        return this.background;
+    }
+
+    public void setBackground(Background background) {
+        this.background = background;
+    }
+
+    public Label getScore() {
+        return this.score;
+    }
+
+    public void setScore(Label score) {
+        this.score = score;
+    }
+
+    public List<Brick> getBricks() {
+        return this.bricks;
+    }
+
+    public void setBricks(List<Brick> bricks) {
+        this.bricks = bricks;
+    }
+
+    public List<Powerup> getPowerups() {
+        return this.powerups;
+    }
+
+    public void setPowerups(List<Powerup> powerups) {
+        this.powerups = powerups;
+    }
+
+    public Paddle getPaddle() {
+        return this.paddle;
+    }
+
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
+    }
+
+    public Ball getBall() {
+        return this.ball;
+    }
+
+    public void setBall(Ball ball) {
+        this.ball = ball;
+    }
+
+    public long getLastUpdate() {
+        return this.lastUpdate;
+    }
+
+    public void setLastUpdate(long lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    public Scene getScene() {
+        return this.scene;
+    }
+
+    public void addPowerup(Powerup powerup) {
+        powerups.add(powerup);
+    }
+
+    public void deletePowerup(Powerup powerup) {
+        powerups.remove(powerup);
     }
 
     private void PauseGame() {
