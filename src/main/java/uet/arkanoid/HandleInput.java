@@ -30,5 +30,10 @@ public class HandleInput {
         if (pressedKeys.contains(KeyCode.L)) {
             ball.fast();
         }
+        // if (pressedKeys.contains(KeyCode.N)) {
+        //     gameController.changeMap();
+        //     pressedKeys.remove(KeyCode.N);
+        // }
+
     }
 }

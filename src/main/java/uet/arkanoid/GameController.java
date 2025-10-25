@@ -31,20 +31,32 @@ public class GameController {
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
-        LevelLoader(3);
+        LevelLoader(Gameconfig.currentMap);
         MainLoop();
 
     }
+    // public void changeMap() {
+    //     Gameconfig.currentMap++;
+    //     if (Gameconfig.currentMap > Gameconfig.TOTAL_MAP) {
+    //         Gameconfig.currentMap = 1;
+    //     }
+    //     System.out.println("Switching to map: " + Gameconfig.currentMap);
+    //     root.getChildren().clear();
+    //     LevelLoader(Gameconfig.currentMap);
+    //     lastUpdate = 0;
+    //     MainLoop();
+    // }
 
     private void LevelLoader(int level) {
         BaseObject.setRootPane(root);
         background = new Background(3);
         paddle = new Paddle();
         ball = new Ball();
+        ball.attachToPane(root);
         bricks = ReadMapFile.readMapFXML(level, root);
 
     }
-
+ 
     public void setScene(Scene scene) {
         this.scene = scene;
     }
@@ -59,6 +71,7 @@ public class GameController {
                     double deltaTime = (now - lastUpdate) / 1e9; // convert ns → seconds
                     BaseObject.setDeltatime(deltaTime);
                     if (scene != null) {
+                        //HandleInput.check_input(paddle, ball, scene, GameController.this);
                         HandleInput.check_input(paddle, ball, scene);
                     }
                     paddle.update(deltaTime);

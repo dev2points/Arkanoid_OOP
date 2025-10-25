@@ -119,18 +119,27 @@ public class BaseObject {
     }
 
     public void loadImage(String imagePath, Pane pane) {
-        Image img = new Image(getClass().getResource(imagePath).toExternalForm());
-        ImageView imageView = new ImageView(img);
+    java.net.URL resource = getClass().getResource(imagePath);
 
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
-        imageView.setLayoutX(x);
-        imageView.setLayoutY(y);
-
-        if (view != null)
-            pane.getChildren().remove(view);
-
-        view = imageView;
-        pane.getChildren().add(view);
+    if (resource == null) {
+        System.err.println("Không tìm thấy ảnh: " + imagePath);
+        return;
     }
+
+    Image img = new Image(resource.toExternalForm());
+    ImageView imageView = new ImageView(img);
+
+    imageView.setFitWidth(width);
+    imageView.setFitHeight(height);
+    imageView.setLayoutX(x);
+    imageView.setLayoutY(y);
+
+    if (view != null) {
+        pane.getChildren().remove(view);
+    }
+
+    view = imageView;
+    pane.getChildren().add(view);
+    }
+
 }
