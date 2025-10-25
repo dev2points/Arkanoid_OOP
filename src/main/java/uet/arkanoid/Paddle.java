@@ -11,8 +11,10 @@ public class Paddle extends BaseObject {
     private double moveDir = 0;
 
     public Paddle() {
-        super(screen_width / 2 - Gameconfig.width_paddle / 2, screen_height - 50, Gameconfig.width_paddle,
-                Gameconfig.height_paddle);
+        super(screen_width / 2 - Gameconfig.width_paddle / 2,
+        screen_height - Gameconfig.height_paddle,
+        Gameconfig.width_paddle,
+        Gameconfig.height_paddle);
         loadImage();
     }
 
