@@ -9,6 +9,7 @@ import javafx.util.Duration;
 import java.util.LinkedList;
 
 public class Ball extends BaseObject {
+
     private double dx = 0;
     private double dy = -Gameconfig.speed_ball;
     private double radius;
@@ -35,6 +36,7 @@ public class Ball extends BaseObject {
     }
 
 
+
     private void loadImage() {
         Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball.png").toExternalForm());
         ImageView imageView = new ImageView(ballImg);
@@ -50,6 +52,7 @@ public class Ball extends BaseObject {
 
     public void update(double deltaTime) {
         // cập nhật vị trí
+
         x += dx * deltaTime;
         y += dy * deltaTime;
 
@@ -79,6 +82,7 @@ public class Ball extends BaseObject {
             img.setLayoutY(y);
         }
     }
+
 
     /** Hiệu ứng vệt mờ theo hướng di chuyển */
     private void createTrail() {

@@ -28,6 +28,7 @@ public class GameController {
 
     @FXML
     public void initialize() {
+        root.requestFocus();
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
@@ -74,12 +75,13 @@ public class GameController {
                         //HandleInput.check_input(paddle, ball, scene, GameController.this);
                         HandleInput.check_input(paddle, ball, scene);
                     }
-                    paddle.update(deltaTime);
-                    ball.update(deltaTime);
+                   
                     // Check va chạm
                     Collision.checkPaddleCollision(ball, paddle);
                     Collision.checkBrickCollision(ball, bricks, GameController.this);
-                    Collision.checkPowerUpCollision(paddle, powerups, GameController.this);
+                    Collision.checkPowerUpCollision(paddle, powerups, GameController.this); 
+                    paddle.update(deltaTime);
+                    ball.update(deltaTime);
                 }
                 lastUpdate = now;
 

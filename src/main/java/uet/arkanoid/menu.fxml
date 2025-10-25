@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox 
+    fx:id="rootPane"
+    alignment="CENTER" 
+    prefHeight="600.0" 
+    prefWidth="800.0" 
+    spacing="25.0" 
+    styleClass="background" 
+    stylesheets="@style.css" 
+    xmlns="http://javafx.com/javafx/21" 
+    xmlns:fx="http://javafx.com/fxml/1" 
+    fx:controller="uet.arkanoid.MenuController"> <children>
+        <Label styleClass="game-title" text="ARKANOID" />
+      
+        <Button 
+            mnemonicParsing="false" 
+            onAction="#handleStartButtonAction" 
+            styleClass="menu-button" 
+            text="Bắt đầu" />
+            
+        <Button 
+            mnemonicParsing="false" 
+            onAction="#handleHighScoresButtonAction" 
+            styleClass="menu-button" 
+            text="Bảng xếp hạng" />
+            
+        <Button 
+            mnemonicParsing="false" 
+            onAction="#handleExitButtonAction" 
+            styleClass="menu-button" 
+            text="Thoát" />
+    </children>
+    
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    
+</VBox>
