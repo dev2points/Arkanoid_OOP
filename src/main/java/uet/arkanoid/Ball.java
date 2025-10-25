@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
 public class Ball extends BaseObject {
-    private double dx = 0; // vận tốc trục X (pixel/giây)
+    private double dx = 100; // vận tốc trục X (pixel/giây)
     private double dy = -Gameconfig.speed_ball; // vận tốc trục Y (pixel/giây)
     private double radius;
 
@@ -16,11 +16,18 @@ public class Ball extends BaseObject {
         loadImage();
     }
 
-    public Ball() {
-        super(140, 300, Gameconfig.size_ball, Gameconfig.size_ball, pane);
-        this.pane = pane;
-        loadImage();
-    }
+    public Ball(Paddle paddle) {
+    super(
+        paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2, // canh giữa theo paddle
+        paddle.getY() - Gameconfig.size_ball - 2,                        // ngay trên paddle
+        Gameconfig.size_ball,
+        Gameconfig.size_ball,
+        pane
+    );
+    this.pane = pane;
+    loadImage();
+}
+
 
     private void loadImage() {
         Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball_2.png").toExternalForm());
@@ -35,7 +42,7 @@ public class Ball extends BaseObject {
     }
 
     /** Cập nhật vị trí bóng theo deltaTime (giây) */
-    public void update(double deltaTime) {
+    public void update(double deltaTime, Paddle paddle) {
         x += dx * deltaTime;
         y += dy * deltaTime;
 
@@ -59,7 +66,7 @@ public class Ball extends BaseObject {
 
         // Nếu rơi khỏi màn hình
         if (y > Gameconfig.screen_height) {
-            resetPosition();
+            resetPosition(paddle);
         }
 
         // Cập nhật vị trí hiển thị
@@ -69,10 +76,10 @@ public class Ball extends BaseObject {
         }
     }
 
-    private void resetPosition() {
-        x = Gameconfig.screen_width / 2 - width / 2;
-        y = Gameconfig.screen_height / 2;
-        dx = 0;
+    private void resetPosition(Paddle paddle) {
+        x = paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2;
+        y = paddle.getY() - Gameconfig.size_ball - 2;
+        dx = 45;
         dy = -Gameconfig.speed_ball;
     }
 

@@ -93,17 +93,16 @@ public class Collision {
         PlaySound.soundEffect("/assets/sound/ballSound.mp3");
     }
 }
-     public static void checkBrickCollision(Ball ball, List<Brick> bricks, GameController gameController) {
+    public static void checkBrickCollision(Ball ball, List<Brick> bricks, GameController gameController) {
     Iterator<Brick> iterator = bricks.iterator();
 
-    double ballX = ball.getX();
-    double ballY = ball.getY();
-    double ballR = Gameconfig.size_ball / 2.0;
-    double ballCenterX = ballX + ballR;
-    double ballCenterY = ballY + ballR;
+    double ballR = ball.getWidth() / 2.0;
+    double ballCenterX = ball.getX() + ballR;
+    double ballCenterY = ball.getY() + ballR;
 
     double dx = ball.getDx();
     double dy = ball.getDy();
+    double speed = Math.sqrt(dx * dx + dy * dy); // ✅ tốc độ gốc
 
     while (iterator.hasNext()) {
         Brick brick = iterator.next();
@@ -113,88 +112,77 @@ public class Collision {
         double brickW = brick.getWidth();
         double brickH = brick.getHeight();
 
-        double brickCenterX = brickX + brickW / 2.0;
-        double brickCenterY = brickY + brickH / 2.0;
-
-        // --- Kiểm tra va chạm AABB ---
         if (ballCenterX + ballR >= brickX &&
             ballCenterX - ballR <= brickX + brickW &&
             ballCenterY + ballR >= brickY &&
             ballCenterY - ballR <= brickY + brickH) {
 
-            // --- Tính chênh lệch và overlap ---
-            double diffX = ballCenterX - brickCenterX;
-            double diffY = ballCenterY - brickCenterY;
+            double overlapLeft   = (ballCenterX + ballR) - brickX;
+            double overlapRight  = (brickX + brickW) - (ballCenterX - ballR);
+            double overlapTop    = (ballCenterY + ballR) - brickY;
+            double overlapBottom = (brickY + brickH) - (ballCenterY - ballR);
 
-            double overlapX = (brickW / 2.0 + ballR) - Math.abs(diffX);
-            double overlapY = (brickH / 2.0 + ballR) - Math.abs(diffY);
+            double minOverlapX = Math.min(overlapLeft, overlapRight);
+            double minOverlapY = Math.min(overlapTop, overlapBottom);
 
-            if (overlapX > 0 && overlapY > 0) { // Có va chạm thực sự
-
-                boolean hitHorizontal = false;
-                boolean hitVertical = false;
-
-                // Ưu tiên hướng theo vận tốc
-                if (Math.abs(dx) > Math.abs(dy)) {
-                    hitHorizontal = true;
-                } else if (Math.abs(dy) > Math.abs(dx)) {
-                    hitVertical = true;
-                } else {
-                    // Nếu góc gần 45°, chọn theo overlap nhỏ hơn
-                    if (overlapX < overlapY) hitHorizontal = true;
-                    else hitVertical = true;
-                }
-
-                // --- Va chạm theo trục X ---
-                if (hitHorizontal) {
-                    if (dx > 0) { // Bóng đi sang phải -> chạm cạnh trái
+            if (minOverlapX < minOverlapY) {
+                if (overlapLeft < overlapRight) {
+                    if (dx > 0) {
                         ball.setX(brickX - 2 * ballR);
-                    } else { // Bóng đi sang trái -> chạm cạnh phải
+                        dx = -dx;
+                    }
+                } else {
+                    if (dx < 0) {
                         ball.setX(brickX + brickW);
+                        dx = -dx;
                     }
-                    ball.setDx(-dx);
                 }
-
-                // --- Va chạm theo trục Y ---
-                else if (hitVertical) {
-                    if (dy > 0) { // Bóng đi xuống -> chạm mặt trên
+            } else {
+                if (overlapTop < overlapBottom) {
+                    if (dy > 0) {
                         ball.setY(brickY - 2 * ballR);
-                    } else { // Bóng đi lên -> chạm mặt dưới
+                        dy = -dy;
+                    }
+                } else {
+                    if (dy < 0) {
                         ball.setY(brickY + brickH);
-                    }
-                    ball.setDy(-dy);
-                }
-
-                // --- Va chạm góc (cả hai overlap gần bằng nhau) ---
-                else if (Math.abs(overlapX - overlapY) < 1.5) {
-                    ball.setDx(-dx);
-                    ball.setDy(-dy);
-                }
-
-                // --- Âm thanh và xử lý gạch ---
-                PlaySound.soundEffect("/assets/sound/ballSound.mp3");
-
-                if (brick.frames_isEmpty()) {
-                    iterator.remove();
-
-                    Powerup newPowerup = dropPowerup(
-                        brickX + brickW / 2.0,
-                        brickY + brickH / 2.0,
-                        gameController.getPaddle()
-                    );
-
-                    if (newPowerup != null) {
-                        gameController.addPowerup(newPowerup);
+                        dy = -dy;
                     }
                 }
-
-                brick.update();
-                break; // ⚠️ Quan trọng: thoát vòng lặp sau va chạm đầu tiên
             }
+
+            if (Math.abs(minOverlapX - minOverlapY) < 1.0) {
+                dx = -dx;
+                dy = -dy;
+            }
+
+            // ✅ Chuẩn hóa lại vận tốc (giữ nguyên tốc độ)
+            double newSpeed = Math.sqrt(dx * dx + dy * dy);
+            dx = dx / newSpeed * speed;
+            dy = dy / newSpeed * speed;
+
+            ball.setDx(dx);
+            ball.setDy(dy);
+
+            PlaySound.soundEffect("/assets/sound/ballSound.mp3");
+
+            if (brick.frames_isEmpty()) {
+                iterator.remove();
+                Powerup newPowerup = dropPowerup(
+                    brickX + brickW / 2.0,
+                    brickY + brickH / 2.0,
+                    gameController.getPaddle()
+                );
+                if (newPowerup != null) {
+                    gameController.addPowerup(newPowerup);
+                }
+            }
+
+            brick.update();
+            break;
         }
     }
 }
-
 
         
 

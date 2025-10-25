@@ -40,7 +40,7 @@ public class GameController {
         BaseObject.setRootPane(root);
         background = new Background(3);
         paddle = new Paddle();
-        ball = new Ball();
+        ball = new Ball(paddle);
         bricks = ReadMapFile.readMapFXML(level, root);
 
     }
@@ -61,12 +61,13 @@ public class GameController {
                     if (scene != null) {
                         HandleInput.check_input(paddle, ball, scene);
                     }
-                    paddle.update(deltaTime);
-                    ball.update(deltaTime);
+                   
                     // Check va chạm
                     Collision.checkPaddleCollision(ball, paddle);
                     Collision.checkBrickCollision(ball, bricks, GameController.this);
-                    Collision.checkPowerUpCollision(paddle, powerups, GameController.this);
+                    Collision.checkPowerUpCollision(paddle, powerups, GameController.this); 
+                    paddle.update(deltaTime);
+                    ball.update(deltaTime,paddle);
                 }
                 lastUpdate = now;
 
