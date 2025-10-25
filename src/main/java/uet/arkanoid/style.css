@@ -1,0 +1,34 @@
+/* Áp dụng cho VBox gốc để đặt ảnh nền */
+.background {
+    -fx-background-image: url("menu_bg.png"); /* Thay bằng tên ảnh của bạn */
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+}
+
+/* Định dạng cho tiêu đề game "ARKANOID" */
+.game-title {
+    -fx-font-family: "Press Start 2P", "Courier New"; /* Font pixel, nếu không có thì dùng Courier New */
+    -fx-font-size: 72px;
+    -fx-text-fill: #00ffff; /* Màu xanh cyan neon */
+    -fx-effect: dropshadow(gaussian, rgba(255, 255, 255, 0.8), 10, 0.5, 0, 0);
+}
+
+/* Định dạng chung cho các nút bấm trong menu */
+.menu-button {
+    -fx-font-family: "Press Start 2P", sans-serif;
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+    -fx-background-color: #1c1c1c; /* Màu nền tối */
+    -fx-border-color: #ff00ff; /* Viền màu tím hồng neon */
+    -fx-border-width: 3px;
+    -fx-background-insets: 0;
+    -fx-padding: 10px 30px;
+    -fx-pref-width: 300px; /* Đảm bảo các nút có chiều rộng bằng nhau */
+}
+
+/* Hiệu ứng khi di chuột qua nút */
+.menu-button:hover {
+    -fx-background-color: #ff00ff; /* Đổi màu nền thành màu của viền */
+    -fx-text-fill: #1c1c1c;       /* Đổi màu chữ thành màu nền cũ */
+    -fx-cursor: hand;            /* Biến con trỏ thành hình bàn tay */
+}
