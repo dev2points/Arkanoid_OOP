@@ -93,66 +93,112 @@ public class Collision {
         PlaySound.soundEffect("/assets/sound/ballSound.mp3");
     }
 }
+     public static void checkBrickCollision(Ball ball, List<Brick> bricks, GameController gameController) {
+    Iterator<Brick> iterator = bricks.iterator();
 
+    double ballX = ball.getX();
+    double ballY = ball.getY();
+    double ballR = Gameconfig.size_ball / 2.0;
+    double ballCenterX = ballX + ballR;
+    double ballCenterY = ballY + ballR;
 
-    public static void checkBrickCollision(Ball ball, List<Brick> bricks, GameController gameController) {
-        Iterator<Brick> iterator = bricks.iterator();
+    double dx = ball.getDx();
+    double dy = ball.getDy();
 
-        while (iterator.hasNext()) {
-            Brick brick = iterator.next();
+    while (iterator.hasNext()) {
+        Brick brick = iterator.next();
 
-            double ballX = ball.getX();
-            double ballY = ball.getY();
-            double ballR = Gameconfig.size_ball;
-            double brickX = brick.getX();
-            double brickY = brick.getY();
-            double brickW = brick.getWidth();
-            double brickH = brick.getHeight();
+        double brickX = brick.getX();
+        double brickY = brick.getY();
+        double brickW = brick.getWidth();
+        double brickH = brick.getHeight();
 
-            if (ballX + ballR >= brickX &&
-                    ballX <= brickX + brickW &&
-                    ballY + ballR >= brickY &&
-                    ballY <= brickY + brickH) {
-                // Xác định độ chồng trên quả bóng
-                double overlapX1 = (brickX + brickW) - (ballX); // chồng bên trái
-                double overlapX2 = (ballX + ballR) - brickX; // chồng bên phải
-                double overlapY1 = (brickY + brickH) - (ballY); // chồng phía trên
-                double overlapY2 = (ballY + ballR) - brickY; // chồng phía dưới
+        double brickCenterX = brickX + brickW / 2.0;
+        double brickCenterY = brickY + brickH / 2.0;
 
-                double minOverlapX = Math.min(overlapX1, overlapX2);
-                double minOverlapY = Math.min(overlapY1, overlapY2);
+        // --- Kiểm tra va chạm AABB ---
+        if (ballCenterX + ballR >= brickX &&
+            ballCenterX - ballR <= brickX + brickW &&
+            ballCenterY + ballR >= brickY &&
+            ballCenterY - ballR <= brickY + brickH) {
 
-                if (minOverlapX < minOverlapY) {
-                    ball.setDx(-ball.getDx()); // va chạm bên trái/phải
-                    // Đẩy bóng ra ngoài brick để tránh dính
-                    if (overlapX2 < overlapX1)
-                        ball.setX(brickX - ballR);
-                    else
-                        ball.setX(brickX + brickW);
+            // --- Tính chênh lệch và overlap ---
+            double diffX = ballCenterX - brickCenterX;
+            double diffY = ballCenterY - brickCenterY;
+
+            double overlapX = (brickW / 2.0 + ballR) - Math.abs(diffX);
+            double overlapY = (brickH / 2.0 + ballR) - Math.abs(diffY);
+
+            if (overlapX > 0 && overlapY > 0) { // Có va chạm thực sự
+
+                boolean hitHorizontal = false;
+                boolean hitVertical = false;
+
+                // Ưu tiên hướng theo vận tốc
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    hitHorizontal = true;
+                } else if (Math.abs(dy) > Math.abs(dx)) {
+                    hitVertical = true;
                 } else {
-                    ball.setDy(-ball.getDy()); // va chạm trên/dưới
-                    // Đẩy bóng ra ngoài brick để tránh dính
-                    if (overlapY2 < overlapY1)
-                        ball.setY(brickY - ballR);
-                    else
-                        ball.setY(brickY + brickH);
+                    // Nếu góc gần 45°, chọn theo overlap nhỏ hơn
+                    if (overlapX < overlapY) hitHorizontal = true;
+                    else hitVertical = true;
                 }
+
+                // --- Va chạm theo trục X ---
+                if (hitHorizontal) {
+                    if (dx > 0) { // Bóng đi sang phải -> chạm cạnh trái
+                        ball.setX(brickX - 2 * ballR);
+                    } else { // Bóng đi sang trái -> chạm cạnh phải
+                        ball.setX(brickX + brickW);
+                    }
+                    ball.setDx(-dx);
+                }
+
+                // --- Va chạm theo trục Y ---
+                else if (hitVertical) {
+                    if (dy > 0) { // Bóng đi xuống -> chạm mặt trên
+                        ball.setY(brickY - 2 * ballR);
+                    } else { // Bóng đi lên -> chạm mặt dưới
+                        ball.setY(brickY + brickH);
+                    }
+                    ball.setDy(-dy);
+                }
+
+                // --- Va chạm góc (cả hai overlap gần bằng nhau) ---
+                else if (Math.abs(overlapX - overlapY) < 1.5) {
+                    ball.setDx(-dx);
+                    ball.setDy(-dy);
+                }
+
+                // --- Âm thanh và xử lý gạch ---
                 PlaySound.soundEffect("/assets/sound/ballSound.mp3");
+
                 if (brick.frames_isEmpty()) {
                     iterator.remove();
-                    Powerup newPowerup = dropPowerup(brickX + brickW / 2, brickY + brickH / 2,
-                            gameController.getPaddle());
-                    if (newPowerup != null)
+
+                    Powerup newPowerup = dropPowerup(
+                        brickX + brickW / 2.0,
+                        brickY + brickH / 2.0,
+                        gameController.getPaddle()
+                    );
+
+                    if (newPowerup != null) {
                         gameController.addPowerup(newPowerup);
+                    }
                 }
 
                 brick.update();
-
+                break; // ⚠️ Quan trọng: thoát vòng lặp sau va chạm đầu tiên
             }
-
         }
     }
+}
 
+
+        
+
+         
     public static Powerup dropPowerup(double x, double y, Paddle paddle) {
         double dropRate = Gameconfig.dropRate; // xác suất rơi power-up
         if (Math.random() < dropRate) {
