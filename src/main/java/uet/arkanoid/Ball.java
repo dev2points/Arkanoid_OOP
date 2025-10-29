@@ -13,27 +13,33 @@ public class Ball extends BaseObject {
     private double dx = 0;
     private double dy = -Gameconfig.speed_ball;
     private double radius;
-    private Pane pane;
+    private Pane pane = BaseObject.getRootPane();
     private LinkedList<ImageView> trailList = new LinkedList<>();
     private static final int MAX_TRAIL = 8; // số vệt tối đa
 
     public Ball() {
-        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball, null);
-        this.radius = Gameconfig.size_ball / 2;
-        
-    }
-
-    public Ball(double x, double y, Pane pane) {
-        super(x, y, Gameconfig.size_ball, Gameconfig.size_ball, pane);
-        this.pane = pane;
+        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball );
         this.radius = Gameconfig.size_ball / 2;
         loadImage();
     }
-
-    public void attachToPane(Pane pane) {
-        this.pane = pane;
+    public Ball(double x, double y, double dx, double dy) {
+    super(x, y, Gameconfig.size_ball, Gameconfig.size_ball);
+    this.dx = dx;
+    this.dy = dy;
+    this.radius = Gameconfig.size_ball / 2;
+    loadImage();
+    }
+    public Ball(Paddle paddle) {
+        super(
+            paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2,  // canh giữa paddle
+            paddle.getY() - Gameconfig.size_ball,                              // nằm ngay trên paddle
+            Gameconfig.size_ball,
+            Gameconfig.size_ball
+        );
+        this.radius = Gameconfig.size_ball / 2;
         loadImage();
     }
+ 
 
 
 
@@ -55,7 +61,7 @@ public class Ball extends BaseObject {
 
         x += dx * deltaTime;
         y += dy * deltaTime;
-
+       
         // tạo hiệu ứng vệt
         createTrail();
 
@@ -72,9 +78,8 @@ public class Ball extends BaseObject {
             y = 0; dy = -dy;
             PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
-        if (y > Gameconfig.screen_height) {
-            resetPosition();
-        }
+      
+    
 
         // cập nhật vị trí hiển thị
         if (view instanceof ImageView img) {
@@ -111,13 +116,7 @@ public class Ball extends BaseObject {
         }
     }
 
-    private void resetPosition() {
-        x = Gameconfig.screen_width / 2 - width / 2;
-        y = Gameconfig.screen_height / 2;
-        dx = 0;
-        dy = -Gameconfig.speed_ball;
-    }
-
+  
     // getter/setter như cũ
     public double getDx() { return dx; }
     public void setDx(double dx) { this.dx = dx; }

@@ -21,7 +21,6 @@ public abstract class Powerup extends BaseObject {
         ImageView iv = new ImageView(image);
         iv.setFitWidth(width);
         iv.setFitHeight(height);
-        System.out.println(x);
         iv.setLayoutX(x);
         iv.setLayoutY(y);
 

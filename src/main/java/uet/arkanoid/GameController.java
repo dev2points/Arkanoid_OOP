@@ -22,7 +22,7 @@ public class GameController {
     List<Brick> bricks = new ArrayList<>();
     List<Powerup> powerups = new ArrayList<>();
     private Paddle paddle;
-    private Ball ball;
+    private BallManager ballManager ;
     private long lastUpdate = 0;
     private Scene scene;
 
@@ -52,8 +52,8 @@ public class GameController {
         BaseObject.setRootPane(root);
         background = new Background(3);
         paddle = new Paddle();
-        ball = new Ball();
-        ball.attachToPane(root);
+        ballManager = new BallManager(paddle);
+        ballManager.addDefaultBall();
         bricks = ReadMapFile.readMapFXML(level, root);
 
     }
@@ -73,15 +73,16 @@ public class GameController {
                     BaseObject.setDeltatime(deltaTime);
                     if (scene != null) {
                         //HandleInput.check_input(paddle, ball, scene, GameController.this);
-                        HandleInput.check_input(paddle, ball, scene);
+                        HandleInput.check_input(paddle, ballManager, scene);
+
                     }
-                   
                     // Check va chạm
-                    Collision.checkPaddleCollision(ball, paddle);
-                    Collision.checkBrickCollision(ball, bricks, GameController.this);
+                    Collision.checkPaddleCollision(GameController.this);
+                    Collision.checkBrickCollision(GameController.this);
                     Collision.checkPowerUpCollision(paddle, powerups, GameController.this); 
                     paddle.update(deltaTime);
-                    ball.update(deltaTime);
+                    ballManager.updateAll(deltaTime);
+
                 }
                 lastUpdate = now;
 
@@ -133,17 +134,18 @@ public class GameController {
         return this.paddle;
     }
 
+
     public void setPaddle(Paddle paddle) {
         this.paddle = paddle;
     }
 
-    public Ball getBall() {
-        return this.ball;
+    public List<Ball> getBalls() {
+        return ballManager.getBalls();
+    }
+    public void addBall(Ball ball) {
+        ballManager.addBall(ball);
     }
 
-    public void setBall(Ball ball) {
-        this.ball = ball;
-    }
 
     public long getLastUpdate() {
         return this.lastUpdate;

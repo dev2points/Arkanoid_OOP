@@ -12,7 +12,7 @@ public class BaseObject {
     protected Node view;
     protected static Pane pane;
     protected static double deltatime;
-
+ 
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
         this.y = y;
@@ -48,6 +48,10 @@ public class BaseObject {
         deltatime = _deltatime;
 
     }
+    public static Pane getRootPane() {// set màn hình chính để hiển thị
+        return pane;
+    }
+    
 
     public void removeFromPane(Pane pane) {
         pane.getChildren().remove(view);
