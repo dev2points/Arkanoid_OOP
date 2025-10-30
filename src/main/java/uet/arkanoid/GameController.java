@@ -1,14 +1,19 @@
 package uet.arkanoid;
 
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import uet.arkanoid.Menu.PauseMenu.PauseController;
 import uet.arkanoid.Powerups.Powerup;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +32,8 @@ public class GameController {
     private long lastUpdate = 0;
     private Scene scene;
     private User user;
+    private static AnimationTimer gameloop;
+    private Parent pauseMenuLayer;
 
     @FXML
     public void initialize() {
@@ -68,7 +75,7 @@ public class GameController {
     private void MainLoop() {
         // loop, update, timer gi day viet vao day
         // Timer time = new Timer();
-        new AnimationTimer() {
+        gameloop = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 if (lastUpdate > 0) {
@@ -76,7 +83,7 @@ public class GameController {
                     BaseObject.setDeltatime(deltaTime);
                     if (scene != null) {
                         // HandleInput.check_input(paddle, ball, scene, GameController.this);
-                        HandleInput.check_input(paddle, ballManager, scene);
+                        HandleInput.check_input(paddle, ballManager, scene, GameController.this);
                     }
                     // Check va chạm
                     Collision.checkPaddleCollision(GameController.this);
@@ -88,7 +95,8 @@ public class GameController {
                 lastUpdate = now;
 
             }
-        }.start();
+        };
+        gameloop.start();
     }
 
     public Pane getRoot() {
@@ -175,16 +183,35 @@ public class GameController {
         return gameMap;
     }
 
-    private void PauseGame() {
-
+    public void PauseGame(){
+        gameloop.stop();
+        AnchorPane pane;
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/PauseMenu/pause_menu.fxml"));
+            pane = loader.load();
+            PauseController controller = loader.getController();
+            controller.setGameController(this);
+            this.pauseMenuLayer = pane;
+            root.getChildren().add(pauseMenuLayer);
+        } catch (IOException e) {
+            System.err.println("Không thể tải file menu.fxml. Hãy chắc chắn file tồn tại và đúng đường dẫn.");
+            e.printStackTrace();
+        }  
     }
 
-    private void ContinueGame() {
-
+    public void ContinueGame() {
+        if (pauseMenuLayer != null && root.getChildren().contains(pauseMenuLayer)) {
+            root.getChildren().remove(pauseMenuLayer);
+            pauseMenuLayer = null; 
+            gameloop.start();
+            root.requestFocus();
+        }
     }
 
     private void BacktoMain() {
 
     }
+
+    
 
 }
