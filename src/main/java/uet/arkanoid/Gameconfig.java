@@ -19,23 +19,23 @@ public class Gameconfig {
     public static final double speed_powerup = 50;
     public static final double width_powerup = 32;
     public static final double height_powerup = 32;
-    public static final double dropRate = 0.90;
+    public static final double dropRate = 0.10;
 
     // Paddle config
     public static final double width_paddle = 150;
     public static final double height_paddle = 30;
     public static final int speed_paddle = 500;
-    public static final double extend_ratio = 1.6;
-    public static final double shrink_ratio = 0.625;
+    public static final double extend_ratio = 1.3;
+    public static final double shrink_ratio = 0.8;
 
     // Ball config
     public static final double size_ball = 20;
-    public static final double speed_ball = 350;
+    public static final double speed_ball = 320;
 
     // Time config
     public static final double FPS = 60.0;
 
     //current map config
-    public static int currentMap = 2;
+    public static int currentMap = 4;
     public static final int TOTAL_MAP = 5;
 }

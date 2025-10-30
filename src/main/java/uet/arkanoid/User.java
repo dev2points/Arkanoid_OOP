@@ -17,6 +17,6 @@ public class User {
 
     public void addScore(int amount) { this.score += amount; }
     public void loseHp(int amount) { this.hp =  hp - amount; }
-
+    public void addHp(int amount) { this.hp =  hp + amount; }
     public boolean isDead() { return hp <= 0; }
 }
