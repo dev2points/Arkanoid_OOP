@@ -1,18 +1,20 @@
 package uet.arkanoid;
 
+import java.io.Serializable;
+
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 
-public class BaseObject {
+public class BaseObject implements Serializable {
 
     protected double x, y, width, height;
     protected Node view;
     protected static Pane pane;
     protected static double deltatime;
- 
+
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
         this.y = y;
@@ -48,10 +50,10 @@ public class BaseObject {
         deltatime = _deltatime;
 
     }
+
     public static Pane getRootPane() {// set màn hình chính để hiển thị
         return pane;
     }
-    
 
     public void removeFromPane(Pane pane) {
         pane.getChildren().remove(view);
@@ -123,27 +125,27 @@ public class BaseObject {
     }
 
     public void loadImage(String imagePath, Pane pane) {
-    java.net.URL resource = getClass().getResource(imagePath);
+        java.net.URL resource = getClass().getResource(imagePath);
 
-    if (resource == null) {
-        System.err.println("Không tìm thấy ảnh: " + imagePath);
-        return;
-    }
+        if (resource == null) {
+            System.err.println("Không tìm thấy ảnh: " + imagePath);
+            return;
+        }
 
-    Image img = new Image(resource.toExternalForm());
-    ImageView imageView = new ImageView(img);
+        Image img = new Image(resource.toExternalForm());
+        ImageView imageView = new ImageView(img);
 
-    imageView.setFitWidth(width);
-    imageView.setFitHeight(height);
-    imageView.setLayoutX(x);
-    imageView.setLayoutY(y);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
 
-    if (view != null) {
-        pane.getChildren().remove(view);
-    }
+        if (view != null) {
+            pane.getChildren().remove(view);
+        }
 
-    view = imageView;
-    pane.getChildren().add(view);
+        view = imageView;
+        pane.getChildren().add(view);
     }
 
 }

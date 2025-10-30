@@ -1,6 +1,8 @@
 package uet.arkanoid;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
     private int hp;
     private int score;
 
@@ -9,14 +11,35 @@ public class User {
         this.score = score;
     }
 
-    public int getHp() { return hp; }
-    public void setHp(int hp) { this.hp = Math.max(hp, 0); }
+    public int getHp() {
+        return hp;
+    }
 
-    public int getScore() { return score; }
-    public void setScore(int score) { this.score = Math.max(score, 0); }
+    public void setHp(int hp) {
+        this.hp = Math.max(hp, 0);
+    }
 
-    public void addScore(int amount) { this.score += amount; }
-    public void loseHp(int amount) { this.hp =  hp - amount; }
-    public void addHp(int amount) { this.hp =  hp + amount; }
-    public boolean isDead() { return hp <= 0; }
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = Math.max(score, 0);
+    }
+
+    public void addScore(int amount) {
+        this.score += amount;
+    }
+
+    public void loseHp(int amount) {
+        this.hp = hp - amount;
+    }
+
+    public void addHp(int amount) {
+        this.hp = hp + amount;
+    }
+
+    public boolean isDead() {
+        return hp <= 0;
+    }
 }

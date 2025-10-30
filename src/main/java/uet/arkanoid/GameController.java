@@ -19,13 +19,14 @@ public class GameController {
     @FXML
     private Background background;
     private Label score;
+    private GameMap gameMap;
     List<Brick> bricks = new ArrayList<>();
     List<Powerup> powerups = new ArrayList<>();
     private Paddle paddle;
-    private BallManager ballManager ;
+    private BallManager ballManager;
     private long lastUpdate = 0;
     private Scene scene;
-    private User user ;
+    private User user;
 
     @FXML
     public void initialize() {
@@ -33,33 +34,33 @@ public class GameController {
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
-        user = new User(3, 0); 
+        user = new User(3, 0);
         LevelLoader(Gameconfig.currentMap);
         MainLoop();
 
     }
     // public void changeMap() {
-    //     Gameconfig.currentMap++;
-    //     if (Gameconfig.currentMap > Gameconfig.TOTAL_MAP) {
-    //         Gameconfig.currentMap = 1;
-    //     }
-    //     System.out.println("Switching to map: " + Gameconfig.currentMap);
-    //     root.getChildren().clear();
-    //     LevelLoader(Gameconfig.currentMap);
-    //     lastUpdate = 0;
-    //     MainLoop();
+    // Gameconfig.currentMap++;
+    // if (Gameconfig.currentMap > Gameconfig.TOTAL_MAP) {
+    // Gameconfig.currentMap = 1;
+    // }
+    // System.out.println("Switching to map: " + Gameconfig.currentMap);
+    // root.getChildren().clear();
+    // LevelLoader(Gameconfig.currentMap);
+    // lastUpdate = 0;
+    // MainLoop();
     // }
 
     private void LevelLoader(int level) {
         BaseObject.setRootPane(root);
-        background = new Background(3);
-        paddle = new Paddle();
-        ballManager = new BallManager(paddle);
-        ballManager.addDefaultBall();
-        bricks = ReadMapFile.readMapFXML(level, root);
+        gameMap = new GameMap(level, root);
+        background = gameMap.getBackground();
+        paddle = gameMap.getPaddle();
+        ballManager = gameMap.getBallManager();
+        bricks = gameMap.getBricks();
 
     }
- 
+
     public void setScene(Scene scene) {
         this.scene = scene;
     }
@@ -74,13 +75,13 @@ public class GameController {
                     double deltaTime = (now - lastUpdate) / 1e9; // convert ns → seconds
                     BaseObject.setDeltatime(deltaTime);
                     if (scene != null) {
-                        //HandleInput.check_input(paddle, ball, scene, GameController.this);
+                        // HandleInput.check_input(paddle, ball, scene, GameController.this);
                         HandleInput.check_input(paddle, ballManager, scene);
                     }
                     // Check va chạm
                     Collision.checkPaddleCollision(GameController.this);
                     Collision.checkBrickCollision(GameController.this);
-                    Collision.checkPowerUpCollision(paddle, powerups, GameController.this); 
+                    Collision.checkPowerUpCollision(paddle, powerups, GameController.this);
                     paddle.update(deltaTime);
                     ballManager.updateAll(deltaTime, GameController.this);
                 }
@@ -129,13 +130,14 @@ public class GameController {
     public void setPowerups(List<Powerup> powerups) {
         this.powerups = powerups;
     }
-    public User getUser(){
+
+    public User getUser() {
         return this.user;
     }
+
     public Paddle getPaddle() {
         return this.paddle;
     }
-
 
     public void setPaddle(Paddle paddle) {
         this.paddle = paddle;
@@ -144,10 +146,10 @@ public class GameController {
     public List<Ball> getBalls() {
         return ballManager.getBalls();
     }
+
     public void addBall(Ball ball) {
         ballManager.addBall(ball);
     }
-
 
     public long getLastUpdate() {
         return this.lastUpdate;
@@ -168,7 +170,11 @@ public class GameController {
     public void deletePowerup(Powerup powerup) {
         powerups.remove(powerup);
     }
-    
+
+    public GameMap getGameMap() {
+        return gameMap;
+    }
+
     private void PauseGame() {
 
     }
