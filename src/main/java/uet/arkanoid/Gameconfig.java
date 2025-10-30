@@ -36,6 +36,6 @@ public class Gameconfig {
     public static final double FPS = 60.0;
 
     //current map config
-    public static int currentMap = 1;
+    public static int currentMap = 2;
     public static final int TOTAL_MAP = 5;
 }

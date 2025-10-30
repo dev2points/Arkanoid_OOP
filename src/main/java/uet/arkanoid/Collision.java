@@ -188,6 +188,7 @@ public class Collision {
                 }
 
                 brick.update();
+                gameController.getUser().addScore(1);
                 break;
             }
         }
@@ -205,8 +206,9 @@ public class Collision {
 
         // Danh sách các loại Powerup có thể rơi
         String[] types = {
-            
-                "Multi ball"
+               "Extend paddle",
+                "Multi ball",
+                "Shrink paddle"
         };
 
         // Chọn ngẫu nhiên một loại

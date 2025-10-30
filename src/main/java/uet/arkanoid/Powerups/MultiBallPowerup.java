@@ -17,7 +17,6 @@ public class MultiBallPowerup extends Powerup {
 
     @Override
     public Image loadImage() {
-        System.out.println("hihi");
         return new Image(getClass().getResource("/assets/image/powerups/extend_paddle.png").toExternalForm());
     }
 

@@ -25,6 +25,7 @@ public class GameController {
     private BallManager ballManager ;
     private long lastUpdate = 0;
     private Scene scene;
+    private User user ;
 
     @FXML
     public void initialize() {
@@ -32,6 +33,7 @@ public class GameController {
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
+        user = new User(3, 0); 
         LevelLoader(Gameconfig.currentMap);
         MainLoop();
 
@@ -74,15 +76,13 @@ public class GameController {
                     if (scene != null) {
                         //HandleInput.check_input(paddle, ball, scene, GameController.this);
                         HandleInput.check_input(paddle, ballManager, scene);
-
                     }
                     // Check va chạm
                     Collision.checkPaddleCollision(GameController.this);
                     Collision.checkBrickCollision(GameController.this);
                     Collision.checkPowerUpCollision(paddle, powerups, GameController.this); 
                     paddle.update(deltaTime);
-                    ballManager.updateAll(deltaTime);
-
+                    ballManager.updateAll(deltaTime, GameController.this);
                 }
                 lastUpdate = now;
 
@@ -129,7 +129,9 @@ public class GameController {
     public void setPowerups(List<Powerup> powerups) {
         this.powerups = powerups;
     }
-
+    public User getUser(){
+        return this.user;
+    }
     public Paddle getPaddle() {
         return this.paddle;
     }
@@ -166,7 +168,7 @@ public class GameController {
     public void deletePowerup(Powerup powerup) {
         powerups.remove(powerup);
     }
-
+    
     private void PauseGame() {
 
     }

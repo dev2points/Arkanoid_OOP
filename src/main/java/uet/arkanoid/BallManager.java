@@ -44,12 +44,8 @@ public class BallManager {
         waitingForLaunch = value;
     }
 
-    public void updateAll(double deltaTime) {
-        // Nếu không còn bóng nào → tạo lại 1 quả trên paddle
-        if (balls.isEmpty()) {
-            addDefaultBall();
-            return;
-        }
+    public void updateAll(double deltaTime , GameController gameController ) {
+
 
         // Danh sách tạm để lưu bóng cần xoá
         List<Ball> toRemove = new ArrayList<>();
@@ -79,7 +75,12 @@ public class BallManager {
 
         // Nếu không còn bóng nào → tạo lại bóng mặc định
         if (balls.isEmpty()) {
-            addDefaultBall();
+            User user = gameController.getUser();
+            user.loseHp(1);
+            int hp = user.getHp();
+            if (hp> 0) addDefaultBall();
+            if (hp == 0) System.out.println(user.getScore());
+       
         }
     }
 
