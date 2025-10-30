@@ -6,6 +6,11 @@ module uet.arkanoid {
     requires javafx.base;
 
     opens uet.arkanoid to javafx.fxml;
+<<<<<<< Updated upstream
+=======
+    opens uet.arkanoid.Menu.StartMenu to javafx.fxml;
+>>>>>>> Stashed changes
 
     exports uet.arkanoid;
+    exports uet.arkanoid.Menu.StartMenu;
 }
