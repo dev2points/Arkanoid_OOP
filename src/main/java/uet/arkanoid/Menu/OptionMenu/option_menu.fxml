@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.OptionMenu.OptionController">
+
+    <children>
+      <Pane layoutX="300.0" layoutY="209.0" prefHeight="52.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
+            <Slider fx:id="volumeSlider" prefHeight="69.0" prefWidth="202.0" value="10.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Slider>
+            <Label fx:id="volumeLabel" layoutX="14.0" layoutY="3.0" prefHeight="23.0" prefWidth="172.0" text="0%" />
+         </children>
+      </Pane>
+      <Pane fx:id="optionsButton" layoutX="332.0" layoutY="457.0" onMouseClicked="#returnHome" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
+         <children>
+            <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+            <ImageView fitHeight="67.0" fitWidth="87.0" layoutX="37.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../VictoryMenu/home.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="14.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
+         </children>
+      </Pane>
+
+    </children>
+</AnchorPane>

@@ -77,7 +77,22 @@ public class MenuController {
 
     @FXML
     private void handleOptions(MouseEvent event) {
-        System.out.println("Options clicked!");
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/OptionMenu/option_menu.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+
+            // Get the current stage
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            stage.setScene(scene);
+            stage.show();
+
+            System.out.println("New Game scene loaded successfully!");
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println("Failed to load game.fxml");
+        }
     }
 
     @FXML

@@ -4,7 +4,7 @@
 }
 
 
-#pause_menu {
+#victory_menu {
     -fx-background-image: url("menu_bg.png");
     -fx-background-size: cover;
     -fx-background-color: rgba(0, 0, 0, 0.8); /* dark overlay */

@@ -10,12 +10,15 @@ module uet.arkanoid {
     opens uet.arkanoid.Menu.PauseMenu to javafx.fxml;
     opens uet.arkanoid.Menu.LoadGame to javafx.fxml;
     opens uet.arkanoid.Menu.HighScore to javafx.fxml;
+    opens uet.arkanoid.Menu.VictoryMenu to javafx.fxml;
+    opens uet.arkanoid.Menu.OptionMenu to javafx.fxml;
     exports uet.arkanoid;
     exports uet.arkanoid.Menu.StartMenu;
     exports uet.arkanoid.Menu.PauseMenu;
     exports uet.arkanoid.Menu.LoadGame;
     exports uet.arkanoid.Menu.HighScore;
-
+    exports uet.arkanoid.Menu.OptionMenu;
+    exports uet.arkanoid.Menu.VictoryMenu;
 
 
 }
