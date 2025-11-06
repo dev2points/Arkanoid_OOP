@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml" fx:controller="uet.arkanoid.Menu.LoadGame.LoadGameController"
+
+            prefWidth="600" prefHeight="400" style="-fx-background-color: #1e1e1e;">
+
+    <VBox spacing="10" alignment="CENTER" layoutX="50" layoutY="50" prefWidth="500">
+        <Text text="LOAD GAME" style="-fx-fill: white; -fx-font-size: 28; -fx-font-weight: bold;"/>
+
+        <!-- Danh sách người chơi -->
+        <ListView fx:id="playerList" prefWidth="400" prefHeight="250" style="-fx-background-color: #2d2d2d;"/>
+
+        <!-- Nút điều khiển -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button fx:id="loadButton" text="Load" onAction="#handleLoad" style="-fx-font-size: 16; -fx-background-color: #3a86ff; -fx-text-fill: white;"/>
+            <Button fx:id="backButton" text="Back" onAction="#handleBack" style="-fx-font-size: 16; -fx-background-color: #e63946; -fx-text-fill: white;"/>
+        </HBox>
+    </VBox>
+</AnchorPane>

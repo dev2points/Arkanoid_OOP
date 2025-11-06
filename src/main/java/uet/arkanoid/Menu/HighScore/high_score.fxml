@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="uet.arkanoid.Menu.HighScore.HighscoreController"
+            prefWidth="400" prefHeight="400">
+
+    <Label text="High Scores" layoutX="140" layoutY="20"
+           style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+
+    <ListView fx:id="highscoreList"
+              layoutX="50" layoutY="70"
+              prefWidth="300" prefHeight="250" />
+
+    <Button text="Back"
+            layoutX="170" layoutY="340"
+            onAction="#handleBack"
+            prefWidth="60" />
+
+</AnchorPane>
