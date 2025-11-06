@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 import uet.arkanoid.GameController;
 
 public class ExtraHpPowerup extends Powerup {
-    private GameController controller;
+    private transient GameController controller;
 
     public ExtraHpPowerup(double x, double y, double width, double height, GameController controller) {
         super(x, y, width, height);

@@ -1,10 +1,11 @@
 package uet.arkanoid;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.input.KeyCode;
 
-public class BallManager {
+public class BallManager implements Serializable {
     private final List<Ball> balls = new ArrayList<>();
     private final Paddle paddle;
     private boolean waitingForLaunch = false; // ← cờ chờ bắt đầu
@@ -44,8 +45,7 @@ public class BallManager {
         waitingForLaunch = value;
     }
 
-    public void updateAll(double deltaTime , GameController gameController ) {
-
+    public void updateAll(double deltaTime, GameController gameController) {
 
         // Danh sách tạm để lưu bóng cần xoá
         List<Ball> toRemove = new ArrayList<>();
@@ -78,12 +78,13 @@ public class BallManager {
             User user = gameController.getUser();
             user.loseHp(1);
             int hp = user.getHp();
-            if (hp> 0) addDefaultBall();
-            if (hp == 0) System.out.println(user.getScore());
-       
+            if (hp > 0)
+                addDefaultBall();
+            if (hp == 0)
+                System.out.println(user.getScore());
+
         }
     }
-
 
     // Gọi khi nhấn SPACE
     public void launchBalls() {

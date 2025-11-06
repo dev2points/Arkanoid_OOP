@@ -10,15 +10,17 @@ import javafx.scene.image.WritableImage;
 
 public class Brick extends BaseObject {
 
-    private Queue<Image> frames = new LinkedList<>();
+    private transient Queue<Image> frames = new LinkedList<>();
     private int width_frame;
     private int height_frame;
     private int frame_count;
     private int type_brick;
+    private int mapNumber;
 
-    public Brick(double x, double y, double width, double height, Pane pane, int type_brick) {
+    public Brick(double x, double y, double width, double height, Pane pane, int type_brick, int map) {
         super(x, y, width, height, pane);
         this.type_brick = type_brick;
+        this.mapNumber = map;
         check_type(type_brick);
         loadbricks(type_brick);
         update();
@@ -46,7 +48,7 @@ public class Brick extends BaseObject {
 
     private void loadbricks(int type_brick) {
         String path = "/assets/image/bricks/map"
-                + Gameconfig.currentMap
+                + mapNumber
                 + "/brick_"
                 + type_brick
                 + ".png";
@@ -65,8 +67,7 @@ public class Brick extends BaseObject {
                     0,
                     y * height_frame,
                     width_frame,
-                    height_frame
-            );
+                    height_frame);
             frames.add(frame);
         }
     }

@@ -10,7 +10,7 @@ import java.util.Set;
 public class HandleInput {
     private static final Set<KeyCode> pressedKeys = new HashSet<>();
 
-    public static void check_input(Paddle paddle, BallManager ballManager, Scene scene, GameController gamecontroller){
+    public static void check_input(Paddle paddle, BallManager ballManager, Scene scene, GameController gamecontroller) {
         if (scene.getOnKeyPressed() == null && scene.getOnKeyReleased() == null) {
             scene.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
             scene.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
@@ -31,9 +31,20 @@ public class HandleInput {
             pressedKeys.remove(KeyCode.SPACE);
         }
 
-        if(pressedKeys.contains(KeyCode.ESCAPE)) {
+        if (pressedKeys.contains(KeyCode.ESCAPE)) {
             pressedKeys.remove(KeyCode.ESCAPE);
             gamecontroller.PauseGame();
         }
+    }
+
+    public static void testSaveGame(Scene scene, GameController gameController) {
+        if (scene.getOnKeyPressed() == null && scene.getOnKeyReleased() == null) {
+            scene.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
+            scene.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
+        }
+        if (pressedKeys.contains(KeyCode.ENTER))
+            SaveGame.saveGame(gameController);
+        if (pressedKeys.contains(KeyCode.S))
+            SaveGame.saveScore(gameController.getUser().getName(), gameController.getUser().getScore());
     }
 }

@@ -8,7 +8,7 @@ import java.util.List;
 
 public class MultiBallPowerup extends Powerup {
 
-    private GameController controller;
+    private transient GameController controller;
 
     public MultiBallPowerup(double x, double y, double width, double height, GameController controller) {
         super(x, y, width, height);
@@ -45,6 +45,5 @@ public class MultiBallPowerup extends Powerup {
             controller.addBall(b);
         }
 
-      
     }
 }

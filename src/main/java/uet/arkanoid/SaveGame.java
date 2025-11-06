@@ -27,14 +27,15 @@ public class SaveGame {
     }
 
     public static void saveGame(GameController gameController) {
-        User user = gameController.getUser();
-        GameMap gameMap = gameController.getGameMap();
         try {
+            List<Pair<GameMap, User>> saved = loadGame();
             FileOutputStream fout = new FileOutputStream(processPath);
+            if (saved == null)
+                saved = new ArrayList<>();
             ObjectOutputStream oos = new ObjectOutputStream(fout);
-            // Ghi Map trước User
-            oos.writeObject(gameMap);
-            oos.writeObject(user);
+            saved.add(0, new Pair<GameMap, User>(gameController.getGameMap(), gameController.getUser()));
+            oos.writeObject(saved);
+            System.out.println("Saved process");
             oos.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,15 +48,23 @@ public class SaveGame {
      * @return Pair(GameMap, User)
      */
     public static List<Pair<GameMap, User>> loadGame() {
-        try {
-            FileInputStream fout = new FileInputStream(processPath);
-            ObjectInputStream ois = new ObjectInputStream(fout);
-            List<Pair<GameMap, User>> data = (List<Pair<GameMap, User>>) ois.readObject();
-            ois.close();
-            return data;
+        File file = new File(processPath);
+
+        if (!file.exists() || file.length() == 0) {
+            return new ArrayList<>();
+        }
+
+        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            Object obj = ois.readObject();
+            if (obj instanceof List<?>) {
+                return (List<Pair<GameMap, User>>) obj;
+            } else {
+                System.out.println("Dữ liệu không hợp lệ");
+                return new ArrayList<>();
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
+            return new ArrayList<>();
         }
 
     }
@@ -73,6 +82,7 @@ public class SaveGame {
             for (Pair<String, Integer> p : scores) {
                 pw.println(p.getKey() + "|" + p.getValue());
             }
+            System.out.println("Save score successfully!");
         } catch (IOException e) {
             e.printStackTrace();
         }

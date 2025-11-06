@@ -11,8 +11,8 @@ import javafx.scene.shape.Rectangle;
 public class BaseObject implements Serializable {
 
     protected double x, y, width, height;
-    protected Node view;
-    protected static Pane pane;
+    protected transient Node view;
+    protected static transient Pane pane;
     protected static double deltatime;
 
     public BaseObject(double x, double y, double width, double height, Pane pane) {

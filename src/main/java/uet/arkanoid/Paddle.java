@@ -15,27 +15,29 @@ public class Paddle extends BaseObject {
 
     public Paddle() {
         super(SCREEN_WIDTH / 2 - Gameconfig.width_paddle / 2,
-              SCREEN_HEIGHT - Gameconfig.height_paddle,
-              Gameconfig.width_paddle,
-              Gameconfig.height_paddle);
+                SCREEN_HEIGHT - Gameconfig.height_paddle,
+                Gameconfig.width_paddle,
+                Gameconfig.height_paddle);
         loadImage();
     }
 
     /** Xử lý phóng to paddle theo state logic */
     public void extend() {
         switch (state) {
-            case 1 -> { /* đang phóng to, giữ nguyên */ }
+            case 1 -> {
+                /* đang phóng to, giữ nguyên */ }
             case 0 -> applyExtend(); // bình thường → phóng to
-            case -1 -> resetSize();  // đang thu nhỏ → về bình thường
+            case -1 -> resetSize(); // đang thu nhỏ → về bình thường
         }
     }
 
     /** Xử lý thu nhỏ paddle theo state logic */
     public void shrink() {
         switch (state) {
-            case -1 -> { /* đang thu nhỏ, giữ nguyên */ }
+            case -1 -> {
+                /* đang thu nhỏ, giữ nguyên */ }
             case 0 -> applyShrink(); // bình thường → thu nhỏ
-            case 1 -> resetSize();   // đang phóng to → về bình thường
+            case 1 -> resetSize(); // đang phóng to → về bình thường
         }
     }
 
@@ -88,18 +90,31 @@ public class Paddle extends BaseObject {
     }
 
     /** Di chuyển paddle */
-    public void moveLeft() { moveDir = -1; }
-    public void moveRight() { moveDir = 1; }
-    public void stop() { moveDir = 0; }
-    public double getDx() { return speed * moveDir; }
+    public void moveLeft() {
+        moveDir = -1;
+    }
+
+    public void moveRight() {
+        moveDir = 1;
+    }
+
+    public void stop() {
+        moveDir = 0;
+    }
+
+    public double getDx() {
+        return speed * moveDir;
+    }
 
     /** Cập nhật vị trí paddle theo thời gian deltaTime (giây) */
     public void update(double deltaTime) {
         x += moveDir * speed * deltaTime;
 
         // Giới hạn biên
-        if (x < 0) x = 0;
-        if (x + width > SCREEN_WIDTH) x = SCREEN_WIDTH - width;
+        if (x < 0)
+            x = 0;
+        if (x + width > SCREEN_WIDTH)
+            x = SCREEN_WIDTH - width;
 
         // Cập nhật hiển thị
         updateView();

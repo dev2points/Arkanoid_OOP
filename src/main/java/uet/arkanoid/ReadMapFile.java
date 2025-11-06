@@ -43,10 +43,10 @@ public class ReadMapFile {
                             break;
                         }
                     }
-                    System.out.println(type);
+                    // System.out.println(type);
 
                     // Tạo brick
-                    Brick brick = new Brick(x, y, width, height, pane, type);
+                    Brick brick = new Brick(x, y, width, height, pane, type, level);
                     bricks.add(brick);
                     // rect.setVisible(false);
                 }

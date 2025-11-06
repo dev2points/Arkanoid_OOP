@@ -5,6 +5,15 @@ import java.io.Serializable;
 public class User implements Serializable {
     private int hp;
     private int score;
+    private String name = "Arkanoid";
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public User(int hp, int score) {
         this.hp = hp;

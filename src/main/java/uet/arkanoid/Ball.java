@@ -13,35 +13,33 @@ public class Ball extends BaseObject {
     private double dx = 0;
     private double dy = -Gameconfig.speed_ball;
     private double radius;
-    private Pane pane = BaseObject.getRootPane();
-    private LinkedList<ImageView> trailList = new LinkedList<>();
+    private transient Pane pane = BaseObject.getRootPane();
+    private transient LinkedList<ImageView> trailList = new LinkedList<>();
     private static final int MAX_TRAIL = 8; // số vệt tối đa
 
     public Ball() {
-        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball );
+        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball);
         this.radius = Gameconfig.size_ball / 2;
         loadImage();
     }
+
     public Ball(double x, double y, double dx, double dy) {
-    super(x, y, Gameconfig.size_ball, Gameconfig.size_ball);
-    this.dx = dx;
-    this.dy = dy;
-    this.radius = Gameconfig.size_ball / 2;
-    loadImage();
+        super(x, y, Gameconfig.size_ball, Gameconfig.size_ball);
+        this.dx = dx;
+        this.dy = dy;
+        this.radius = Gameconfig.size_ball / 2;
+        loadImage();
     }
+
     public Ball(Paddle paddle) {
         super(
-            paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2,  // canh giữa paddle
-            paddle.getY() - Gameconfig.size_ball,                              // nằm ngay trên paddle
-            Gameconfig.size_ball,
-            Gameconfig.size_ball
-        );
+                paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2, // canh giữa paddle
+                paddle.getY() - Gameconfig.size_ball, // nằm ngay trên paddle
+                Gameconfig.size_ball,
+                Gameconfig.size_ball);
         this.radius = Gameconfig.size_ball / 2;
         loadImage();
     }
- 
-
-
 
     private void loadImage() {
         Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball.png").toExternalForm());
@@ -51,7 +49,7 @@ public class Ball extends BaseObject {
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         setView(imageView);
-        if(pane!=null) {
+        if (pane != null) {
             pane.getChildren().add(imageView);
         }
     }
@@ -61,25 +59,26 @@ public class Ball extends BaseObject {
 
         x += dx * deltaTime;
         y += dy * deltaTime;
-       
+
         // tạo hiệu ứng vệt
         createTrail();
 
         // va chạm tường
         if (x <= 0) {
-            x = 0; dx = -dx;
+            x = 0;
+            dx = -dx;
             PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
         if (x + width >= Gameconfig.screen_width) {
-            x = Gameconfig.screen_width - width; dx = -dx;
+            x = Gameconfig.screen_width - width;
+            dx = -dx;
             PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
         if (y <= 0) {
-            y = 0; dy = -dy;
+            y = 0;
+            dy = -dy;
             PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
-      
-    
 
         // cập nhật vị trí hiển thị
         if (view instanceof ImageView img) {
@@ -88,10 +87,10 @@ public class Ball extends BaseObject {
         }
     }
 
-
     /** Hiệu ứng vệt mờ theo hướng di chuyển */
     private void createTrail() {
-        if (!(view instanceof ImageView ballView)) return;
+        if (!(view instanceof ImageView ballView))
+            return;
 
         ImageView trail = new ImageView(ballView.getImage());
         trail.setFitWidth(width);
@@ -116,16 +115,46 @@ public class Ball extends BaseObject {
         }
     }
 
-  
     // getter/setter như cũ
-    public double getDx() { return dx; }
-    public void setDx(double dx) { this.dx = dx; }
-    public double getDy() { return dy; }
-    public void setDy(double dy) { this.dy = dy; }
-    public void slow() { this.dx *= 0.8; this.dy *= 0.8; }
-    public void fast() { this.dx *= 1.2; this.dy *= 1.2; }
-    public double getSpeed() { return Math.sqrt(dx * dx + dy * dy); }
-    public double getRadius() { return radius; }
-    public double getCenterX() { return x + radius; }
-    public double getCenterY() { return y + radius; }
+    public double getDx() {
+        return dx;
+    }
+
+    public void setDx(double dx) {
+        this.dx = dx;
+    }
+
+    public double getDy() {
+        return dy;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
+    }
+
+    public void slow() {
+        this.dx *= 0.8;
+        this.dy *= 0.8;
+    }
+
+    public void fast() {
+        this.dx *= 1.2;
+        this.dy *= 1.2;
+    }
+
+    public double getSpeed() {
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getCenterX() {
+        return x + radius;
+    }
+
+    public double getCenterY() {
+        return y + radius;
+    }
 }

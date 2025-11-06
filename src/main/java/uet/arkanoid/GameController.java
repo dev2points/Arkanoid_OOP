@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Pair;
 import uet.arkanoid.Menu.PauseMenu.PauseController;
 import uet.arkanoid.Powerups.Powerup;
 
@@ -34,6 +35,7 @@ public class GameController {
     private User user;
     private static AnimationTimer gameloop;
     private Parent pauseMenuLayer;
+    private int currentMap;
 
     @FXML
     public void initialize() {
@@ -42,7 +44,9 @@ public class GameController {
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
         user = new User(3, 0);
-        LevelLoader(Gameconfig.currentMap);
+        currentMap = 2;
+        LevelLoader(currentMap);
+        // SaveGame.saveGame(GameController.this);
         MainLoop();
 
     }
@@ -68,6 +72,16 @@ public class GameController {
 
     }
 
+    public void loadProcess(Pair<GameMap, User> process) {
+        gameMap = process.getKey();
+        background = gameMap.getBackground();
+        paddle = gameMap.getPaddle();
+        ballManager = gameMap.getBallManager();
+        bricks = gameMap.getBricks();
+        user = process.getValue();
+        currentMap = gameMap.getLevel();
+    }
+
     public void setScene(Scene scene) {
         this.scene = scene;
     }
@@ -84,6 +98,7 @@ public class GameController {
                     if (scene != null) {
                         // HandleInput.check_input(paddle, ball, scene, GameController.this);
                         HandleInput.check_input(paddle, ballManager, scene, GameController.this);
+                        HandleInput.testSaveGame(scene, GameController.this);
                     }
                     // Check va chạm
                     Collision.checkPaddleCollision(GameController.this);
@@ -93,7 +108,14 @@ public class GameController {
                     ballManager.updateAll(deltaTime, GameController.this);
                 }
                 lastUpdate = now;
-
+                if (bricks.isEmpty()) {
+                    currentMap++;
+                    SaveGame.saveGame(GameController.this);
+                    if (currentMap <= Gameconfig.TOTAL_MAP)
+                        LevelLoader(currentMap);
+                    else
+                        System.out.println("Win game!");
+                }
             }
         };
         gameloop.start();
@@ -183,7 +205,7 @@ public class GameController {
         return gameMap;
     }
 
-    public void PauseGame(){
+    public void PauseGame() {
         gameloop.stop();
         AnchorPane pane;
         try {
@@ -196,13 +218,13 @@ public class GameController {
         } catch (IOException e) {
             System.err.println("Không thể tải file menu.fxml. Hãy chắc chắn file tồn tại và đúng đường dẫn.");
             e.printStackTrace();
-        }  
+        }
     }
 
     public void ContinueGame() {
         if (pauseMenuLayer != null && root.getChildren().contains(pauseMenuLayer)) {
             root.getChildren().remove(pauseMenuLayer);
-            pauseMenuLayer = null; 
+            pauseMenuLayer = null;
             gameloop.start();
             root.requestFocus();
         }
@@ -211,7 +233,5 @@ public class GameController {
     private void BacktoMain() {
 
     }
-
-    
 
 }
