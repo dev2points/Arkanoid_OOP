@@ -46,15 +46,13 @@ public class SaveGame {
      * 
      * @return Pair(GameMap, User)
      */
-    public static Pair<GameMap, User> loadGame() {
+    public static List<Pair<GameMap, User>> loadGame() {
         try {
             FileInputStream fout = new FileInputStream(processPath);
             ObjectInputStream ois = new ObjectInputStream(fout);
-            // Đọc Map trước User
-            GameMap map = (GameMap) ois.readObject();
-            User user = (User) ois.readObject();
+            List<Pair<GameMap, User>> data = (List<Pair<GameMap, User>>) ois.readObject();
             ois.close();
-            return new Pair<>(map, user);
+            return data;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
