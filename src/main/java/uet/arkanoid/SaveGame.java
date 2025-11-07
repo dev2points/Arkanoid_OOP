@@ -22,23 +22,31 @@ import java.io.ObjectInputStream;
 public class SaveGame {
     private static final String processPath = "data/process.txt";
     private static final String rankingPath = "data/ranking.txt";
+    private static List<Pair<GameMap, User>> process = new ArrayList<>();
     static {
         new File("data").mkdirs();
     }
 
     public static void saveGame(GameController gameController) {
         try {
-            List<Pair<GameMap, User>> saved = loadGame();
+            if (process.isEmpty())
+                process = loadGame();
             FileOutputStream fout = new FileOutputStream(processPath);
-            if (saved == null)
-                saved = new ArrayList<>();
+            // if (saved == null)
+            // saved = new ArrayList<>();
             ObjectOutputStream oos = new ObjectOutputStream(fout);
-            saved.add(0, new Pair<GameMap, User>(gameController.getGameMap(), gameController.getUser()));
-            oos.writeObject(saved);
+            process.add(0, new Pair<GameMap, User>(gameController.getGameMap(), gameController.getUser()));
+            oos.writeObject(process);
             System.out.println("Saved process");
             oos.close();
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public static void processChoosed(int index) {
+        if (!process.isEmpty()) {
+            process.remove(index);
         }
     }
 
@@ -57,7 +65,8 @@ public class SaveGame {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
             Object obj = ois.readObject();
             if (obj instanceof List<?>) {
-                return (List<Pair<GameMap, User>>) obj;
+                process = (List<Pair<GameMap, User>>) obj;
+                return process;
             } else {
                 System.out.println("Dữ liệu không hợp lệ");
                 return new ArrayList<>();

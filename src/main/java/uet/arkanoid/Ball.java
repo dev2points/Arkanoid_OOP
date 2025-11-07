@@ -13,7 +13,7 @@ public class Ball extends BaseObject {
     private double dx = 0;
     private double dy = -Gameconfig.speed_ball;
     private double radius;
-    private transient Pane pane = BaseObject.getRootPane();
+    private transient Pane pane;
     private transient LinkedList<ImageView> trailList = new LinkedList<>();
     private static final int MAX_TRAIL = 8; // số vệt tối đa
 
@@ -41,7 +41,8 @@ public class Ball extends BaseObject {
         loadImage();
     }
 
-    private void loadImage() {
+    public void loadImage() {
+        pane = BaseObject.getRootPane();
         Image ballImg = new Image(getClass().getResource("/assets/image/balls/ball.png").toExternalForm());
         ImageView imageView = new ImageView(ballImg);
         imageView.setFitWidth(width);
@@ -61,7 +62,7 @@ public class Ball extends BaseObject {
         y += dy * deltaTime;
 
         // tạo hiệu ứng vệt
-        createTrail();
+        // createTrail();
 
         // va chạm tường
         if (x <= 0) {

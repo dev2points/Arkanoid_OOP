@@ -3,14 +3,20 @@ package uet.arkanoid.Powerups;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import uet.arkanoid.BaseObject;
+import uet.arkanoid.GameController;
 import uet.arkanoid.Gameconfig;
 
 public abstract class Powerup extends BaseObject {
     private double fallSpeed = Gameconfig.speed_powerup;
+    public static transient GameController controller;
 
     public Powerup(double x, double y, double width, double height) {
         super(x, y, width, height);
         loadPowerup(loadImage());
+    }
+
+    public static void setGameController(GameController gameController) {
+        controller = gameController;
     }
 
     // Load image để sử dụng loadpowerup

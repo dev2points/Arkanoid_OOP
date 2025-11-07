@@ -16,6 +16,7 @@ public class Brick extends BaseObject {
     private int frame_count;
     private int type_brick;
     private int mapNumber;
+    private int frame_remaining;
 
     public Brick(double x, double y, double width, double height, Pane pane, int type_brick, int map) {
         super(x, y, width, height, pane);
@@ -70,6 +71,7 @@ public class Brick extends BaseObject {
                     height_frame);
             frames.add(frame);
         }
+        frame_remaining = frame_count;
     }
 
     @Override
@@ -79,6 +81,7 @@ public class Brick extends BaseObject {
 
             if (!is_block()) {
                 currentFrame = frames.poll();
+                frame_remaining--;
             } else {
                 currentFrame = frames.peek();
                 frames.add(frames.poll());
@@ -102,5 +105,17 @@ public class Brick extends BaseObject {
 
     public boolean is_block() {
         return type_brick > 10;
+    }
+
+    public int getFramecount() {
+        return frame_count;
+    }
+
+    public void restoreFrame() {
+        frames = new LinkedList<>();
+        loadbricks(type_brick);
+        for (int i = 1; i < frame_count - frame_remaining; i++)
+            frames.poll();
+        update();
     }
 }

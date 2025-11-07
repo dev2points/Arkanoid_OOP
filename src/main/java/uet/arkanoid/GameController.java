@@ -44,8 +44,8 @@ public class GameController {
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
         user = new User(3, 0);
-        currentMap = 2;
-        LevelLoader(currentMap);
+        currentMap = 0;
+        // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
         MainLoop();
 
@@ -73,13 +73,32 @@ public class GameController {
     }
 
     public void loadProcess(Pair<GameMap, User> process) {
+        BaseObject.setRootPane(root);
         gameMap = process.getKey();
-        background = gameMap.getBackground();
+        currentMap = gameMap.getLevel();
+        System.out.println(currentMap);
+        background = new Background(3);
+        // background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
         bricks = gameMap.getBricks();
+        powerups = gameMap.getPowerups();
         user = process.getValue();
-        currentMap = gameMap.getLevel();
+
+        restoreView();
+    }
+
+    private void restoreView() {
+
+        Powerup.setGameController(GameController.this);
+        for (Powerup powerup : powerups) {
+            powerup.loadPowerup(powerup.loadImage());
+        }
+        for (Brick brick : bricks)
+            brick.restoreFrame();
+        paddle.loadImage();
+        ballManager.restoreView();
+
     }
 
     public void setScene(Scene scene) {
@@ -110,10 +129,10 @@ public class GameController {
                 lastUpdate = now;
                 if (bricks.isEmpty()) {
                     currentMap++;
-                    SaveGame.saveGame(GameController.this);
-                    if (currentMap <= Gameconfig.TOTAL_MAP)
+                    if (currentMap <= Gameconfig.TOTAL_MAP) {
                         LevelLoader(currentMap);
-                    else
+                        System.out.println("Load new map number " + currentMap);
+                    } else
                         System.out.println("Win game!");
                 }
             }

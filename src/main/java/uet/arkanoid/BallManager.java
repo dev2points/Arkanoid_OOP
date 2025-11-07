@@ -96,4 +96,10 @@ public class BallManager implements Serializable {
             waitingForLaunch = false;
         }
     }
+
+    public void restoreView() {
+        for (Ball ball : balls) {
+            ball.loadImage();
+        }
+    }
 }
