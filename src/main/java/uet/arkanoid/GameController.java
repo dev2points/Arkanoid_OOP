@@ -13,6 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import uet.arkanoid.Menu.PauseMenu.PauseController;
+import uet.arkanoid.Menu.VictoryMenu.VictoryController;
 import uet.arkanoid.Powerups.Powerup;
 
 import java.io.IOException;
@@ -50,7 +51,7 @@ public class GameController {
         currentMap = 0;
         // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
-        init_lable();
+
         MainLoop();
 
     }
@@ -73,6 +74,7 @@ public class GameController {
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
         bricks = gameMap.getBricks();
+        init_lable();
 
     }
 
@@ -86,7 +88,7 @@ public class GameController {
         livesLabel.setLayoutX(20);
         livesLabel.setLayoutY(50);
         livesLabel.setStyle("-fx-text-fill: black; -fx-font-size: 18px;");
-        
+
         root.getChildren().addAll(scoreLabel, livesLabel);
     }
 
@@ -96,19 +98,21 @@ public class GameController {
         if (user.getHp() <= 0) {
             gameloop.stop();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
                 Parent root1 = loader.load();
+                VictoryController victoryController = loader.getController();
+                victoryController.setScore(user.getScore());
                 Scene scene = new Scene(root1);
                 Stage stage = (Stage) root.getScene().getWindow();
 
                 stage.setScene(scene);
                 stage.setTitle("Test Paddle");
                 stage.show();
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("loose");
             }
-            
+
         }
     }
 
@@ -126,17 +130,18 @@ public class GameController {
         user = process.getValue();
 
         restoreView();
+        init_lable();
     }
 
     private void restoreView() {
 
+        for (Brick brick : bricks)
+            brick.restoreFrame();
+        paddle.loadImage();
         Powerup.setGameController(GameController.this);
         for (Powerup powerup : powerups) {
             powerup.loadPowerup(powerup.loadImage());
         }
-        for (Brick brick : bricks)
-            brick.restoreFrame();
-        paddle.loadImage();
         ballManager.restoreView();
 
     }
@@ -289,7 +294,6 @@ public class GameController {
             root.requestFocus();
         }
     }
-
 
     private void BacktoMain() {
 
