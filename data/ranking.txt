@@ -1,7 +1,0 @@
-APdz|100
-APdzvl|50
-APdzvc|30
-APdzvcl|10
-AP|3
-AP dzvcl|3
-APppppp|1

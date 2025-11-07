@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -52,7 +53,13 @@ public class GameController {
         currentMap = 4;
         // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
+        Platform.runLater(() -> {
+            Stage stage = (Stage) root.getScene().getWindow();
 
+            // Now you can set close event handler
+            HandleInput.setOnCloseHandler(stage, this);
+        });
+        init_lable();
         MainLoop();
 
     }
@@ -93,8 +100,8 @@ public class GameController {
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
                 Parent root1 = loader.load();
-                VictoryController victoryController = loader.getController();
-                victoryController.setScore(user.getScore());
+                VictoryController victory = loader.getController();
+                victory.setScore(user.getScore());
                 Scene scene = new Scene(root1);
                 Stage stage = (Stage) root.getScene().getWindow();
 

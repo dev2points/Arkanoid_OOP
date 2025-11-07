@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import uet.arkanoid.GameController;
 import uet.arkanoid.SaveGame;
@@ -16,6 +17,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TextField;
 
 public class VictoryController {
+    @FXML
+    private Text player_score;
     @FXML
     private Pane victory_menu;
     @FXML
@@ -31,7 +34,7 @@ public class VictoryController {
     @FXML
     private TextField player_name;
 
-    // private GameController gamecontroller;
+    private GameController gamecontroller;
     private int score;
 
     @FXML
@@ -105,7 +108,6 @@ public class VictoryController {
 
     @FXML
     private void handleHighScore(MouseEvent event) {
-        System.out.println("High Score clicked!");
         try {
             // Tải file giao diện highscore.fxml
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/HighScore/high_score.fxml"));
@@ -140,11 +142,13 @@ public class VictoryController {
         }
     }
 
+    public void setGameController(GameController g) {
+        gamecontroller = g;
+    }
+
     public void setScore(int score) {
+        player_score.setText("Your Score: " + score);
         this.score = score;
     }
-    // public void setGameController(GameController g) {
-    // gamecontroller = g;
-    // }
 
 }

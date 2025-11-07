@@ -1,7 +1,11 @@
 package uet.arkanoid;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -47,4 +51,45 @@ public class HandleInput {
         if (pressedKeys.contains(KeyCode.S))
             SaveGame.saveScore(gameController.getUser().getName(), gameController.getUser().getScore());
     }
+    public static void setOnCloseHandler(Stage stage, GameController gameController) {
+    stage.setOnCloseRequest(event -> {
+        event.consume(); // prevent immediate close
+
+        // Step 1: Ask user if they want to save
+        Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Exit Game");
+        confirmAlert.setHeaderText("Do you want to save your game before exiting?");
+        confirmAlert.setContentText("Choose OK to save, or Cancel to stay in the game.");
+
+        confirmAlert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+
+                // Step 2: Ask for username
+                TextInputDialog nameDialog = new TextInputDialog();
+                nameDialog.setTitle("Save Game");
+                nameDialog.setHeaderText("Enter your name to save your game:");
+                nameDialog.setContentText("Name:");
+
+                nameDialog.showAndWait().ifPresent(name -> {
+                    if (name.trim().isEmpty()) {
+                        System.out.println("No name entered, game not saved.");
+                        stage.close();
+                    } else {
+                        // Save the game and score with the given name
+                        gameController.getUser().setName(name);
+                        SaveGame.saveGame(gameController);
+                        SaveGame.saveScore(name, gameController.getUser().getScore());
+
+                        System.out.println("Game saved for user: " + name);
+                        stage.close();
+                    }
+                });
+
+            } else {
+                System.out.println("Exit canceled by user.");
+            }
+        });
+    });
+}
+
 }
