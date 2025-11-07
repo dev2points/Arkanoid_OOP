@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import uet.arkanoid.Menu.PauseMenu.PauseController;
+import uet.arkanoid.Menu.VictoryMenu.VictoryController;
 import uet.arkanoid.Powerups.Powerup;
 
 import java.io.IOException;
@@ -105,6 +106,8 @@ public class GameController {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
                 Parent root1 = loader.load();
+                VictoryController victory = loader.getController();
+                victory.setScore(user.getScore());
                 Scene scene = new Scene(root1);
                 Stage stage = (Stage) root.getScene().getWindow();
 

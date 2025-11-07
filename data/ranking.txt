@@ -1,6 +1,9 @@
+123|231
 APdz|100
 APdzvl|50
 123123|43
 APdzvc|30
 APdzvcl|10
+123|6
+123|1
 ffff|0
