@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import javafx.util.Pair;
 import uet.arkanoid.Menu.PauseMenu.PauseController;
 import uet.arkanoid.Powerups.Powerup;
@@ -36,6 +37,8 @@ public class GameController {
     private static AnimationTimer gameloop;
     private Parent pauseMenuLayer;
     private int currentMap;
+    private Label scoreLabel;
+    private Label livesLabel;
 
     @FXML
     public void initialize() {
@@ -47,6 +50,7 @@ public class GameController {
         currentMap = 0;
         // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
+        init_lable();
         MainLoop();
 
     }
@@ -70,6 +74,42 @@ public class GameController {
         ballManager = gameMap.getBallManager();
         bricks = gameMap.getBricks();
 
+    }
+
+    private void init_lable() {
+        scoreLabel = new Label("Score: 0");
+        scoreLabel.setLayoutX(20);
+        scoreLabel.setLayoutY(10);
+        scoreLabel.setStyle("-fx-text-fill: black; -fx-font-size: 18px;");
+
+        livesLabel = new Label("Lives: 3");
+        livesLabel.setLayoutX(20);
+        livesLabel.setLayoutY(50);
+        livesLabel.setStyle("-fx-text-fill: black; -fx-font-size: 18px;");
+        
+        root.getChildren().addAll(scoreLabel, livesLabel);
+    }
+
+    private void update_lable() {
+        scoreLabel.setText("Score: " + user.getScore());
+        livesLabel.setText("Lives: " + user.getHp());
+        if (user.getHp() <= 0) {
+            gameloop.stop();
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
+                Parent root1 = loader.load();
+                Scene scene = new Scene(root1);
+                Stage stage = (Stage) root.getScene().getWindow();
+
+                stage.setScene(scene);
+                stage.setTitle("Test Paddle");
+                stage.show();
+            }
+            catch (IOException e){
+                System.out.println("loose");
+            }
+            
+        }
     }
 
     public void loadProcess(Pair<GameMap, User> process) {
@@ -125,6 +165,7 @@ public class GameController {
                     Collision.checkPowerUpCollision(paddle, powerups, GameController.this);
                     paddle.update(deltaTime);
                     ballManager.updateAll(deltaTime, GameController.this);
+                    update_lable();
                 }
                 lastUpdate = now;
                 if (bricks.isEmpty()) {
@@ -248,6 +289,7 @@ public class GameController {
             root.requestFocus();
         }
     }
+
 
     private void BacktoMain() {
 

@@ -13,7 +13,7 @@ public class ArkanoidMenu extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            Parent root = FXMLLoader.load(getClass().getResource("menu.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("option_menu.fxml"));
 
             Scene scene = new Scene(root, 800, 600);
             

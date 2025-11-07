@@ -6,7 +6,7 @@ public class User implements Serializable {
     private int hp;
     private int score;
     private String name = "Arkanoid";
-
+    
     public String getName() {
         return this.name;
     }
