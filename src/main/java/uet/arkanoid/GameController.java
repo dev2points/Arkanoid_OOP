@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
@@ -50,6 +51,12 @@ public class GameController {
         currentMap = 2;
         LevelLoader(currentMap);
         // SaveGame.saveGame(GameController.this);
+        Platform.runLater(() -> {
+        Stage stage = (Stage) root.getScene().getWindow();
+
+        // Now you can set close event handler
+        HandleInput.setOnCloseHandler(stage, this);
+    });
         init_lable();
         MainLoop();
 
