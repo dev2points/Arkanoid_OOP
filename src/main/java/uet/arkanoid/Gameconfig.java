@@ -37,5 +37,8 @@ public class Gameconfig {
 
     // current map config
     // public static int currentMap = 4;
-    public static final int TOTAL_MAP = 5;
+    public static final int TOTAL_MAP = 4;
+
+    // Bos config
+    public static final int Boss_HP = 20;
 }

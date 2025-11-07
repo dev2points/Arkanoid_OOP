@@ -16,6 +16,7 @@ public class GameMap implements Serializable {
     private List<Brick> bricks = new ArrayList<>();
     private List<Powerup> powerups = new ArrayList<>();
     private int level;
+    private Boss boss;
 
     public GameMap(int level, Pane root) {
         BaseObject.setRootPane(root);
@@ -24,8 +25,20 @@ public class GameMap implements Serializable {
         this.paddle = new Paddle();
         this.ballManager = new BallManager(paddle);
         this.ballManager.addDefaultBall();
-        this.bricks = ReadMapFile.readMapFXML(level, root);
+        if (level > Gameconfig.TOTAL_MAP)
+            this.boss = new Boss(250, 50, 258, 227);
+        else
+            this.bricks = ReadMapFile.readMapFXML(level, root);
     }
+
+    // public GameMap(Pane root) {
+    // this.level = 6;
+    // this.background = new Background(3);
+
+    // this.paddle = new Paddle();
+    // this.ballManager = new BallManager(paddle);
+    // this.ballManager.addDefaultBall();
+    // }
 
     // Getter & Setter
     public Background getBackground() {
@@ -51,4 +64,37 @@ public class GameMap implements Serializable {
     public int getLevel() {
         return level;
     }
+
+    public void setBackground(Background background) {
+        this.background = background;
+    }
+
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
+    }
+
+    public void setBallManager(BallManager ballManager) {
+        this.ballManager = ballManager;
+    }
+
+    public void setBricks(List<Brick> bricks) {
+        this.bricks = bricks;
+    }
+
+    public void setPowerups(List<Powerup> powerups) {
+        this.powerups = powerups;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public Boss getBoss() {
+        return this.boss;
+    }
+
+    public void setBoss(Boss boss) {
+        this.boss = boss;
+    }
+
 }

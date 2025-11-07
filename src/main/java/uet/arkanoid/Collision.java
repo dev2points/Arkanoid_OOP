@@ -261,4 +261,99 @@ public class Collision {
         }
     }
 
+    public static void checkBossCollision(GameController gameController) {
+        List<Ball> balls = gameController.getBalls();
+        Boss boss = gameController.getBoss();
+
+        for (Ball ball : balls) {
+            double ballR = ball.getWidth() / 2.0;
+            double ballCenterX = ball.getX() + ballR;
+            double ballCenterY = ball.getY() + ballR;
+
+            double dx = ball.getDx();
+            double dy = ball.getDy();
+            double speed = Math.sqrt(dx * dx + dy * dy); // tốc độ gốc {
+
+            double bossX = boss.getX();
+            double bossY = boss.getY();
+            double bossW = boss.getWidth();
+            double bossH = boss.getHeight();
+
+            if (ballCenterX + ballR >= bossX &&
+                    ballCenterX - ballR <= bossX + bossW &&
+                    ballCenterY + ballR >= bossY &&
+                    ballCenterY - ballR <= bossY + bossH) {
+
+                double overlapLeft = (ballCenterX + ballR) - bossX;
+                double overlapRight = (bossX + bossW) - (ballCenterX - ballR);
+                double overlapTop = (ballCenterY + ballR) - bossY;
+                double overlapBottom = (bossY + bossH) - (ballCenterY - ballR);
+
+                double minOverlapX = Math.min(overlapLeft, overlapRight);
+                double minOverlapY = Math.min(overlapTop, overlapBottom);
+
+                if (minOverlapX < minOverlapY) {
+                    if (overlapLeft < overlapRight) {
+                        if (dx > 0) {
+                            ball.setX(bossX - 2 * ballR);
+                            dx = -dx;
+                        }
+                    } else {
+                        if (dx < 0) {
+                            ball.setX(bossX + bossW);
+                            dx = -dx;
+                        }
+                    }
+                } else {
+                    if (overlapTop < overlapBottom) {
+                        if (dy > 0) {
+                            ball.setY(bossY - 2 * ballR);
+                            dy = -dy;
+                        }
+                    } else {
+                        if (dy < 0) {
+                            ball.setY(bossY + bossH);
+                            dy = -dy;
+                        }
+                    }
+                }
+
+                if (Math.abs(minOverlapX - minOverlapY) < 1.0) {
+                    dx = -dx;
+                    dy = -dy;
+                }
+
+                // Chuẩn hóa lại vận tốc (giữ nguyên tốc độ)
+                double newSpeed = Math.sqrt(dx * dx + dy * dy);
+                dx = dx / newSpeed * speed;
+                dy = dy / newSpeed * speed;
+
+                ball.setDx(dx);
+                ball.setDy(dy);
+
+                PlaySound.soundEffect("/assets/sound/ballSound.mp3");
+                // Trừ máu của boss
+                boss.subHealthPoint();
+
+                Powerup newPowerup = dropPowerup(
+                        ballCenterX + ballR,
+                        ballCenterY + ballR,
+                        gameController.getPaddle(),
+                        gameController);
+                if (newPowerup != null) {
+                    gameController.addPowerup(newPowerup);
+                }
+
+                gameController.getUser().addScore(1);
+                if (boss.getHealthpoint() == 0) {
+                    boss.destroy();
+                    break;
+                }
+
+            }
+
+        }
+        // boss.update();
+    }
+
 }

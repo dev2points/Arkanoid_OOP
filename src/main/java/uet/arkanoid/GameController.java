@@ -28,6 +28,7 @@ public class GameController {
     private Background background;
     private Label score;
     private GameMap gameMap;
+    private Boss boss;
     List<Brick> bricks = new ArrayList<>();
     List<Powerup> powerups = new ArrayList<>();
     private Paddle paddle;
@@ -48,24 +49,13 @@ public class GameController {
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
         user = new User(3, 0);
-        currentMap = 0;
+        currentMap = 4;
         // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
 
         MainLoop();
 
     }
-    // public void changeMap() {
-    // Gameconfig.currentMap++;
-    // if (Gameconfig.currentMap > Gameconfig.TOTAL_MAP) {
-    // Gameconfig.currentMap = 1;
-    // }
-    // System.out.println("Switching to map: " + Gameconfig.currentMap);
-    // root.getChildren().clear();
-    // LevelLoader(Gameconfig.currentMap);
-    // lastUpdate = 0;
-    // MainLoop();
-    // }
 
     private void LevelLoader(int level) {
         BaseObject.setRootPane(root);
@@ -73,9 +63,11 @@ public class GameController {
         background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
-        bricks = gameMap.getBricks();
+        if (level > Gameconfig.TOTAL_MAP)
+            boss = gameMap.getBoss();
+        else
+            bricks = gameMap.getBricks();
         init_lable();
-
     }
 
     private void init_lable() {
@@ -166,21 +158,47 @@ public class GameController {
                     }
                     // Check va chạm
                     Collision.checkPaddleCollision(GameController.this);
-                    Collision.checkBrickCollision(GameController.this);
+                    if (currentMap > Gameconfig.TOTAL_MAP) {
+                        Collision.checkBossCollision(GameController.this);
+                        boss.update(deltaTime);
+                    }
+
+                    else
+                        Collision.checkBrickCollision(GameController.this);
                     Collision.checkPowerUpCollision(paddle, powerups, GameController.this);
                     paddle.update(deltaTime);
                     ballManager.updateAll(deltaTime, GameController.this);
                     update_lable();
                 }
                 lastUpdate = now;
-                if (bricks.isEmpty()) {
+                if (bricks.isEmpty() && currentMap < Gameconfig.TOTAL_MAP) {
                     currentMap++;
-                    if (currentMap <= Gameconfig.TOTAL_MAP) {
-                        LevelLoader(currentMap);
-                        System.out.println("Load new map number " + currentMap);
-                    } else
-                        System.out.println("Win game!");
+                    LevelLoader(currentMap);
+                    System.out.println("Load new map number " + currentMap);
+
+                } else if (currentMap == Gameconfig.TOTAL_MAP) {
+                    currentMap++;
+                    LevelLoader(currentMap);
+                    System.out.println("Boss level");
+                } else if (boss == null && currentMap == Gameconfig.TOTAL_MAP + 1) {
+                    gameloop.stop();
+                    try {
+                        FXMLLoader loader = new FXMLLoader(
+                                getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
+                        Parent root1 = loader.load();
+                        VictoryController victoryController = loader.getController();
+                        victoryController.setScore(user.getScore());
+                        Scene scene = new Scene(root1);
+                        Stage stage = (Stage) root.getScene().getWindow();
+
+                        stage.setScene(scene);
+                        stage.setTitle("Test Paddle");
+                        stage.show();
+                    } catch (IOException e) {
+                        System.out.println("Win game");
+                    }
                 }
+
             }
         };
         gameloop.start();
@@ -297,6 +315,10 @@ public class GameController {
 
     private void BacktoMain() {
 
+    }
+
+    public Boss getBoss() {
+        return boss;
     }
 
 }
