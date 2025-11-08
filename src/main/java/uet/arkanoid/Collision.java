@@ -174,7 +174,7 @@ public class Collision {
 
                     PlaySound.soundEffect("/assets/sound/ballSound.mp3");
 
-                    if (brick.isFramesEmpty()) {
+                    if (brick.frames_isEmpty()) {
                         iterator.remove();
                         Powerup newPowerup = dropPowerup(
                                 brickX + brickW / 2.0,
