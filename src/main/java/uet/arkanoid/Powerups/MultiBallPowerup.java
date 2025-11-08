@@ -8,7 +8,11 @@ import java.util.List;
 
 public class MultiBallPowerup extends Powerup {
 
-    // private transient GameController controller;
+    private static final Image IMAGE = new Image(
+        MultiBallPowerup.class.getResource("/assets/image/powerups/extend_paddle.png").toExternalForm()
+    );
+
+    private GameController controller;
 
     public MultiBallPowerup(double x, double y, double width, double height, GameController controller) {
         super(x, y, width, height);
@@ -17,7 +21,8 @@ public class MultiBallPowerup extends Powerup {
 
     @Override
     public Image loadImage() {
-        return new Image(getClass().getResource("/assets/image/powerups/extend_paddle.png").toExternalForm());
+        // Dùng ảnh cache thay vì load lại mỗi lần
+        return IMAGE;
     }
 
     @Override
@@ -32,19 +37,17 @@ public class MultiBallPowerup extends Powerup {
             double dx = mainBall.getDx();
             double dy = mainBall.getDy();
 
-            // Tạo 2 quả bóng mới lệch hướng nhau một chút
-            Ball ball1 = new Ball(x, y, dx * 0.8, dy * 1.0);
-            Ball ball2 = new Ball(x, y, -dx * 0.8, dy * 1.0);
+            // Tạo 2 quả bóng mới lệch hướng nhau nhẹ
+            Ball ball1 = new Ball(x, y, dx * 0.8, dy);
+            Ball ball2 = new Ball(x, y, -dx * 0.8, dy);
 
             newBalls.add(ball1);
             newBalls.add(ball2);
         }
 
-        // Thêm tất cả bóng mới vào controller
+        // Thêm bóng mới vào controller
         for (Ball b : newBalls) {
             controller.addBall(b);
         }
-
     }
-
 }
