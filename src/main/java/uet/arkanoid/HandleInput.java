@@ -54,8 +54,11 @@ public class HandleInput {
     }
 
     public static void setOnCloseHandler(Stage stage, GameController gameController) {
-        if (GameController.getIsplaying() == false) return; 
     stage.setOnCloseRequest(event -> {
+        if (!GameController.getIsplaying()) {
+            // Let it close normally if not playing (e.g., in pause menu, start menu)
+            return;
+        }
         event.consume(); // prevent immediate close
 
         // Step 1: Ask user if they want to save
