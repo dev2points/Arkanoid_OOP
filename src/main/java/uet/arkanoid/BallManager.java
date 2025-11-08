@@ -9,7 +9,7 @@ public class BallManager implements Serializable {
     private final List<Ball> balls = new ArrayList<>();
     private final Paddle paddle;
     private boolean waitingForLaunch = false; // ← cờ chờ bắt đầu
-
+    private final List<Ball> toRemove = new ArrayList<>();
     public BallManager(Paddle paddle) {
         this.paddle = paddle;
     }
@@ -48,8 +48,7 @@ public class BallManager implements Serializable {
     public void updateAll(double deltaTime, GameController gameController) {
 
         // Danh sách tạm để lưu bóng cần xoá
-        List<Ball> toRemove = new ArrayList<>();
-
+        toRemove.clear();
         if (waitingForLaunch) {
             // Giữ bóng đứng yên trên paddle
             for (Ball ball : balls) {

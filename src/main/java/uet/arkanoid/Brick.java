@@ -1,33 +1,40 @@
 package uet.arkanoid;
 
-import java.util.Queue;
-import java.util.LinkedList;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
+import java.util.*;
+import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 
 public class Brick extends BaseObject {
 
-    private transient Queue<Image> frames = new LinkedList<>();
+    // Cache chung cho toàn bộ gạch (ảnh đã load)
+    private static final Map<String, List<Image>> brickCache = new HashMap<>();
+
+    private List<Image> frames = new ArrayList<>();
     private int width_frame;
     private int height_frame;
     private int frame_count;
     private int type_brick;
     private int mapNumber;
+    private int frameIndex = 0; // dùng cho block animation
 
     public Brick(double x, double y, double width, double height, Pane pane, int type_brick, int map) {
         super(x, y, width, height, pane);
         this.type_brick = type_brick;
         this.mapNumber = map;
-        check_type(type_brick);
-        loadbricks(type_brick);
-        update();
-    }
 
-    public boolean frames_isEmpty() {
-        return frames.isEmpty();
+        check_type(type_brick);
+        loadFrames(type_brick);
+
+        // Khởi tạo ImageView chỉ 1 lần
+        if (!frames.isEmpty()) {
+            ImageView imageView = new ImageView(frames.get(0));
+            imageView.setFitWidth(width);
+            imageView.setFitHeight(height);
+            imageView.setLayoutX(x);
+            imageView.setLayoutY(y);
+            setView(imageView);
+            pane.getChildren().add(imageView);
+        }
     }
 
     private void check_type(int type_brick) {
@@ -46,61 +53,72 @@ public class Brick extends BaseObject {
         }
     }
 
-    private void loadbricks(int type_brick) {
-        String path = "/assets/image/bricks/map"
-                + mapNumber
-                + "/brick_"
-                + type_brick
-                + ".png";
+    /** Load hoặc dùng lại frame từ cache */
+    private void loadFrames(int type_brick) {
+        String path = "/assets/image/bricks/map" + mapNumber + "/brick_" + type_brick + ".png";
 
+        // Nếu đã có cache → dùng lại
+        if (brickCache.containsKey(path)) {
+            frames = brickCache.get(path);
+            return;
+        }
+
+        // Nếu chưa → load mới
         Image sheet = new Image(getClass().getResource(path).toExternalForm());
         PixelReader reader = sheet.getPixelReader();
-
         if (reader == null) {
             System.out.println("ERROR: Cannot load brick image: " + path);
             return;
         }
 
+        List<Image> frameList = new ArrayList<>();
         for (int y = 0; y < frame_count; y++) {
-            WritableImage frame = new WritableImage(
-                    reader,
-                    0,
-                    y * height_frame,
-                    width_frame,
-                    height_frame);
-            frames.add(frame);
+            WritableImage frame = new WritableImage(reader, 0, y * height_frame, width_frame, height_frame);
+            frameList.add(frame);
         }
+
+        // Lưu vào cache để viên khác dùng lại
+        brickCache.put(path, frameList);
+        frames = frameList;
     }
 
     @Override
     public void update() {
-        if (frames != null && !frames.isEmpty()) {
-            Image currentFrame;
+        if (frames == null || frames.isEmpty()) return;
 
-            if (!is_block()) {
-                currentFrame = frames.poll();
-            } else {
-                currentFrame = frames.peek();
-                frames.add(frames.poll());
-            }
+        Image currentFrame;
 
-            if (view instanceof ImageView imageView) {
-                imageView.setImage(currentFrame);
-            } else {
-                ImageView imageView = new ImageView(currentFrame);
-                imageView.setFitWidth(width);
-                imageView.setFitHeight(height);
-                imageView.setLayoutX(x);
-                imageView.setLayoutY(y);
-                setView(imageView);
-                pane.getChildren().add(imageView);
-            }
+        if (is_block()) {
+            // block xoay vòng animation
+            currentFrame = frames.get(frameIndex);
+            frameIndex = (frameIndex + 1) % frames.size();
         } else {
-            destroy();
+            // gạch thường nứt dần rồi biến mất
+            currentFrame = frames.get(0);
+            frames.remove(0);
+            if (frames.isEmpty()) {
+                destroy();
+                return;
+            }
+        }
+
+        // Cập nhật ảnh hiển thị
+        if (view instanceof ImageView imageView) {
+            imageView.setImage(currentFrame);
         }
     }
 
     public boolean is_block() {
         return type_brick > 10;
+    }
+    public boolean frames_isEmpty(){
+        return frames.isEmpty();
+    }
+    @Override
+    public void destroy() {
+        if (pane != null && view != null) {
+            pane.getChildren().remove(view);
+        }
+        frames.clear();
     }
 }
