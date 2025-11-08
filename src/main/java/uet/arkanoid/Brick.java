@@ -1,105 +1,109 @@
 package uet.arkanoid;
 
-import java.util.*;
 import javafx.scene.image.*;
 import javafx.scene.layout.Pane;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Brick extends BaseObject {
 
-    // Cache chung cho toàn bộ gạch (ảnh đã load)
-    private static final Map<String, List<Image>> brickCache = new HashMap<>();
-
-    private List<Image> frames = new ArrayList<>();
-    private int width_frame;
-    private int height_frame;
-    private int frame_count;
-    private int type_brick;
+    // Dùng transient để tránh lỗi khi serialize
+    private transient Queue<Image> frames = new LinkedList<>();
+    private int widthFrame;
+    private int heightFrame;
+    private int frameCount;
+    private int typeBrick;
     private int mapNumber;
-    private int frameIndex = 0; // dùng cho block animation
+    private int framesRemaining;
 
-    public Brick(double x, double y, double width, double height, Pane pane, int type_brick, int map) {
+    public Brick(double x, double y, double width, double height, Pane pane, int typeBrick, int mapNumber) {
         super(x, y, width, height, pane);
-        this.type_brick = type_brick;
-        this.mapNumber = map;
+        this.typeBrick = typeBrick;
+        this.mapNumber = mapNumber;
 
-        check_type(type_brick);
-        loadFrames(type_brick);
-
-        // Khởi tạo ImageView chỉ 1 lần
-        if (!frames.isEmpty()) {
-            ImageView imageView = new ImageView(frames.get(0));
-            imageView.setFitWidth(width);
-            imageView.setFitHeight(height);
-            imageView.setLayoutX(x);
-            imageView.setLayoutY(y);
-            setView(imageView);
-            pane.getChildren().add(imageView);
-        }
+        setupBrickType();
+        loadFrames();
+        initializeView();
+        update();
     }
 
-    private void check_type(int type_brick) {
-        if (type_brick < 10) {
-            frame_count = type_brick; // số frame nứt
-            width_frame = Gameconfig.width_brick;
-            height_frame = Gameconfig.height_brick;
-        } else if (type_brick < 20) {
-            frame_count = 4;
-            width_frame = Gameconfig.width_block_brick_1;
-            height_frame = Gameconfig.height_block_brick_1;
+    /** Xác định loại gạch và kích thước frame */
+    private void setupBrickType() {
+        if (typeBrick < 10) {
+            frameCount = typeBrick;
+            widthFrame = Gameconfig.width_brick;
+            heightFrame = Gameconfig.height_brick;
+        } else if (typeBrick < 20) {
+            frameCount = 4;
+            widthFrame = Gameconfig.width_block_brick_1;
+            heightFrame = Gameconfig.height_block_brick_1;
         } else {
-            frame_count = 4;
-            width_frame = Gameconfig.width_block_brick_2;
-            height_frame = Gameconfig.height_block_brick_2;
+            frameCount = 4;
+            widthFrame = Gameconfig.width_block_brick_2;
+            heightFrame = Gameconfig.height_block_brick_2;
         }
     }
 
-    /** Load hoặc dùng lại frame từ cache */
-    private void loadFrames(int type_brick) {
-        String path = "/assets/image/bricks/map" + mapNumber + "/brick_" + type_brick + ".png";
+    /** Load toàn bộ frame của gạch */
+    private void loadFrames() {
+        frames.clear();
 
-        // Nếu đã có cache → dùng lại
-        if (brickCache.containsKey(path)) {
-            frames = brickCache.get(path);
+        String path = String.format("/assets/image/bricks/map%d/brick_%d.png", mapNumber, typeBrick);
+        Image sheet;
+
+        try {
+            sheet = new Image(getClass().getResource(path).toExternalForm());
+        } catch (Exception e) {
+            System.err.println("⚠️ Không thể load ảnh brick: " + path);
             return;
         }
 
-        // Nếu chưa → load mới
-        Image sheet = new Image(getClass().getResource(path).toExternalForm());
         PixelReader reader = sheet.getPixelReader();
         if (reader == null) {
-            System.out.println("ERROR: Cannot load brick image: " + path);
+            System.err.println("⚠️ PixelReader null cho ảnh: " + path);
             return;
         }
 
-        List<Image> frameList = new ArrayList<>();
-        for (int y = 0; y < frame_count; y++) {
-            WritableImage frame = new WritableImage(reader, 0, y * height_frame, width_frame, height_frame);
-            frameList.add(frame);
+        for (int i = 0; i < frameCount; i++) {
+            WritableImage frame = new WritableImage(reader, 0, i * heightFrame, widthFrame, heightFrame);
+            frames.add(frame);
         }
 
-        // Lưu vào cache để viên khác dùng lại
-        brickCache.put(path, frameList);
-        frames = frameList;
+        framesRemaining = frameCount;
+    }
+
+    /** Khởi tạo ImageView lần đầu (để tránh tạo lại mỗi frame) */
+    private void initializeView() {
+        if (frames.isEmpty()) return;
+
+        Image firstFrame = frames.peek();
+        ImageView imageView = new ImageView(firstFrame);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        imageView.setLayoutX(x);
+        imageView.setLayoutY(y);
+
+        setView(imageView);
+        pane.getChildren().add(imageView);
     }
 
     @Override
     public void update() {
-        if (frames == null || frames.isEmpty()) return;
+        if (frames == null || frames.isEmpty()) {
+            destroy();
+            return;
+        }
 
         Image currentFrame;
 
-        if (is_block()) {
-            // block xoay vòng animation
-            currentFrame = frames.get(frameIndex);
-            frameIndex = (frameIndex + 1) % frames.size();
+        // Brick thường bị nứt dần → giảm số frame còn lại
+        if (!isBlock()) {
+            currentFrame = frames.poll();
+            framesRemaining--;
         } else {
-            // gạch thường nứt dần rồi biến mất
-            currentFrame = frames.get(0);
-            frames.remove(0);
-            if (frames.isEmpty()) {
-                destroy();
-                return;
-            }
+            // Block có animation lặp lại
+            currentFrame = frames.peek();
+            frames.add(frames.poll());
         }
 
         // Cập nhật ảnh hiển thị
@@ -108,12 +112,30 @@ public class Brick extends BaseObject {
         }
     }
 
-    public boolean is_block() {
-        return type_brick > 10;
+    public boolean isBlock() {
+        return typeBrick > 10;
     }
-    public boolean frames_isEmpty(){
+
+    public boolean isFramesEmpty() {
         return frames.isEmpty();
     }
+
+    public int getFrameCount() {
+        return frameCount;
+    }
+
+    /** Khôi phục lại trạng thái ảnh sau khi load lại game */
+    public void restoreFrame() {
+        loadFrames();
+
+        // Bỏ qua số frame đã bị phá
+        for (int i = 1; i < frameCount - framesRemaining; i++) {
+            frames.poll();
+        }
+
+        update();
+    }
+
     @Override
     public void destroy() {
         if (pane != null && view != null) {
@@ -121,4 +143,5 @@ public class Brick extends BaseObject {
         }
         frames.clear();
     }
+ 
 }

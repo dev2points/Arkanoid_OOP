@@ -55,9 +55,10 @@ public class LoadGameController {
             Parent root = loader.load();
             Scene scene = new Scene(root);
             GameController controller = loader.getController();
-            GameMap gameMap = players.get(selectedIndex).getKey();
-            controller.setBackground(gameMap.getBackground());
+            controller.loadProcess(players.get(selectedIndex));
             controller.setScene(scene);
+
+            SaveGame.processChoosed(selectedIndex);
 
             // Get the current stage
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -73,23 +74,23 @@ public class LoadGameController {
     }
 
     // Lớp tạm lưu dữ liệu người chơi
-    public static class PlayerData {
-        private String name;
-        private int score;
+    // public static class PlayerData {
+    // private String name;
+    // private int score;
 
-        public PlayerData(String name, int score) {
-            this.name = name;
-            this.score = score;
-        }
+    // public PlayerData(String name, int score) {
+    // this.name = name;
+    // this.score = score;
+    // }
 
-        public String getName() {
-            return name;
-        }
+    // public String getName() {
+    // return name;
+    // }
 
-        public int getScore() {
-            return score;
-        }
-    }
+    // public int getScore() {
+    // return score;
+    // }
+    // }
 
     @FXML
     private void handleBack(ActionEvent event) {

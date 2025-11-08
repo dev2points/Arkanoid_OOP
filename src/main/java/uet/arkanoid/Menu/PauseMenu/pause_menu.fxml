@@ -15,36 +15,44 @@
         <!-- NEW GAME -->
         <Pane fx:id="continueButton" layoutX="96.0" layoutY="447.0" onMouseClicked="#continueGame" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
             <children>
-                <Rectangle fx:id="continue_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
-                <Text fill="WHITE" layoutX="13.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="CONTINUE" textAlignment="CENTER" wrappingWidth="109.6" />
-                <Polygon fill="WHITE" layoutX="96.0" layoutY="50.0" points="-50.0, 26.0, 3.5, -3.0, -50.0, -33.5" stroke="BLACK" strokeType="INSIDE" />
+                <Rectangle fx:id="continue_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="-55.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+                <Text fill="WHITE" layoutX="-42.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="CONTINUE" textAlignment="CENTER" wrappingWidth="109.6" />
+                <Polygon fill="WHITE" layoutX="36.0" layoutY="48.0" points="-50.0, 26.0, 3.5, -3.0, -50.0, -33.5" stroke="BLACK" strokeType="INSIDE" />
             </children>
         </Pane>
       <Pane fx:id="returnButton" layoutX="353.0" layoutY="447.0" onMouseClicked="#returnHome" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
          <children>
-            <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="1.0" layoutY="-2.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
-            <ImageView fitHeight="67.0" fitWidth="87.0" layoutX="36.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+            <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="-110.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+            <ImageView fitHeight="67.0" fitWidth="87.0" layoutX="-75.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@home.png" />
                </image>
             </ImageView>
-            <Text fill="WHITE" layoutX="13.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
+            <Text fill="WHITE" layoutX="-96.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
+                <Rectangle fx:id="option_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="80.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="118.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@option.png" />
+                    </image>
+                </ImageView>
+                <Text fill="WHITE" layoutX="93.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OPTIONS" textAlignment="CENTER" wrappingWidth="109.6" />
          </children>
       </Pane>
       <Text id="menu_title" layoutX="147.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="GAME PAUSED" wrappingWidth="669.63671875" />
 
               <!-- OPTIONS -->
-        <Pane fx:id="optionsButton" layoutX="613.0" layoutY="447.0" onMouseClicked="#handleOptions" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
-            <children>
-                <Rectangle fx:id="option_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
-                <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="38.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@option.png" />
-                    </image>
-                </ImageView>
-                <Text fill="WHITE" layoutX="13.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OPTIONS" textAlignment="CENTER" wrappingWidth="109.6" />
-            </children>
+        <Pane fx:id="optionsButton" layoutX="598.0" layoutY="447.0" onMouseClicked="#handleOptions" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
+         <children>
+        <Rectangle fx:id="save_exit_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="40.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+        <Text fill="WHITE" layoutX="53.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="SAVE &amp; EXIT" textAlignment="CENTER" wrappingWidth="109.6" />
+        <ImageView fitHeight="60.0" fitWidth="60.0" layoutX="77.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@save.png" />
+            </image>
+        </ImageView>
+         </children>
         </Pane>
+        <Pane fx:id="saveExitButton" layoutX="353.0" layoutY="310.0" onMouseClicked="#saveAndExit" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane" />
 
     </children>
 </AnchorPane>

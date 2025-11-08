@@ -29,8 +29,10 @@ public class GameController {
     private Background background;
     private Label score;
     private GameMap gameMap;
+    private Boss boss;
     List<Brick> bricks = new ArrayList<>();
     List<Powerup> powerups = new ArrayList<>();
+
     private Paddle paddle;
     private BallManager ballManager;
     private long lastUpdate = 0;
@@ -49,30 +51,19 @@ public class GameController {
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
         user = new User(3, 0);
-        currentMap = 2;
-        LevelLoader(currentMap);
+        currentMap = 1;
+        // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
         Platform.runLater(() -> {
-        Stage stage = (Stage) root.getScene().getWindow();
+            Stage stage = (Stage) root.getScene().getWindow();
 
-        // Now you can set close event handler
-        HandleInput.setOnCloseHandler(stage, this);
-    });
+            // Now you can set close event handler
+            HandleInput.setOnCloseHandler(stage, this);
+        });
         init_lable();
         MainLoop();
 
     }
-    // public void changeMap() {
-    // Gameconfig.currentMap++;
-    // if (Gameconfig.currentMap > Gameconfig.TOTAL_MAP) {
-    // Gameconfig.currentMap = 1;
-    // }
-    // System.out.println("Switching to map: " + Gameconfig.currentMap);
-    // root.getChildren().clear();
-    // LevelLoader(Gameconfig.currentMap);
-    // lastUpdate = 0;
-    // MainLoop();
-    // }
 
     private void LevelLoader(int level) {
         BaseObject.setRootPane(root);
@@ -80,8 +71,11 @@ public class GameController {
         background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
-        bricks = gameMap.getBricks();
-
+        if (level > Gameconfig.TOTAL_MAP)
+            boss = gameMap.getBoss();
+        else
+            bricks = gameMap.getBricks();
+        init_lable();
     }
 
     private void init_lable() {
@@ -94,7 +88,7 @@ public class GameController {
         livesLabel.setLayoutX(20);
         livesLabel.setLayoutY(50);
         livesLabel.setStyle("-fx-text-fill: black; -fx-font-size: 18px;");
-        
+
         root.getChildren().addAll(scoreLabel, livesLabel);
     }
 
@@ -104,7 +98,8 @@ public class GameController {
         if (user.getHp() <= 0) {
             gameloop.stop();
             try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
                 Parent root1 = loader.load();
                 VictoryController victory = loader.getController();
                 victory.setScore(user.getScore());
@@ -114,22 +109,59 @@ public class GameController {
                 stage.setScene(scene);
                 stage.setTitle("Test Paddle");
                 stage.show();
-            }
-            catch (IOException e){
+            } catch (IOException e) {
                 System.out.println("loose");
             }
-            
+
+        }
+        if (boss != null && boss.getHealthpoint() <= 0) {
+            gameloop.stop();
+            try {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
+                Parent root1 = loader.load();
+                VictoryController victory = loader.getController();
+                victory.setScore(user.getScore());
+                Scene scene = new Scene(root1);
+                Stage stage = (Stage) root.getScene().getWindow();
+
+                stage.setScene(scene);
+                stage.setTitle("Test Paddle");
+                stage.show();
+            } catch (IOException e) {
+                System.out.println("WIN GAME!");
+            }
         }
     }
 
     public void loadProcess(Pair<GameMap, User> process) {
+        BaseObject.setRootPane(root);
         gameMap = process.getKey();
-        background = gameMap.getBackground();
+        currentMap = gameMap.getLevel();
+        System.out.println(currentMap);
+        background = new Background(3);
+        // background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
         bricks = gameMap.getBricks();
+        powerups = gameMap.getPowerups();
         user = process.getValue();
-        currentMap = gameMap.getLevel();
+
+        restoreView();
+        init_lable();
+    }
+
+    private void restoreView() {
+
+        for (Brick brick : bricks)
+            brick.restoreFrame();
+        paddle.loadImage();
+        Powerup.setGameController(GameController.this);
+        for (Powerup powerup : powerups) {
+            powerup.loadPowerup(powerup.loadImage());
+        }
+        ballManager.restoreView();
+
     }
 
     public void setScene(Scene scene) {
@@ -152,21 +184,30 @@ public class GameController {
                     }
                     // Check va chạm
                     Collision.checkPaddleCollision(GameController.this);
-                    Collision.checkBrickCollision(GameController.this);
+                    if (currentMap > Gameconfig.TOTAL_MAP) {
+                        Collision.checkBossCollision(GameController.this);
+                        boss.update(deltaTime);
+                    }
+
+                    else
+                        Collision.checkBrickCollision(GameController.this);
                     Collision.checkPowerUpCollision(paddle, powerups, GameController.this);
                     paddle.update(deltaTime);
                     ballManager.updateAll(deltaTime, GameController.this);
                     update_lable();
                 }
                 lastUpdate = now;
-                if (bricks.isEmpty()) {
+                if (bricks.isEmpty() && currentMap < Gameconfig.TOTAL_MAP) {
                     currentMap++;
-                    SaveGame.saveGame(GameController.this);
-                    if (currentMap <= Gameconfig.TOTAL_MAP)
-                        LevelLoader(currentMap);
-                    else
-                        System.out.println("Win game!");
+                    LevelLoader(currentMap);
+                    System.out.println("Load new map number " + currentMap);
+
+                } else if (currentMap == Gameconfig.TOTAL_MAP) {
+                    currentMap++;
+                    LevelLoader(currentMap);
+                    System.out.println("Boss level");
                 }
+
             }
         };
         gameloop.start();
@@ -281,9 +322,64 @@ public class GameController {
         }
     }
 
-
     private void BacktoMain() {
 
+    }
+
+    public Boss getBoss() {
+        return boss;
+    }
+
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
+    }
+
+    public void setBoss(Boss boss) {
+        this.boss = boss;
+    }
+
+    public BallManager getBallManager() {
+        return this.ballManager;
+    }
+
+    public void setBallManager(BallManager ballManager) {
+        this.ballManager = ballManager;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Parent getPauseMenuLayer() {
+        return this.pauseMenuLayer;
+    }
+
+    public void setPauseMenuLayer(Parent pauseMenuLayer) {
+        this.pauseMenuLayer = pauseMenuLayer;
+    }
+
+    public int getCurrentMap() {
+        return this.currentMap;
+    }
+
+    public void setCurrentMap(int currentMap) {
+        this.currentMap = currentMap;
+    }
+
+    public Label getScoreLabel() {
+        return this.scoreLabel;
+    }
+
+    public void setScoreLabel(Label scoreLabel) {
+        this.scoreLabel = scoreLabel;
+    }
+
+    public Label getLivesLabel() {
+        return this.livesLabel;
+    }
+
+    public void setLivesLabel(Label livesLabel) {
+        this.livesLabel = livesLabel;
     }
 
 }

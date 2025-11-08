@@ -4,7 +4,7 @@ public class Background extends BaseObject {
     private int type;
 
     Background(int type) {
-        super(0, 0, Gameconfig.screen_width, Gameconfig.screen_height);
+        super(0, 0, Gameconfig.screen_width, Gameconfig.screen_height, BaseObject.getRootPane());
         this.type = type;
         loadImage();
     }

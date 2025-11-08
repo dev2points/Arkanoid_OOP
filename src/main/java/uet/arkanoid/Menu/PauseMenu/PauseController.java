@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import uet.arkanoid.GameController;
+import uet.arkanoid.SaveGame;
 import uet.arkanoid.Menu.HighScore.HighscoreController;
 import javafx.scene.Node;
 
@@ -25,6 +26,7 @@ public class PauseController {
     private Pane highScoreButton;
 
     private GameController gamecontroller;
+
     @FXML
     private void initialize() {
         // Optional hover effects or setup code
@@ -94,9 +96,16 @@ public class PauseController {
             System.err.println("Failed to load highscore.fxml");
         }
     }
-    
 
-    public void setGameController(GameController g){
+    @FXML
+    private void saveAndExit() {
+        // Save game
+        SaveGame.saveGame(gamecontroller);
+        // Đóng ứng dụng
+        javafx.application.Platform.exit();
+    }
+
+    public void setGameController(GameController g) {
         gamecontroller = g;
     }
 
