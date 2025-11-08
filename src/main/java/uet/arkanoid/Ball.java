@@ -18,8 +18,7 @@ public class Ball extends BaseObject {
 
     // Load ảnh 1 lần cho tất cả Ball
     private static final Image BALL_IMAGE = new Image(
-        Ball.class.getResource("/assets/image/balls/ball.png").toExternalForm()
-    );
+            Ball.class.getResource("/assets/image/balls/ball.png").toExternalForm());
 
     public Ball() {
         super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball);
@@ -37,11 +36,10 @@ public class Ball extends BaseObject {
 
     public Ball(Paddle paddle) {
         super(
-            paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2,
-            paddle.getY() - Gameconfig.size_ball,
-            Gameconfig.size_ball,
-            Gameconfig.size_ball
-        );
+                paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2,
+                paddle.getY() - Gameconfig.size_ball,
+                Gameconfig.size_ball,
+                Gameconfig.size_ball);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection();
         loadImage();
@@ -145,13 +143,37 @@ public class Ball extends BaseObject {
     }
 
     // getter/setter
-    public double getDx() { return dx; }
-    public void setDx(double dx) { this.dx = dx; normalizeSpeed(Gameconfig.speed_ball); }
-    public double getDy() { return dy; }
-    public void setDy(double dy) { this.dy = dy; normalizeSpeed(Gameconfig.speed_ball); }
+    public double getDx() {
+        return dx;
+    }
 
-    public double getSpeed() { return Math.sqrt(dx * dx + dy * dy); }
-    public double getRadius() { return radius; }
-    public double getCenterX() { return x + radius; }
-    public double getCenterY() { return y + radius; }
+    public void setDx(double dx) {
+        this.dx = dx;
+        normalizeSpeed(Gameconfig.speed_ball);
+    }
+
+    public double getDy() {
+        return dy;
+    }
+
+    public void setDy(double dy) {
+        this.dy = dy;
+        normalizeSpeed(Gameconfig.speed_ball);
+    }
+
+    public double getSpeed() {
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public double getRadius() {
+        return radius;
+    }
+
+    public double getCenterX() {
+        return x + radius;
+    }
+
+    public double getCenterY() {
+        return y + radius;
+    }
 }

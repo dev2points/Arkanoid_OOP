@@ -52,7 +52,7 @@ public class GameController {
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
         user = new User(3, 0);
-        currentMap = 1;
+        currentMap = 0;
         isPlaying = true;
         // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
