@@ -1,0 +1,56 @@
+package uet.arkanoid;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+public class Energy extends BaseObject {
+    private double dx, dy;
+    private double speed = Gameconfig.SPEED_ENERGY;
+    private boolean active = true;
+
+    public Energy(double x, double y, double angle, double speed) {
+        super(x, y, 50, 50);
+        this.speed = speed;
+        this.dx = Math.cos(Math.toRadians(angle)) * speed;
+        this.dy = Math.sin(Math.toRadians(angle)) * speed;
+        loadImage();
+    }
+
+    private void loadImage() {
+        Image img = new Image(getClass().getResource("/assets/image/boss/energy.png").toExternalForm());
+        ImageView view = new ImageView(img);
+        view.setFitWidth(width);
+        view.setFitHeight(height);
+        setView(view);
+        pane.getChildren().add(view);
+    }
+
+    public void update(double deltaTime) {
+        if (!active)
+            return;
+
+        x += dx * deltaTime;
+        y += dy * deltaTime;
+
+        if (view != null) {
+            view.setLayoutX(x);
+            view.setLayoutY(y);
+        }
+
+        if (x + width < 0 || x > Gameconfig.screen_width ||
+                y + height < 0 || y > Gameconfig.screen_height) {
+            destroy();
+            active = false;
+        }
+    }
+
+    public void destroy() {
+        if (view != null) {
+            pane.getChildren().remove(view);
+        }
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+}

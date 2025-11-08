@@ -225,8 +225,6 @@ public class Collision {
             case "Multi ball":
                 newPowerup = new MultiBallPowerup(x, y, width, height, gameController);
                 break;
-
-            // bạn có thể thêm các loại khác ở đây
             default:
                 return null;
         }
@@ -265,6 +263,10 @@ public class Collision {
         List<Ball> balls = gameController.getBalls();
         Boss boss = gameController.getBoss();
 
+        double bossR = boss.getWidth() / 2.0;
+        double bossCenterX = boss.getX() + bossR;
+        double bossCenterY = boss.getY() + bossR;
+
         for (Ball ball : balls) {
             double ballR = ball.getWidth() / 2.0;
             double ballCenterX = ball.getX() + ballR;
@@ -272,88 +274,88 @@ public class Collision {
 
             double dx = ball.getDx();
             double dy = ball.getDy();
-            double speed = Math.sqrt(dx * dx + dy * dy); // tốc độ gốc {
 
-            double bossX = boss.getX();
-            double bossY = boss.getY();
-            double bossW = boss.getWidth();
-            double bossH = boss.getHeight();
+            double distX = ballCenterX - bossCenterX;
+            double distY = ballCenterY - bossCenterY;
+            double distance = Math.sqrt(distX * distX + distY * distY);
 
-            if (ballCenterX + ballR >= bossX &&
-                    ballCenterX - ballR <= bossX + bossW &&
-                    ballCenterY + ballR >= bossY &&
-                    ballCenterY - ballR <= bossY + bossH) {
+            if (distance < ballR + bossR) {
+                // Chuẩn hóa vector pháp tuyến
+                double nx = distX / distance;
+                double ny = distY / distance;
 
-                double overlapLeft = (ballCenterX + ballR) - bossX;
-                double overlapRight = (bossX + bossW) - (ballCenterX - ballR);
-                double overlapTop = (ballCenterY + ballR) - bossY;
-                double overlapBottom = (bossY + bossH) - (ballCenterY - ballR);
+                // Tính phản xạ: v' = v - 2*(v·n)*n
+                double dot = dx * nx + dy * ny;
+                dx = dx - 2 * dot * nx;
+                dy = dy - 2 * dot * ny;
 
-                double minOverlapX = Math.min(overlapLeft, overlapRight);
-                double minOverlapY = Math.min(overlapTop, overlapBottom);
+                double overlap = (ballR + bossR) - distance;
+                ball.setX(ball.getX() + nx * overlap * 0.5);
+                ball.setY(ball.getY() + ny * overlap * 0.5);
 
-                if (minOverlapX < minOverlapY) {
-                    if (overlapLeft < overlapRight) {
-                        if (dx > 0) {
-                            ball.setX(bossX - 2 * ballR);
-                            dx = -dx;
-                        }
-                    } else {
-                        if (dx < 0) {
-                            ball.setX(bossX + bossW);
-                            dx = -dx;
-                        }
-                    }
-                } else {
-                    if (overlapTop < overlapBottom) {
-                        if (dy > 0) {
-                            ball.setY(bossY - 2 * ballR);
-                            dy = -dy;
-                        }
-                    } else {
-                        if (dy < 0) {
-                            ball.setY(bossY + bossH);
-                            dy = -dy;
-                        }
-                    }
-                }
-
-                if (Math.abs(minOverlapX - minOverlapY) < 1.0) {
-                    dx = -dx;
-                    dy = -dy;
-                }
-
-                // Chuẩn hóa lại vận tốc (giữ nguyên tốc độ)
-                double newSpeed = Math.sqrt(dx * dx + dy * dy);
-                dx = dx / newSpeed * speed;
-                dy = dy / newSpeed * speed;
-
+                // Cập nhật vận tốc
                 ball.setDx(dx);
                 ball.setDy(dy);
 
                 PlaySound.soundEffect("/assets/sound/ballSound.mp3");
-                // Trừ máu của boss
                 boss.subHealthPoint();
-
-                Powerup newPowerup = dropPowerup(
-                        ballCenterX + ballR,
-                        ballCenterY + ballR,
-                        gameController.getPaddle(),
-                        gameController);
-                if (newPowerup != null) {
-                    gameController.addPowerup(newPowerup);
-                }
-
                 gameController.getUser().addScore(1);
-                if (boss.getHealthpoint() == 0) {
+
+                if (boss.getHealthpoint() <= 0) {
                     boss.destroy();
                     break;
                 }
 
+                Powerup newPowerup = dropPowerup(
+                        ballCenterX, ballCenterY,
+                        gameController.getPaddle(), gameController);
+                if (newPowerup != null) {
+                    gameController.addPowerup(newPowerup);
+                }
             }
-
         }
-        // boss.update();
+        checkEnergy(gameController);
+    }
+
+    private static void checkEnergy(GameController gameController) {
+        List<Energy> energies = gameController.getBoss().getEnergies();
+        Paddle paddle = gameController.getPaddle();
+        User user = gameController.getUser();
+
+        Iterator<Energy> iterator = energies.iterator();
+        while (iterator.hasNext()) {
+            Energy energy = iterator.next();
+
+            // Tọa độ trung tâm của Energy (hình tròn)
+            double eCenterX = energy.getX() + energy.getWidth() / 2.0;
+            double eCenterY = energy.getY() + energy.getHeight() / 2.0;
+            double radius = energy.getWidth() / 2.0;
+
+            // Biên của paddle
+            double pX = paddle.getX();
+            double pY = paddle.getY();
+            double pW = paddle.getWidth();
+            double pH = paddle.getHeight();
+
+            // Tìm điểm gần nhất trên paddle so với tâm hình tròn
+            double nearestX = Math.max(pX, Math.min(eCenterX, pX + pW));
+            double nearestY = Math.max(pY, Math.min(eCenterY, pY + pH));
+
+            // Tính khoảng cách từ tâm đến điểm gần nhất
+            double dx = eCenterX - nearestX;
+            double dy = eCenterY - nearestY;
+            double distanceSquared = dx * dx + dy * dy;
+
+            // Nếu khoảng cách nhỏ hơn bán kính -> va chạm
+            if (distanceSquared <= radius * radius) {
+                // Giảm máu người chơi
+                user.addHp(-1);
+
+                // Xóa energy
+                energy.destroy();
+                iterator.remove();
+            }
+        }
     }
 
 }

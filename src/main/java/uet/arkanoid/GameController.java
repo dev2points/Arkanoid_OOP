@@ -32,6 +32,7 @@ public class GameController {
     private Boss boss;
     List<Brick> bricks = new ArrayList<>();
     List<Powerup> powerups = new ArrayList<>();
+
     private Paddle paddle;
     private BallManager ballManager;
     private long lastUpdate = 0;
@@ -113,6 +114,24 @@ public class GameController {
             }
 
         }
+        if (boss != null && boss.getHealthpoint() <= 0) {
+            gameloop.stop();
+            try {
+                FXMLLoader loader = new FXMLLoader(
+                        getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
+                Parent root1 = loader.load();
+                VictoryController victory = loader.getController();
+                victory.setScore(user.getScore());
+                Scene scene = new Scene(root1);
+                Stage stage = (Stage) root.getScene().getWindow();
+
+                stage.setScene(scene);
+                stage.setTitle("Test Paddle");
+                stage.show();
+            } catch (IOException e) {
+                System.out.println("WIN GAME!");
+            }
+        }
     }
 
     public void loadProcess(Pair<GameMap, User> process) {
@@ -187,23 +206,6 @@ public class GameController {
                     currentMap++;
                     LevelLoader(currentMap);
                     System.out.println("Boss level");
-                } else if (boss == null && currentMap == Gameconfig.TOTAL_MAP + 1) {
-                    gameloop.stop();
-                    try {
-                        FXMLLoader loader = new FXMLLoader(
-                                getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
-                        Parent root1 = loader.load();
-                        VictoryController victoryController = loader.getController();
-                        victoryController.setScore(user.getScore());
-                        Scene scene = new Scene(root1);
-                        Stage stage = (Stage) root.getScene().getWindow();
-
-                        stage.setScene(scene);
-                        stage.setTitle("Test Paddle");
-                        stage.show();
-                    } catch (IOException e) {
-                        System.out.println("Win game");
-                    }
                 }
 
             }
@@ -326,6 +328,58 @@ public class GameController {
 
     public Boss getBoss() {
         return boss;
+    }
+
+    public void setGameMap(GameMap gameMap) {
+        this.gameMap = gameMap;
+    }
+
+    public void setBoss(Boss boss) {
+        this.boss = boss;
+    }
+
+    public BallManager getBallManager() {
+        return this.ballManager;
+    }
+
+    public void setBallManager(BallManager ballManager) {
+        this.ballManager = ballManager;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Parent getPauseMenuLayer() {
+        return this.pauseMenuLayer;
+    }
+
+    public void setPauseMenuLayer(Parent pauseMenuLayer) {
+        this.pauseMenuLayer = pauseMenuLayer;
+    }
+
+    public int getCurrentMap() {
+        return this.currentMap;
+    }
+
+    public void setCurrentMap(int currentMap) {
+        this.currentMap = currentMap;
+    }
+
+    public Label getScoreLabel() {
+        return this.scoreLabel;
+    }
+
+    public void setScoreLabel(Label scoreLabel) {
+        this.scoreLabel = scoreLabel;
+    }
+
+    public Label getLivesLabel() {
+        return this.livesLabel;
+    }
+
+    public void setLivesLabel(Label livesLabel) {
+        this.livesLabel = livesLabel;
     }
 
 }

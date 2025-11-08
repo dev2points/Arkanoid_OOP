@@ -1,6 +1,8 @@
 package uet.arkanoid;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,6 +16,8 @@ public class Boss extends BaseObject {
     private double animationTime = 0; // thời gian hiển thị từng frame
     private boolean isAnimating = false; // trạng thái animation
 
+    List<Energy> energies = new ArrayList<>();
+
     public Boss(int x, int y, int width, int height) {
         super(x, y, width, height);
         frame_count = 0;
@@ -21,6 +25,7 @@ public class Boss extends BaseObject {
         updateLayout();
     }
 
+    // Boss có 6 frame animation
     public void loadImage() {
         for (int i = 1; i <= 6; i++) {
             String path = "/assets/image/boss/boss" + i + ".png";
@@ -34,14 +39,16 @@ public class Boss extends BaseObject {
 
         if (isAnimating) {
             animationTime += deltaTime;
-            if (animationTime >= 0.3) { // sau mỗi 0.3 giây đổi frame
+            if (animationTime >= 0.2) { // sau mỗi 0.25 giây đổi frame
                 animationTime = 0;
                 updateLayout();
                 frame_count++;
                 if (frame_count >= 6) {
                     isAnimating = false;
                     frame_count = 0;
-                    elapsedTime = 0; // reset thời gian chờ
+                    elapsedTime = 0;
+                    shootEnergy();
+                    restoreHealthPoint();
                 }
             }
             return; // không di chuyển khi đang thực hiện animation
@@ -50,11 +57,13 @@ public class Boss extends BaseObject {
         updatePosition(deltaTime);
 
         // Sau 6 giây thì dừng lại và bắt đầu animation
-        if (elapsedTime >= 6.0) {
+        if (elapsedTime >= 10.0) {
             isAnimating = true;
             animationTime = 0;
             frame_count = 0;
         }
+
+        updateEnergies(deltaTime);
     }
 
     private void updatePosition(double deltaTime) {
@@ -102,6 +111,10 @@ public class Boss extends BaseObject {
         healthpoint--;
     }
 
+    private void restoreHealthPoint() {
+        healthpoint += 10;
+    }
+
     public void restoreView() {
         // Load lại ảnh
         loadImage();
@@ -109,8 +122,27 @@ public class Boss extends BaseObject {
         for (int i = 0; i < frame_count; i++) {
             frames.add(frames.poll());
         }
-        ;
+
         updateLayout();
+    }
+
+    private void updateEnergies(double deltaTime) {
+        for (Energy e : energies) {
+            e.update(deltaTime);
+        }
+        energies.removeIf(e -> !e.isActive());
+    }
+
+    public void shootEnergy() {
+        double centerX = x + width / 2;
+        double centerY = y + height / 2;
+        for (int i = 0; i < 10; i++) {
+            // Chọn góc bắn ngẫu nhiên
+            double angle = Math.random() * 180;
+
+            Energy e = new Energy(centerX, centerY, angle, Gameconfig.SPEED_ENERGY);
+            energies.add(e);
+        }
     }
 
     public int getFrame_count() {
@@ -165,4 +197,11 @@ public class Boss extends BaseObject {
         this.isAnimating = isAnimating;
     }
 
+    public List<Energy> getEnergies() {
+        return this.energies;
+    }
+
+    public void setEnergies(List<Energy> energies) {
+        this.energies = energies;
+    }
 }
