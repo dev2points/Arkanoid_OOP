@@ -139,22 +139,28 @@ public class GameController {
         gameMap = process.getKey();
         currentMap = gameMap.getLevel();
         System.out.println(currentMap);
-        background = new Background(3);
         // background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
-        bricks = gameMap.getBricks();
         powerups = gameMap.getPowerups();
         user = process.getValue();
-
+        if (currentMap <= Gameconfig.TOTAL_MAP) {
+            bricks = gameMap.getBricks();
+            background = new Background(3);
+        } else {
+            boss = gameMap.getBoss();
+            background = new Background(1);
+        }
         restoreView();
         init_lable();
     }
 
     private void restoreView() {
-
-        for (Brick brick : bricks)
-            brick.restoreFrame();
+        if (currentMap <= Gameconfig.TOTAL_MAP)
+            for (Brick brick : bricks)
+                brick.restoreFrame();
+        else
+            boss.restoreView();
         paddle.loadImage();
         Powerup.setGameController(GameController.this);
         for (Powerup powerup : powerups) {

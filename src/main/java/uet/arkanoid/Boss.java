@@ -6,17 +6,23 @@ import java.util.List;
 import java.util.Queue;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class Boss extends BaseObject {
     private transient Queue<Image> frames = new LinkedList<>();
     private int frame_count;
     private int healthpoint = Gameconfig.Boss_HP;
     private double dx = 3;
-    private double elapsedTime = 0; // thời gian tổng cộng
-    private double animationTime = 0; // thời gian hiển thị từng frame
-    private boolean isAnimating = false; // trạng thái animation
+    private double elapsedTime = 0;
+    private double animationTime = 0;
+    private boolean isAnimating = false;
 
     List<Energy> energies = new ArrayList<>();
+
+    private transient Rectangle healthBarBack;
+    private transient Rectangle healthBarFront;
 
     public Boss(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -32,6 +38,7 @@ public class Boss extends BaseObject {
             Image image = new Image(getClass().getResource(path).toExternalForm());
             frames.add(image);
         }
+        createHealthBar();
     }
 
     public void update(double deltaTime) {
@@ -39,9 +46,8 @@ public class Boss extends BaseObject {
 
         if (isAnimating) {
             animationTime += deltaTime;
-            if (animationTime >= 0.2) { // sau mỗi 0.25 giây đổi frame
+            if (animationTime >= 0.2) { // đổi frame mỗi 0.2s
                 animationTime = 0;
-                updateLayout();
                 frame_count++;
                 if (frame_count >= 6) {
                     isAnimating = false;
@@ -50,13 +56,14 @@ public class Boss extends BaseObject {
                     shootEnergy();
                     restoreHealthPoint();
                 }
+                updateLayout();
             }
             return; // không di chuyển khi đang thực hiện animation
         }
-
+        updateHealthBar();
         updatePosition(deltaTime);
 
-        // Sau 6 giây thì dừng lại và bắt đầu animation
+        // Bắt đầu animation
         if (elapsedTime >= 10.0) {
             isAnimating = true;
             animationTime = 0;
@@ -64,6 +71,7 @@ public class Boss extends BaseObject {
         }
 
         updateEnergies(deltaTime);
+
     }
 
     private void updatePosition(double deltaTime) {
@@ -105,6 +113,7 @@ public class Boss extends BaseObject {
             setView(imageView);
             pane.getChildren().add(imageView);
         }
+
     }
 
     public void subHealthPoint() {
@@ -112,17 +121,19 @@ public class Boss extends BaseObject {
     }
 
     private void restoreHealthPoint() {
-        healthpoint += 10;
+        healthpoint = Math.min(healthpoint + 10, Gameconfig.Boss_HP);
     }
 
     public void restoreView() {
         // Load lại ảnh
+        frames = new LinkedList<>();
         loadImage();
         // Cập nhật lại frame cuối cùng
         for (int i = 0; i < frame_count; i++) {
             frames.add(frames.poll());
         }
-
+        for (Energy energy : energies)
+            energy.loadImage();
         updateLayout();
     }
 
@@ -143,6 +154,38 @@ public class Boss extends BaseObject {
             Energy e = new Energy(centerX, centerY, angle, Gameconfig.SPEED_ENERGY);
             energies.add(e);
         }
+    }
+
+    private void createHealthBar() {
+        if (pane == null)
+            return;
+
+        double barWidth = width;
+        double barHeight = 10;
+
+        healthBarBack = new Rectangle(barWidth, barHeight, Color.GRAY);
+        healthBarFront = new Rectangle(barWidth, barHeight, Color.RED);
+        healthBarBack.setLayoutX(x);
+        healthBarBack.setLayoutY(y - 15);
+        healthBarFront.setLayoutX(x);
+        healthBarFront.setLayoutY(y - 15);
+
+        pane.getChildren().addAll(healthBarBack, healthBarFront);
+    }
+
+    private void updateHealthBar() {
+        if (healthBarFront == null)
+            return;
+        double percent = (double) healthpoint / Gameconfig.Boss_HP;
+        healthBarFront.setWidth(width * percent);
+        if (healthBarBack != null && healthBarFront != null) {
+            healthBarBack.setLayoutX(x);
+            healthBarBack.setLayoutY(y - 15);
+            healthBarFront.setLayoutX(x);
+            healthBarFront.setLayoutY(y - 15);
+        }
+        // updateHealthBar();
+
     }
 
     public int getFrame_count() {

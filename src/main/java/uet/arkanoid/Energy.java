@@ -16,7 +16,7 @@ public class Energy extends BaseObject {
         loadImage();
     }
 
-    private void loadImage() {
+    public void loadImage() {
         Image img = new Image(getClass().getResource("/assets/image/boss/energy.png").toExternalForm());
         ImageView view = new ImageView(img);
         view.setFitWidth(width);
