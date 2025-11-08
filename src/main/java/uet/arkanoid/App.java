@@ -1,12 +1,13 @@
 package uet.arkanoid;
 
 import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 import java.io.IOException;
-
+import java.util.ArrayList;
+import java.util.List;
 
 public class App extends Application {
     @Override

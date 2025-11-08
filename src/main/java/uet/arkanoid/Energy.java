@@ -8,17 +8,21 @@ public class Energy extends BaseObject {
     private double speed = Gameconfig.SPEED_ENERGY;
     private boolean active = true;
 
+    // Load ảnh 1 lần duy nhất cho tất cả Energy
+    private static final Image IMAGE = new Image(
+            Energy.class.getResource("/assets/image/boss/energy.png").toExternalForm());
+
     public Energy(double x, double y, double angle, double speed) {
         super(x, y, 50, 50);
         this.speed = speed;
         this.dx = Math.cos(Math.toRadians(angle)) * speed;
         this.dy = Math.sin(Math.toRadians(angle)) * speed;
-        loadImage();
+        initView();
     }
 
-    public void loadImage() {
-        Image img = new Image(getClass().getResource("/assets/image/boss/energy.png").toExternalForm());
-        ImageView view = new ImageView(img);
+    // Tạo ImageView từ ảnh đã load
+    public void initView() {
+        ImageView view = new ImageView(IMAGE);
         view.setFitWidth(width);
         view.setFitHeight(height);
         setView(view);
