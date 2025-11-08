@@ -43,6 +43,7 @@ public class GameController {
     private int currentMap;
     private Label scoreLabel;
     private Label livesLabel;
+    private static boolean isPlaying = false;
 
     @FXML
     public void initialize() {
@@ -51,7 +52,8 @@ public class GameController {
         root.setPrefHeight(Gameconfig.screen_height);
         PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
         user = new User(3, 0);
-        currentMap = 0;
+        currentMap = 1;
+        isPlaying = true;
         // LevelLoader(currentMap + 1);
         // SaveGame.saveGame(GameController.this);
         Platform.runLater(() -> {
@@ -386,6 +388,22 @@ public class GameController {
 
     public void setLivesLabel(Label livesLabel) {
         this.livesLabel = livesLabel;
+    }
+
+    public Stage getStage() {
+        return (Stage) root.getScene().getWindow();
+    }
+
+    public int getuserHP() {
+        return user.getHp();
+    }
+
+    public static void setIsplaying(boolean b) {
+        isPlaying = b;
+    }
+
+    public static boolean getIsplaying() {
+        return isPlaying;
     }
 
 }

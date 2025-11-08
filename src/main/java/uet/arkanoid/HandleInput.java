@@ -2,6 +2,7 @@ package uet.arkanoid;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
@@ -51,19 +52,31 @@ public class HandleInput {
         if (pressedKeys.contains(KeyCode.S))
             SaveGame.saveScore(gameController.getUser().getName(), gameController.getUser().getScore());
     }
+
     public static void setOnCloseHandler(Stage stage, GameController gameController) {
     stage.setOnCloseRequest(event -> {
+        if (!GameController.getIsplaying()) {
+            // Let it close normally if not playing (e.g., in pause menu, start menu)
+            return;
+        }
         event.consume(); // prevent immediate close
 
         // Step 1: Ask user if they want to save
         Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmAlert.setTitle("Exit Game");
         confirmAlert.setHeaderText("Do you want to save your game before exiting?");
-        confirmAlert.setContentText("Choose OK to save, or Cancel to stay in the game.");
+        confirmAlert.setContentText("Choose an option:");
+
+        // Define buttons in desired order
+        
+        ButtonType noSaveButton = new ButtonType("Exit without Saving", ButtonBar.ButtonData.NO);
+        ButtonType saveButton = new ButtonType("Save & Exit", ButtonBar.ButtonData.OK_DONE);
+        ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+        confirmAlert.getButtonTypes().setAll(noSaveButton, saveButton, cancelButton);
 
         confirmAlert.showAndWait().ifPresent(response -> {
-            if (response == ButtonType.OK) {
-
+            if (response == saveButton) {
                 // Step 2: Ask for username
                 TextInputDialog nameDialog = new TextInputDialog();
                 nameDialog.setTitle("Save Game");
@@ -75,17 +88,21 @@ public class HandleInput {
                         System.out.println("No name entered, game not saved.");
                         stage.close();
                     } else {
-                        // Save the game and score with the given name
                         gameController.getUser().setName(name);
                         SaveGame.saveGame(gameController);
                         SaveGame.saveScore(name, gameController.getUser().getScore());
-
                         System.out.println("Game saved for user: " + name);
                         stage.close();
                     }
                 });
 
+            } else if (response == noSaveButton) {
+                // Exit without saving
+                System.out.println("Exited without saving.");
+                stage.close();
+
             } else {
+                // Cancel
                 System.out.println("Exit canceled by user.");
             }
         });

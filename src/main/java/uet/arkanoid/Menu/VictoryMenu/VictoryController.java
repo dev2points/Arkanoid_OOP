@@ -41,6 +41,7 @@ public class VictoryController {
     private void initialize() {
         // Optional hover effects or setup code
         System.out.println("Victory menu loaded successfully!");
+        GameController.setIsplaying(false);
     }
 
     @FXML
@@ -150,5 +151,7 @@ public class VictoryController {
         player_score.setText("Your Score: " + score);
         this.score = score;
     }
+
+
 
 }
