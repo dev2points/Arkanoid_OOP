@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import uet.arkanoid.PlaySound;
 
 public class OptionController {
 
@@ -22,12 +23,15 @@ public class OptionController {
 
     @FXML
     public void initialize() {
-        // Set initial value
-        updateVolumeLabel(volumeSlider.getValue());
+        // Lấy âm lượng hiện tại từ PlaySound (đang là 0.0 – 1.0)
+        double currentVolume = PlaySound.getVolume() * 100;
+        volumeSlider.setValue(currentVolume);
+        updateVolumeLabel(currentVolume);
 
-        // Update label when slider moves
+        // Khi kéo thanh trượt, cập nhật âm lượng nhạc nền
         volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             updateVolumeLabel(newVal.doubleValue());
+            PlaySound.setVolume(newVal.doubleValue() / 100.0);
         });
     }
 

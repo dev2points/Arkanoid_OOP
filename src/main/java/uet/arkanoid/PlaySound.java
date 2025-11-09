@@ -59,4 +59,19 @@ public class PlaySound {
             bgPlayer.play();
         }
     }
+    // Đặt âm lượng (0.0 đến 1.0)
+    public static void setVolume(double volume) {
+        if (bgPlayer != null) {
+            bgPlayer.setVolume(volume);
+        }
+    }
+
+    // Lấy âm lượng hiện tại
+    public static double getVolume() {
+        if (bgPlayer != null) {
+            return bgPlayer.getVolume();
+        }
+        return 0.5;
+    }
+
 }
