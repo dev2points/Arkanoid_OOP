@@ -19,14 +19,13 @@ public class GameMap implements Serializable {
     private Boss boss;
 
     public GameMap(int level, Pane root) {
-        BaseObject.setRootPane(root);
         this.level = level;
-        this.background = new Background(1);
-        this.paddle = new Paddle();
-        this.ballManager = new BallManager(paddle);
+        this.background = new Background(1, root);
+        this.paddle = new Paddle(root);
+        this.ballManager = new BallManager(paddle, root);
         this.ballManager.addDefaultBall();
         if (level > Gameconfig.TOTAL_MAP)
-            this.boss = new Boss(250, 50, 260, 260);
+            this.boss = new Boss(250, 50, 260, 260, root);
         else
             this.bricks = ReadMapFile.readMapFXML(level, root);
     }

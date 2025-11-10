@@ -2,6 +2,7 @@ package uet.arkanoid;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 public class Energy extends BaseObject {
     private double dx, dy;
@@ -12,8 +13,8 @@ public class Energy extends BaseObject {
     private static final Image IMAGE = new Image(
             Energy.class.getResource("/assets/image/boss/energy.png").toExternalForm());
 
-    public Energy(double x, double y, double angle, double speed) {
-        super(x, y, 50, 50);
+    public Energy(double x, double y, double angle, double speed, Pane pane) {
+        super(x, y, 50, 50, pane);
         this.speed = speed;
         this.dx = Math.cos(Math.toRadians(angle)) * speed;
         this.dy = Math.sin(Math.toRadians(angle)) * speed;

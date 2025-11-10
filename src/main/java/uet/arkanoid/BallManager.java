@@ -4,18 +4,22 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.input.KeyCode;
+import javafx.scene.layout.Pane;
 
 public class BallManager implements Serializable {
     private final List<Ball> balls = new ArrayList<>();
     private final Paddle paddle;
     private boolean waitingForLaunch = false; // ← cờ chờ bắt đầu
     private final List<Ball> toRemove = new ArrayList<>();
-    public BallManager(Paddle paddle) {
+    private Pane pane;
+
+    public BallManager(Paddle paddle, Pane pane) {
+        this.pane = pane;
         this.paddle = paddle;
     }
 
     public void addBall(double x, double y, double dx, double dy) {
-        Ball ball = new Ball(x, y, dx, dy);
+        Ball ball = new Ball(x, y, dx, dy, pane);
         balls.add(ball);
     }
 
@@ -24,7 +28,7 @@ public class BallManager implements Serializable {
     }
 
     public void addDefaultBall() {
-        Ball ball = new Ball(paddle); // bóng nằm trên paddle
+        Ball ball = new Ball(paddle, pane); // bóng nằm trên paddle
         balls.add(ball);
         waitingForLaunch = true; // ← bật trạng thái chờ Space
     }

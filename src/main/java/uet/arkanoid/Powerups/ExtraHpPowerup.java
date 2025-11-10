@@ -7,13 +7,12 @@ public class ExtraHpPowerup extends Powerup {
 
     // Ảnh cache chỉ load một lần duy nhất
     private static final Image IMAGE = new Image(
-        ExtraHpPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm()
-    );
+            ExtraHpPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm());
 
     private GameController controller;
 
     public ExtraHpPowerup(double x, double y, double width, double height, GameController controller) {
-        super(x, y, width, height);
+        super(x, y, width, height, controller.getPane());
         this.controller = controller;
     }
 

@@ -2,6 +2,7 @@ package uet.arkanoid.Powerups;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import uet.arkanoid.BaseObject;
 import uet.arkanoid.GameController;
 import uet.arkanoid.Gameconfig;
@@ -10,8 +11,8 @@ public abstract class Powerup extends BaseObject {
     private double fallSpeed = Gameconfig.speed_powerup;
     public static transient GameController controller;
 
-    public Powerup(double x, double y, double width, double height) {
-        super(x, y, width, height);
+    public Powerup(double x, double y, double width, double height, Pane pane) {
+        super(x, y, width, height, pane);
         loadPowerup(loadImage());
     }
 

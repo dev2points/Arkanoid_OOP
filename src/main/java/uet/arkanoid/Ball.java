@@ -20,21 +20,24 @@ public class Ball extends BaseObject {
     private static final Image BALL_IMAGE = new Image(
             Ball.class.getResource("/assets/image/balls/ball.png").toExternalForm());
 
-    public Ball() {
+    public Ball(Pane pane) {
+        this.pane = pane;
         super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection();
         loadImage();
     }
 
-    public Ball(double x, double y, double dx, double dy) {
+    public Ball(double x, double y, double dx, double dy, Pane pane) {
+        this.pane = pane;
         super(x, y, Gameconfig.size_ball, Gameconfig.size_ball);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection(); // luôn đặt tổng vector bằng speed_ball
         loadImage();
     }
 
-    public Ball(Paddle paddle) {
+    public Ball(Paddle paddle, Pane pane) {
+        this.pane = pane;
         super(
                 paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2,
                 paddle.getY() - Gameconfig.size_ball,
@@ -55,7 +58,6 @@ public class Ball extends BaseObject {
 
     /** Load ảnh */
     public void loadImage() {
-        pane = BaseObject.getRootPane();
         ImageView imageView = new ImageView(BALL_IMAGE);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);

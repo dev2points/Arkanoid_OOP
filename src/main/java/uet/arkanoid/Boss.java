@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -30,8 +31,8 @@ public class Boss extends BaseObject {
     private transient Rectangle healthBarBack;
     private transient Rectangle healthBarFront;
 
-    public Boss(int x, int y, int width, int height) {
-        super(x, y, width, height);
+    public Boss(int x, int y, int width, int height, Pane pane) {
+        super(x, y, width, height, pane);
         initView();
         createHealthBar();
     }
@@ -112,7 +113,7 @@ public class Boss extends BaseObject {
         double centerY = y + height / 2;
         for (int i = 0; i < 10; i++) {
             double angle = Math.random() * 180;
-            energies.add(new Energy(centerX, centerY, angle, Gameconfig.SPEED_ENERGY));
+            energies.add(new Energy(centerX, centerY, angle, Gameconfig.SPEED_ENERGY, pane));
         }
     }
 
