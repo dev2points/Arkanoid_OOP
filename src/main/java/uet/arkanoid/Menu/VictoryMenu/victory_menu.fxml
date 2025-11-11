@@ -36,7 +36,6 @@
             </ImageView>
          </children>
       </Pane>
-      <Text id="menu_title" layoutX="233.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="VICTORY" wrappingWidth="354.13671875" />
 
               <!-- OPTIONS -->
         <Pane fx:id="optionsButton" layoutX="613.0" layoutY="447.0" onMouseClicked="#returnHome" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
@@ -50,18 +49,15 @@
             <Text fill="WHITE" layoutX="14.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
          </children>
         </Pane>
-      <Pane fx:id="input_pane" layoutX="243.0" layoutY="221.0" prefHeight="67.0" prefWidth="336.0">
+      <Pane fx:id="input_pane" layoutX="219.0" layoutY="266.0" prefHeight="67.0" prefWidth="336.0">
          <children>
-            <Text fx:id="player_score" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="YOUR SCORE: " wrappingWidth="254.6" />
-            <Pane fx:id="submit_button" layoutX="213.0" layoutY="14.0" onMouseClicked="#save_score" prefHeight="39.0" prefWidth="42.0" styleClass="menu_pane">
-               <children>
-                  <Rectangle fx:id="continue_button1" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="35.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="42.0" />
-                  <Text fill="WHITE" layoutX="-34.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OK" textAlignment="CENTER" wrappingWidth="109.6" />
-               </children>
-            </Pane>
-            <TextField fx:id="player_name" layoutX="-5.0" layoutY="19.0" prefHeight="25.0" prefWidth="203.0" />
+            <Text fx:id="player_score" fill="WHITE" layoutX="27.0" layoutY="-41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="YOUR SCORE: " wrappingWidth="254.6" x="20.0" y="60.0" />
+            <Pane fx:id="submit_button" layoutX="213.0" layoutY="14.0" onMouseClicked="#save_score" prefHeight="39.0" prefWidth="42.0" styleClass="menu_pane" />
          </children>
       </Pane>
+      <TextField fx:id="player_name" layoutX="260.0" layoutY="286.0" prefHeight="25.0" prefWidth="203.0" />
+      <Rectangle fx:id="continue_button1" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="35.0" layoutX="479.0" layoutY="281.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="42.0" />
+      <Text fill="WHITE" layoutX="445.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OK" textAlignment="CENTER" wrappingWidth="109.6" />
 
     </children>
 </AnchorPane>

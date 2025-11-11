@@ -15,13 +15,7 @@
     <children>
       <Pane layoutX="300.0" layoutY="209.0" prefHeight="52.0" prefWidth="200.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="52.0" stroke="BLACK" strokeType="INSIDE" width="200.0" />
-            <Slider fx:id="volumeSlider" prefHeight="69.0" prefWidth="202.0" value="10.0">
-               <cursor>
-                  <Cursor fx:constant="HAND" />
-               </cursor>
-            </Slider>
-            <Label fx:id="volumeLabel" layoutX="14.0" layoutY="3.0" prefHeight="23.0" prefWidth="172.0" text="0%" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" />
          </children>
       </Pane>
       <Pane fx:id="optionsButton" layoutX="332.0" layoutY="457.0" onMouseClicked="#returnHome" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
@@ -35,6 +29,12 @@
             <Text fill="WHITE" layoutX="14.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
          </children>
       </Pane>
+      <Label fx:id="volumeLabel" layoutX="332.0" layoutY="321.0" prefHeight="23.0" prefWidth="172.0" text="0%" />
+      <Slider fx:id="volumeSlider" layoutX="310.0" layoutY="321.0" prefHeight="69.0" prefWidth="202.0" value="10.0">
+         <cursor>
+            <Cursor fx:constant="HAND" />
+         </cursor>
+      </Slider>
 
     </children>
 </AnchorPane>

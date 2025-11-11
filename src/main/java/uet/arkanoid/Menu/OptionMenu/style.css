@@ -7,7 +7,7 @@
 #root {
     -fx-background-image: url("menu_bg.png");
     -fx-background-size: cover;
-    -fx-background-color: rgba(0, 0, 0, 0.4); /* dark overlay */
+    -fx-background-color: rgba(0, 0, 0, 0.4);
     -fx-background-blend-mode: overlay;
 }
 
@@ -36,3 +36,82 @@
 }
 
 
+/* hiệu ứng cho volumslider*/
+.slider {
+    -fx-background-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+/* Track slider */
+.slider .track {
+    -fx-background-color: linear-gradient(to right, #a8edea, #fed6e3);
+    -fx-background-radius: 10px;
+    -fx-pref-height: 10px;
+    -fx-effect: dropshadow(two-pass-box, rgba(255, 255, 255, 0.3), 4, 0, 0, 1);
+}
+
+/* Thumb slider */
+.slider .thumb {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f7f7f7);
+    -fx-background-radius: 50%;
+    -fx-pref-width: 18px;
+    -fx-pref-height: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(200, 200, 200, 0.5), 6, 0, 0, 1);
+    -fx-cursor: hand;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+
+.slider {
+    -fx-background-color: transparent;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.slider .track {
+    -fx-background-color: linear-gradient(to right, #a8edea, #fed6e3);
+    -fx-background-radius: 10px;
+    -fx-pref-height: 10px;
+    -fx-effect: dropshadow(two-pass-box, rgba(255, 255, 255, 0.3), 4, 0, 0, 1);
+}
+
+.slider .thumb {
+    -fx-background-color: linear-gradient(to bottom, #ffffff, #f7f7f7);
+    -fx-background-radius: 50%;
+    -fx-pref-width: 18px;
+    -fx-pref-height: 18px;
+    -fx-effect: dropshadow(gaussian, rgba(200, 200, 200, 0.5), 6, 0, 0, 1);
+    -fx-cursor: hand;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: all 0.25s ease-in-out;
+}
+
+.slider:hover .thumb {
+    -fx-background-color: linear-gradient(to bottom, #ffe6f2, #ffffff);
+    -fx-effect: dropshadow(gaussian, rgba(255, 182, 193, 0.6), 10, 0, 0, 0);
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+}
+
+.slider .thumb:pressed {
+    -fx-background-color: linear-gradient(to bottom, #ffd1dc, #ffffff);
+    -fx-effect: dropshadow(gaussian, rgba(255, 182, 193, 0.8), 12, 0.4, 0, 0);
+}
+
+.label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ffffff;
+    -fx-effect: dropshadow(two-pass-box, rgba(255, 255, 255, 0.6), 4, 0.2, 0, 0);
+    -fx-font-family: "Segoe UI", "Roboto", "Arial";
+}
+
+.label:hover {
+    -fx-text-fill: #ffffff;
+    -fx-scale-x: 1.03;
+    -fx-scale-y: 1.03;
+    -fx-effect: dropshadow(two-pass-box, rgba(255, 255, 255, 0.8), 8, 0.3, 0, 0);
+}

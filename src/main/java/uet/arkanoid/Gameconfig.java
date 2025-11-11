@@ -17,8 +17,8 @@ public class Gameconfig {
 
     // Powerups config
     public static final double speed_powerup = 50;
-    public static final double width_powerup = 32;
-    public static final double height_powerup = 32;
+    public static final double width_powerup = 42;
+    public static final double height_powerup = 42;
     public static final double dropRate = 0.10;
 
     // Paddle config
