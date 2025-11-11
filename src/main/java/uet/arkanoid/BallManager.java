@@ -7,10 +7,10 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 public class BallManager implements Serializable {
-    private final List<Ball> balls = new ArrayList<>();
-    private final Paddle paddle;
+    private List<Ball> balls = new ArrayList<>();
+    private  Paddle paddle;
     private boolean waitingForLaunch = false; // ← cờ chờ bắt đầu
-    private final List<Ball> toRemove = new ArrayList<>();
+    private  List<Ball> toRemove = new ArrayList<>();
     private transient Pane pane;
 
     public BallManager(Paddle paddle, Pane pane) {
@@ -39,6 +39,9 @@ public class BallManager implements Serializable {
 
     public List<Ball> getBalls() {
         return balls;
+    }
+    public int getSize() {
+        return balls.size();
     }
 
     public boolean isWaitingForLaunch() {
@@ -105,4 +108,9 @@ public class BallManager implements Serializable {
             ball.loadImage();
         }
     }
+    public void reset(){
+        balls.clear();
+        addDefaultBall();
+    }
+
 }
