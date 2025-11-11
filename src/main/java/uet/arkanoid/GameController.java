@@ -47,6 +47,7 @@ public class GameController {
     private int num = 2;
     private boolean isVictory = false;
     private boolean isMultiPlayer = false;
+    private boolean isLoose = false;
 
     @FXML
     public void initialize() {
@@ -117,6 +118,10 @@ public class GameController {
         livesLabel.setText("Lives: " + user.getHp());
         if (user.getHp() <= 0) {
             gameloop.stop();
+            if (isMultiPlayer) {
+                isLoose = true;
+                return;
+            }
             try {
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
@@ -137,7 +142,7 @@ public class GameController {
         if (boss != null && boss.getHealthpoint() <= 0) {
             isVictory = true;
             gameloop.stop();
-            if (!isMultiPlayer)
+            if (isMultiPlayer)
                 return;
             try {
                 FXMLLoader loader = new FXMLLoader(
@@ -288,6 +293,10 @@ public class GameController {
         return this.paddle;
     }
 
+    public boolean IsLoose() {
+        return isLoose;
+    }
+
     public void setPaddle(Paddle paddle) {
         this.paddle = paddle;
     }
@@ -326,6 +335,8 @@ public class GameController {
 
     public void PauseGame() {
         gameloop.stop();
+        if (isMultiPlayer)
+            return;
         AnchorPane pane;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/PauseMenu/pause_menu.fxml"));
