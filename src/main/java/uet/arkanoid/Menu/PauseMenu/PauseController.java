@@ -54,6 +54,7 @@ public class PauseController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("New Game scene loaded successfully!");
         } catch (IOException e) {
@@ -75,6 +76,7 @@ public class PauseController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("Option menu scene loaded successfully!");
         } catch (IOException e) {
@@ -109,6 +111,7 @@ public class PauseController {
             // Hiển thị giao diện Highscore
             stage.setScene(new Scene(root));
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("Highscore scene loaded successfully!");
         } catch (IOException e) {

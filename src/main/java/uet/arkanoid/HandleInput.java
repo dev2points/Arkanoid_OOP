@@ -128,4 +128,8 @@ public class HandleInput {
         });
     }
 
+    public static void clearKeys() {
+        pressedKeys.clear();
+    }
+
 }

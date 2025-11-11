@@ -1,9 +1,15 @@
 package uet.arkanoid;
 
+import java.io.IOException;
+
 import javafx.animation.AnimationTimer;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
+import uet.arkanoid.Menu.MultiPlayerVictoryMenu.VictoryController;
 
 public class MultiplayerController {
     private GameController player1Controller;
@@ -21,9 +27,8 @@ public class MultiplayerController {
 
         player1Pane.setPrefSize(Gameconfig.screen_width, Gameconfig.screen_height);
         player2Pane.setPrefSize(Gameconfig.screen_width, Gameconfig.screen_height);
-        player1Pane.setLayoutX((Gameconfig.screen_width * 2 - (2 *
-                Gameconfig.screen_width)) / 2);
-        player2Pane.setLayoutX(player1Pane.getLayoutX() + Gameconfig.screen_width);
+        player1Pane.setLayoutX(0);
+        player2Pane.setLayoutX(Gameconfig.screen_width);
 
         rootPane.getChildren().addAll(player1Pane, player2Pane);
 
@@ -45,23 +50,38 @@ public class MultiplayerController {
     }
 
     private void checkResult() {
-        if (player1Controller.IsVictory() || player2Controller.IsVictory()) {
+        boolean player1Win = player1Controller.IsVictory() || player2Controller.IsLoose();
+        boolean player2Win = player2Controller.IsVictory() || player1Controller.IsLoose();
+
+        if (player1Win || player2Win) {
             gameLoop.stop();
-            if (player1Controller.IsVictory()) {
-                showResult("Player 1 wins!");
-            } else if (player2Controller.IsVictory()) {
-                showResult("Player 2 wins!");
-            } else {
-                showResult("Draw!");
+            player1Controller.PauseGame();
+            player2Controller.PauseGame();
+
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(
+                        "/uet/arkanoid/Menu/MultiPlayerVictoryMenu/victory_menu.fxml"));
+                Parent root1 = loader.load();
+                VictoryController victory = loader.getController();
+
+                if (player1Win && player2Win)
+                    victory.setWinner("DRAW");
+                else if (player1Win)
+                    victory.setWinner("🏆 Player 1 Wins!");
+                else
+                    victory.setWinner("🏆 Player 2 Wins!");
+
+                Scene scene = new Scene(root1);
+                Stage stage = (Stage) rootPane.getScene().getWindow();
+                stage.setScene(scene);
+                stage.setTitle("Multiplayer Victory Menu");
+                stage.show();
+                stage.centerOnScreen();
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Error loading multiplayer victory menu");
             }
         }
     }
 
-    private void showResult(String msg) {
-        Label label = new Label(msg);
-        label.setStyle("-fx-font-size: 36px; -fx-text-fill: yellow;");
-        label.setLayoutX(rootPane.getWidth() / 2 - 100);
-        label.setLayoutY(rootPane.getHeight() / 2 - 50);
-        rootPane.getChildren().add(label);
-    }
 }

@@ -65,6 +65,7 @@ public class LoadGameController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("Process saved loaded successfully!");
         } catch (IOException e) {
@@ -104,6 +105,7 @@ public class LoadGameController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("Return menu from loadGame!");
         } catch (IOException e) {

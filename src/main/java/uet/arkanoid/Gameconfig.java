@@ -1,10 +1,8 @@
 package uet.arkanoid;
 
-import java.util.concurrent.StructuredTaskScope.FailedException;
-
 public class Gameconfig {
     // Screen config
-    public static final int screen_width = 800;
+    public static final int screen_width = 750;
     public static final int screen_height = 600;
 
     // Brick config
