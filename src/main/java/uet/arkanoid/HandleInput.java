@@ -74,7 +74,7 @@ public class HandleInput {
 
     public static void setOnCloseHandler(Stage stage, GameController gameController) {
         stage.setOnCloseRequest(event -> {
-            if (!gameController.getIsplaying()) {
+            if (!GameController.getIsplaying()) {
                 // Let it close normally if not playing (e.g., in pause menu, start menu)
                 return;
             }

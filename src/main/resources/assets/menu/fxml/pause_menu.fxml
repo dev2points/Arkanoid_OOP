@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="pause_menu" prefHeight="600.0" prefWidth="800.0" stylesheets="@../style/pause_menu.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.PauseMenuController">
+
+    <children>
+
+        <!-- NEW GAME -->
+        <Pane fx:id="continueButton" layoutX="306.0" layoutY="300.0" onMouseClicked="#continueGame" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
+            <children>
+                <Rectangle fx:id="continue_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+                <Text fill="WHITE" layoutX="15.0" layoutY="23.0" onMouseClicked="#continueGame" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="CONTINUE" textAlignment="CENTER" wrappingWidth="109.6" />
+            </children>
+        </Pane>
+      <Pane fx:id="returnButton" layoutX="316.0" layoutY="355.0" onMouseClicked="#returnHome" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
+         <children>
+            <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+            <Text fill="WHITE" layoutX="13.0" layoutY="23.0" onMouseClicked="#returnHome" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
+         </children>
+      </Pane>
+      <Pane fx:id="optionsButton" layoutX="315.0" layoutY="411.0" onMouseClicked="#handleOptions" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
+         <children>
+                <Rectangle fx:id="option_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+                <Text fill="WHITE" layoutX="13.0" layoutY="23.0" onMouseClicked="#handleOptions" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OPTIONS" textAlignment="CENTER" wrappingWidth="109.6" />
+         </children>
+      </Pane>
+
+              <!-- OPTIONS -->
+        <Pane layoutX="315.0" layoutY="468.0" onMouseClicked="#saveAndExit" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
+         <children>
+        <Rectangle fx:id="save_exit_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="-1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+        <Text fill="WHITE" layoutX="13.0" layoutY="23.0" onMouseClicked="#saveAndExit" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="SAVE &amp; EXIT" textAlignment="CENTER" wrappingWidth="109.6" />
+         </children>
+        </Pane>
+      <Pane fx:id="input_pane" layoutX="190.0" layoutY="230.0" onMouseClicked="#save_game" prefHeight="67.0" prefWidth="426.0" style="-fx-display: none;" visible="false">
+         <children>
+            <Text fx:id="player_score" fill="WHITE" layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="ENTER YOUR NAME:" wrappingWidth="254.6" />
+            <TextField fx:id="player_name" layoutX="169.0" layoutY="18.0" prefHeight="25.0" prefWidth="178.0" />
+            <Pane fx:id="submit_button" layoutX="368.0" layoutY="14.0" onMouseClicked="#save_game" prefHeight="39.0" prefWidth="42.0" styleClass="menu_pane">
+               <children>
+                  <Rectangle fx:id="continue_button1" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="35.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="42.0" />
+                  <Text fill="WHITE" layoutX="-34.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OK" textAlignment="CENTER" wrappingWidth="109.6" />
+               </children>
+            </Pane>
+         </children>
+      </Pane>
+
+    </children>
+</AnchorPane>

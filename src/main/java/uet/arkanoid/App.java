@@ -10,13 +10,12 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {       
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/assets/maps/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/assets/menu/fxml/stack_pane.fxml"));
         Parent root = loader.load();
         Scene scene = new Scene(root);
-        GameController controller = loader.getController();
-        controller.setScene(scene); 
+        
         stage.setScene(scene);
-        stage.setTitle("Test Paddle");
+        stage.setTitle("Test Paddl11e");
         stage.show();
     }
 

@@ -1,0 +1,39 @@
+@font-face {
+    font-family: "Jersey 25";
+    src: url("../font/Jersey25-Regular.ttf");
+}
+
+#defeat_menu {
+    -fx-background-image: url("../background/defeat_bg.png");
+    -fx-background-size: cover;
+    -fx-background-color: rgba(0, 0, 0, 0.8);
+    -fx-background-blend-mode: overlay;
+
+}
+
+.menu_text {
+    -fx-font-family: "Jersey 25";
+    -fx-font-size: 18px;
+    -fx-fill: rgb(180, 234, 247);
+    -fx-effect: dropshadow(gaussian, rgba(145, 223, 235, 0.471), 4, 0.5, 0, 0);
+    -fx-transition: all 0.3s ease;
+}
+
+.menu_pane {
+    -fx-cursor: default;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-padding: 8;
+}
+
+.menu_pane:hover .menu_text {
+    -fx-fill: linear-gradient(to bottom right, #e0e7ff, #c7d2fe, #f0f4ff);
+    -fx-effect: dropshadow(gaussian, rgba(181, 251, 253, 0.9), 6, 0.3, 0, 0);
+}
+
+.menu_pane Rectangle {
+    -fx-fill: transparent;
+    -fx-stroke: transparent;
+}

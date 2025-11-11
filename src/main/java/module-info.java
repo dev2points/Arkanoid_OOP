@@ -6,21 +6,8 @@ module uet.arkanoid {
     requires javafx.base;
 
     opens uet.arkanoid to javafx.fxml;
-    opens uet.arkanoid.Menu.StartMenu to javafx.fxml;
-    opens uet.arkanoid.Menu.PauseMenu to javafx.fxml;
-    opens uet.arkanoid.Menu.LoadGame to javafx.fxml;
-    opens uet.arkanoid.Menu.HighScore to javafx.fxml;
-    opens uet.arkanoid.Menu.VictoryMenu to javafx.fxml;
-    opens uet.arkanoid.Menu.OptionMenu to javafx.fxml;
-    opens uet.arkanoid.Menu.MultiPlayerVictoryMenu to javafx.fxml;
-
+    opens uet.arkanoid.Menu to javafx.fxml;
     exports uet.arkanoid;
-    exports uet.arkanoid.Menu.StartMenu;
-    exports uet.arkanoid.Menu.PauseMenu;
-    exports uet.arkanoid.Menu.LoadGame;
-    exports uet.arkanoid.Menu.HighScore;
-    exports uet.arkanoid.Menu.OptionMenu;
-    exports uet.arkanoid.Menu.VictoryMenu;
-    exports uet.arkanoid.Menu.MultiPlayerVictoryMenu;
+    exports uet.arkanoid.Menu;
 
 }

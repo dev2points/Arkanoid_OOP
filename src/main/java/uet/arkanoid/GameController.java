@@ -1,23 +1,15 @@
 package uet.arkanoid;
 
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import uet.arkanoid.Menu.PauseMenu.PauseController;
-import uet.arkanoid.Menu.VictoryMenu.VictoryController;
-import uet.arkanoid.Powerups.Powerup;
 
-import java.io.IOException;
+import uet.arkanoid.Powerups.Powerup;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,8 +30,7 @@ public class GameController {
     private long lastUpdate = 0;
     private Scene scene;
     private User user;
-    private static AnimationTimer gameloop;
-    private Parent pauseMenuLayer;
+    private AnimationTimer gameloop;
     private int currentMap;
     private Label scoreLabel;
     private Label livesLabel;
@@ -48,6 +39,8 @@ public class GameController {
     private boolean isVictory = false;
     private boolean isMultiPlayer = false;
     private boolean isLoose = false;
+
+    MenuManager menuManager;
 
     @FXML
     public void initialize() {
@@ -61,8 +54,6 @@ public class GameController {
         // SaveGame.saveGame(GameController.this);
         Platform.runLater(() -> {
             Stage stage = (Stage) root.getScene().getWindow();
-
-            // Now you can set close event handler
             HandleInput.setOnCloseHandler(stage, this);
         });
         init_lable();
@@ -132,21 +123,7 @@ public class GameController {
                 isLoose = true;
                 return;
             }
-            try {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
-                Parent root1 = loader.load();
-                VictoryController victory = loader.getController();
-                victory.setScore(user.getScore());
-                Scene scene = new Scene(root1);
-                Stage stage = (Stage) root.getScene().getWindow();
-
-                stage.setScene(scene);
-                stage.setTitle("Test Paddle");
-                stage.show();
-            } catch (IOException e) {
-                System.out.println("loose");
-            }
+            menuManager.displayDefeatMenu();
 
         }
         if (boss != null && boss.getHealthpoint() <= 0) {
@@ -154,28 +131,13 @@ public class GameController {
             gameloop.stop();
             if (isMultiPlayer)
                 return;
-            try {
-                FXMLLoader loader = new FXMLLoader(
-                        getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
-                Parent root1 = loader.load();
-                VictoryController victory = loader.getController();
-                victory.setScore(user.getScore());
-                Scene scene = new Scene(root1);
-                Stage stage = (Stage) root.getScene().getWindow();
-
-                stage.setScene(scene);
-                stage.setTitle("Test Paddle");
-                stage.show();
-            } catch (IOException e) {
-                System.out.println("WIN GAME!");
-            }
+            menuManager.displayVictoryMenu();
         }
     }
 
     public void loadProcess(Pair<GameMap, User> process) {
         gameMap = process.getKey();
         currentMap = gameMap.getLevel();
-        System.out.println(currentMap);
         // background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
@@ -212,8 +174,6 @@ public class GameController {
     }
 
     private void MainLoop() {
-        // loop, update, timer gi day viet vao day
-        // Timer time = new Timer();
         gameloop = new AnimationTimer() {
             @Override
             public void handle(long now) {
@@ -221,7 +181,6 @@ public class GameController {
                     double deltaTime = (now - lastUpdate) / 1e9; // convert ns → seconds
                     BaseObject.setDeltatime(deltaTime);
                     if (scene != null) {
-
                         HandleInput.check_input(num, scene, GameController.this);
                     }
                     // Check va chạm
@@ -255,13 +214,13 @@ public class GameController {
         gameloop.start();
     }
 
-    public Pane getRoot() {
-        return this.root;
-    }
+    // public Pane getRoot() {
+    //     return this.root;
+    // }
 
-    public void setRoot(Pane root) {
-        this.root = root;
-    }
+    // public void setRoot(Pane root) {
+    //     this.root = root;
+    // }
 
     public Background getBackground() {
         return this.background;
@@ -271,12 +230,8 @@ public class GameController {
         this.background = background;
     }
 
-    public Label getScore() {
-        return this.score;
-    }
-
-    public void setScore(Label score) {
-        this.score = score;
+    public int getScore() {
+        return user.getScore();
     }
 
     public List<Brick> getBricks() {
@@ -347,31 +302,11 @@ public class GameController {
         gameloop.stop();
         if (isMultiPlayer)
             return;
-        AnchorPane pane;
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/uet/arkanoid/Menu/PauseMenu/pause_menu.fxml"));
-            pane = loader.load();
-            PauseController controller = loader.getController();
-            controller.setGameController(this);
-            this.pauseMenuLayer = pane;
-            root.getChildren().add(pauseMenuLayer);
-        } catch (IOException e) {
-            System.err.println("Không thể tải file menu.fxml. Hãy chắc chắn file tồn tại và đúng đường dẫn.");
-            e.printStackTrace();
-        }
+        menuManager.displayPauseMenu();
     }
 
     public void ContinueGame() {
-        if (pauseMenuLayer != null && root.getChildren().contains(pauseMenuLayer)) {
-            root.getChildren().remove(pauseMenuLayer);
-            pauseMenuLayer = null;
-            gameloop.start();
-            root.requestFocus();
-        }
-    }
-
-    private void BacktoMain() {
-
+        gameloop.start();
     }
 
     public Boss getBoss() {
@@ -396,14 +331,6 @@ public class GameController {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Parent getPauseMenuLayer() {
-        return this.pauseMenuLayer;
-    }
-
-    public void setPauseMenuLayer(Parent pauseMenuLayer) {
-        this.pauseMenuLayer = pauseMenuLayer;
     }
 
     public int getCurrentMap() {
@@ -452,5 +379,15 @@ public class GameController {
 
     public boolean IsVictory() {
         return isVictory;
+    }
+
+    public void setFocus() {
+        Platform.runLater(() -> {
+            root.requestFocus();
+        });
+    }
+
+    public void setMenumanager(MenuManager m) {
+        menuManager = m;
     }
 }
