@@ -53,7 +53,7 @@ public class BallManager implements Serializable {
     }
 
     public void updateAll(double deltaTime, GameController gameController) {
-
+        System.out.println(balls.size());
         // Danh sách tạm để lưu bóng cần xoá
         toRemove.clear();
         if (waitingForLaunch) {

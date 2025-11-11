@@ -167,10 +167,10 @@ public class Collision {
 
         // Danh sách các loại Powerup có thể rơi
         String[] types = {
-                "Extend paddle",
+               // "Extend paddle",
                 "Multi ball",
-                "Shrink paddle",
-                "Extra HP",
+                //"Shrink paddle",
+                //"Extra HP",
                 "Fire Ball"
         };
 
