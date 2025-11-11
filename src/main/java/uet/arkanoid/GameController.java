@@ -90,6 +90,7 @@ public class GameController {
         background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
         ballManager = gameMap.getBallManager();
+        powerups.clear();
         if (level > Gameconfig.TOTAL_MAP)
             boss = gameMap.getBoss();
         else
@@ -201,7 +202,6 @@ public class GameController {
         gameloop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                // System.out.println("game start");
                 if (lastUpdate > 0) {
                     double deltaTime = (now - lastUpdate) / 1e9; // convert ns → seconds
                     BaseObject.setDeltatime(deltaTime);

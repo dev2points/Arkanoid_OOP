@@ -15,10 +15,24 @@ public class Ball extends BaseObject {
     private transient Pane pane;
     private transient LinkedList<ImageView> trailList = new LinkedList<>();
     private static final int MAX_TRAIL = 8; // số vệt tối đa
+    private boolean isFireBall = false;
+
 
     // Load ảnh 1 lần cho tất cả Ball
+    private static final Image FIREBALL_IMAGE = new Image(
+            Ball.class.getResource("/assets/image/balls/hp.png").toExternalForm());
     private static final Image BALL_IMAGE = new Image(
             Ball.class.getResource("/assets/image/balls/ball.png").toExternalForm());
+    public void setFireBall(boolean fire) {
+        this.isFireBall = fire;
+        if (super.getView() instanceof ImageView img) { // dùng view của BaseObject
+            img.setImage(fire ? FIREBALL_IMAGE : BALL_IMAGE);
+        }
+    }
+
+    public boolean isFireBall() {
+        return isFireBall;
+    }
 
     public Ball(Pane pane) {
         this.pane = pane;
@@ -73,7 +87,6 @@ public class Ball extends BaseObject {
     public void update(double deltaTime) {
         x += dx * deltaTime;
         y += dy * deltaTime;
-
         // va chạm tường
         if (x <= 0) {
             x = 0;
@@ -97,35 +110,40 @@ public class Ball extends BaseObject {
         }
 
         // tạo hiệu ứng vệt
-        // createTrail();
+        createTrail();
     }
 
     /** Hiệu ứng vệt mờ theo hướng di chuyển */
-    private void createTrail() {
+   private void createTrail() {
         if (!(view instanceof ImageView ballView))
             return;
 
-        ImageView trail = new ImageView(ballView.getImage());
-        trail.setFitWidth(width);
-        trail.setFitHeight(height);
+        // Nếu danh sách trail chưa đủ, tạo sẵn vài ImageView để tái sử dụng
+        while (trailList.size() < MAX_TRAIL) {
+            ImageView trail = new ImageView(ballView.getImage());
+            trail.setFitWidth(width);
+            trail.setFitHeight(height);
+            trail.setOpacity(0.0); // ban đầu ẩn
+            pane.getChildren().add(pane.getChildren().indexOf(ballView), trail);
+            trailList.add(trail);
+        }
+
+        // Dịch chuyển index vòng tròn: vệt cũ nhất sẽ được tái sử dụng
+        ImageView trail = trailList.removeFirst();
+        trailList.addLast(trail);
+
+        // Đặt lại vị trí và hiển thị vệt mới
         trail.setLayoutX(x);
         trail.setLayoutY(y);
         trail.setOpacity(0.4);
 
-        pane.getChildren().add(pane.getChildren().indexOf(ballView), trail);
-        trailList.add(trail);
-
+        // Làm mờ dần dần (tự tính opacity giảm)
         FadeTransition fade = new FadeTransition(Duration.millis(200), trail);
         fade.setFromValue(0.4);
         fade.setToValue(0.0);
-        fade.setOnFinished(e -> pane.getChildren().remove(trail));
         fade.play();
-
-        if (trailList.size() > MAX_TRAIL) {
-            ImageView old = trailList.removeFirst();
-            pane.getChildren().remove(old);
-        }
     }
+
 
     /** Slow: giảm tốc nhưng vẫn đúng tổng vector */
     public void slow() {

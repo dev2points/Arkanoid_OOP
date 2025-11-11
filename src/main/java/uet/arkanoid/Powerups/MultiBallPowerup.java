@@ -9,7 +9,7 @@ import java.util.List;
 public class MultiBallPowerup extends Powerup {
 
     private static final Image IMAGE = new Image(
-            MultiBallPowerup.class.getResource("/assets/image/powerups/hihi.png").toExternalForm());
+            MultiBallPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm());
 
     private GameController controller;
 
@@ -24,7 +24,7 @@ public class MultiBallPowerup extends Powerup {
         return IMAGE;
     }
 
-    @Override
+   @Override
     public void active() {
         // Lấy danh sách bóng hiện có
         List<Ball> currentBalls = new ArrayList<>(controller.getBalls());
@@ -35,10 +35,13 @@ public class MultiBallPowerup extends Powerup {
             double y = mainBall.getY();
             double dx = mainBall.getDx();
             double dy = mainBall.getDy();
-
-            // Tạo 2 quả bóng mới lệch hướng nhau nhẹ
-            Ball ball1 = new Ball(x, y, dx * 0.8, dy, pane);
-            Ball ball2 = new Ball(x, y, -dx * 0.8, dy, pane);
+            double offset = 5; // khoảng cách tách bóng
+            Ball ball1 = new Ball(x - offset, y, dx * 0.8 + 1, dy * 0.8, pane);
+            Ball ball2 = new Ball(x + offset, y, -dx * 0.8, dy * 0.8, pane);
+            if (mainBall.isFireBall()) {
+                ball1.setFireBall(true);
+                ball2.setFireBall(true);
+            }
 
             newBalls.add(ball1);
             newBalls.add(ball2);
@@ -49,4 +52,5 @@ public class MultiBallPowerup extends Powerup {
             controller.addBall(b);
         }
     }
+
 }

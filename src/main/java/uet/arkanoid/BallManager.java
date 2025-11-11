@@ -6,10 +6,10 @@ import java.util.List;
 import javafx.scene.layout.Pane;
 
 public class BallManager implements Serializable {
-    private final List<Ball> balls = new ArrayList<>();
-    private final Paddle paddle;
-    private boolean waitingForLaunch = false; // ← cờ chờ bắt đầu
-    private final List<Ball> toRemove = new ArrayList<>();
+    private List<Ball> balls = new ArrayList<>();
+    private  Paddle paddle;
+    private boolean waitingForLaunch = false; 
+    private  List<Ball> toRemove = new ArrayList<>();
     private transient Pane pane;
 
     public BallManager(Paddle paddle, Pane pane) {
@@ -39,6 +39,9 @@ public class BallManager implements Serializable {
     public List<Ball> getBalls() {
         return balls;
     }
+    public int getSize() {
+        return balls.size();
+    }
 
     public boolean isWaitingForLaunch() {
         return waitingForLaunch;
@@ -49,7 +52,7 @@ public class BallManager implements Serializable {
     }
 
     public void updateAll(double deltaTime, GameController gameController) {
-
+        System.out.println(balls.size());
         // Danh sách tạm để lưu bóng cần xoá
         toRemove.clear();
         if (waitingForLaunch) {
@@ -104,4 +107,9 @@ public class BallManager implements Serializable {
             ball.loadImage();
         }
     }
+    public void reset(){
+        balls.clear();
+        addDefaultBall();
+    }
+
 }
