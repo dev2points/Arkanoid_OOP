@@ -10,6 +10,8 @@ public class PlaySound {
     private static MediaPlayer bgPlayer;
     private static final HashMap<String, AudioClip> soundCache = new HashMap<>();
 
+    private static double effectVolume = 0.5;
+
     // Phát hiệu ứng âm thanh (đã cache)
     public static void soundEffect(String path) {
         try {
@@ -19,7 +21,7 @@ public class PlaySound {
                 clip = new AudioClip(soundPath);
                 soundCache.put(path, clip);
             }
-            clip.play();
+            clip.play(effectVolume); 
         } catch (Exception e) {
             System.err.println("Lỗi phát âm thanh: " + path);
         }
@@ -59,6 +61,7 @@ public class PlaySound {
             bgPlayer.play();
         }
     }
+
     // Đặt âm lượng (0.0 đến 1.0)
     public static void setVolume(double volume) {
         if (bgPlayer != null) {
@@ -74,4 +77,11 @@ public class PlaySound {
         return 0.5;
     }
 
+    public static void setEffectVolume(double volume) {
+        effectVolume = volume;
+    }
+
+    public static double getEffectVolume() {
+        return effectVolume;
+    }
 }

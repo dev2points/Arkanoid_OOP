@@ -35,10 +35,12 @@
       <Pane fx:id="input_pane" layoutX="246.0" layoutY="266.0" prefHeight="66.0" prefWidth="310.0">
          <children>
             <Text fx:id="player_score" fill="WHITE" layoutX="27.0" layoutY="-41.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="YOUR SCORE: " wrappingWidth="254.6" x="20.0" y="60.0" />
-            <Pane fx:id="submit_button" layoutX="246.0" layoutY="11.0" onMouseClicked="#save_score" prefHeight="49.0" prefWidth="59.0" styleClass="menu_pane" />
-            <Rectangle fx:id="continue_button1" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="35.0" layoutX="255.0" layoutY="18.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="42.0" />
+            <Pane fx:id="submit_button" layoutX="246.0" layoutY="11.0" onMouseClicked="#save_score" prefHeight="49.0" prefWidth="59.0" styleClass="menu_pane">
+               <children>
+                  <Text fill="WHITE" layoutX="-30.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OK" textAlignment="CENTER" wrappingWidth="109.6" />
+                  <Rectangle fx:id="continue_button1" arcHeight="20.0" arcWidth="20.0" fill="#82a7d7" height="35.0" layoutX="4.0" layoutY="7.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="50.0" />
+               </children></Pane>
             <TextField fx:id="player_name" layoutX="36.0" layoutY="23.0" prefHeight="25.0" prefWidth="203.0" />
-            <Text fill="WHITE" layoutX="221.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OK" textAlignment="CENTER" wrappingWidth="109.6" />
          </children>
       </Pane>
 

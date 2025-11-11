@@ -11,6 +11,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import uet.arkanoid.GameController;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 import uet.arkanoid.Menu.HighScore.HighscoreController;
 import javafx.scene.Node;
@@ -40,6 +41,7 @@ public class PauseController {
     @FXML
     private void continueGame(MouseEvent event) {
         gamecontroller.ContinueGame();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
@@ -55,6 +57,7 @@ public class PauseController {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("New Game scene loaded successfully!");
         } catch (IOException e) {
@@ -77,6 +80,7 @@ public class PauseController {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");  
 
             System.out.println("Option menu scene loaded successfully!");
         } catch (IOException e) {
@@ -112,6 +116,7 @@ public class PauseController {
             stage.setScene(new Scene(root));
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");  
 
             System.out.println("Highscore scene loaded successfully!");
         } catch (IOException e) {
@@ -124,6 +129,7 @@ public class PauseController {
     private void saveAndExit(MouseEvent event) {
         System.out.println("123");
         input_pane.setVisible(true);
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
@@ -137,6 +143,7 @@ public class PauseController {
             SaveGame.saveScore(name, gamecontroller.getUser().getScore());
             System.out.println("Game saved for user: " + name);
             returnHome(event);
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
         }
 
     }

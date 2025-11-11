@@ -33,54 +33,55 @@ public class MenuController {
 
     @FXML
     private void handleNewGame(MouseEvent event) {
-        // try {
-        // FXMLLoader loader = new
-        // FXMLLoader(getClass().getResource("/assets/maps/main.fxml"));
-        // Parent root = loader.load();
-        // Scene scene = new Scene(root);
-        // GameController controller = loader.getController();
-        // controller.setScene(scene);
-
-        // // Get the current stage
-        // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        // stage.setScene(scene);
-        // stage.show();
-        // stage.centerOnScreen();
-
-        // System.out.println("New Game scene loaded successfully!");
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // System.err.println("Failed to load game.fxml");
-        // }
-
         try {
+        FXMLLoader loader = new
+        FXMLLoader(getClass().getResource("/assets/maps/main.fxml"));
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        GameController controller = loader.getController();
+        controller.setScene(scene);
 
-            // Root cho cả 2 người chơi
-            Pane root = new Pane();
-            // root.getChildren().addAll(player1Pane, player2Pane);
+        // Get the current stage
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-            // Tạo scene
-            Scene scene = new Scene(root, Gameconfig.screen_width * 2,
-                    Gameconfig.screen_height);
+        stage.setScene(scene);
+        stage.show();
+        stage.centerOnScreen();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
-            // Khởi tạo MultiplayerController
-            MultiplayerController multiplayerController = new MultiplayerController(root,
-                    scene);
-            // Lấy stage hiện tại
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-            // root.setLayoutX(0);
-            // root.setLayoutY(0);
-            // root.setTranslateX(0);
-            // root.setTranslateY(0);
-            stage.setScene(scene);
-            stage.show();
-            stage.centerOnScreen();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println("New Game scene loaded successfully!");
+        } catch (IOException e) {
+        e.printStackTrace();
+        System.err.println("Failed to load game.fxml");
         }
+
+        // try {
+
+        //     // Root cho cả 2 người chơi
+        //     Pane root = new Pane();
+        //     // root.getChildren().addAll(player1Pane, player2Pane);
+
+        //     // Tạo scene
+        //     Scene scene = new Scene(root, Gameconfig.screen_width * 2,
+        //             Gameconfig.screen_height);
+
+        //     // Khởi tạo MultiplayerController
+        //     MultiplayerController multiplayerController = new MultiplayerController(root,
+        //             scene);
+        //     // Lấy stage hiện tại
+        //     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        //     // root.setLayoutX(0);
+        //     // root.setLayoutY(0);
+        //     // root.setTranslateX(0);
+        //     // root.setTranslateY(0);
+        //     stage.setScene(scene);
+        //     stage.show();
+        //     stage.centerOnScreen();
+
+        // } catch (Exception e) {
+        //     e.printStackTrace();
+        // }
     }
 
     @FXML
@@ -98,6 +99,7 @@ public class MenuController {
             // Hiển thị giao diện Load Game
             stage.setScene(scene);
             stage.show();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Load Game scene loaded successfully!");
         } catch (IOException e) {
@@ -119,6 +121,7 @@ public class MenuController {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Option menu scene loaded successfully!");
 
@@ -155,6 +158,7 @@ public class MenuController {
             stage.setScene(new Scene(root));
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Highscore scene loaded successfully!");
         } catch (IOException e) {

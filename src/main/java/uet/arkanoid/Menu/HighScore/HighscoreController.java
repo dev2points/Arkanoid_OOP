@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -63,6 +64,7 @@ public class HighscoreController {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Return menu from highscore");
         } catch (IOException e) {

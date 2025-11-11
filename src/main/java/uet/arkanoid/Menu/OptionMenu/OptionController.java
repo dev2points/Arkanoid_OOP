@@ -22,21 +22,40 @@ public class OptionController {
     private Label volumeLabel;
 
     @FXML
+    private Slider volumeSlider1;
+
+    @FXML
+    private Label volumeLabel1;
+
+    @FXML
     public void initialize() {
         // Lấy âm lượng hiện tại từ PlaySound (đang là 0.0 – 1.0)
         double currentVolume = PlaySound.getVolume() * 100;
         volumeSlider.setValue(currentVolume);
         updateVolumeLabel(currentVolume);
 
+        double currentVolume1 = PlaySound.getEffectVolume() * 100;
+        volumeSlider1.setValue(currentVolume1);
+        updateVolumeLabel1(currentVolume1);
+
         // Khi kéo thanh trượt, cập nhật âm lượng nhạc nền
         volumeSlider.valueProperty().addListener((obs, oldVal, newVal) -> {
             updateVolumeLabel(newVal.doubleValue());
             PlaySound.setVolume(newVal.doubleValue() / 100.0);
         });
+
+        volumeSlider1.valueProperty().addListener((obs, oldVal, newVal) -> {
+            updateVolumeLabel1(newVal.doubleValue());
+            PlaySound.setEffectVolume(newVal.doubleValue() / 100.0);
+        });
     }
 
     private void updateVolumeLabel(double value) {
         volumeLabel.setText(String.format("Volume: %.0f%%", value));
+    }
+
+    private void updateVolumeLabel1(double value) {
+        volumeLabel1.setText(String.format("Volume: %.0f%%", value));
     }
 
     public double getVolume() {
@@ -45,6 +64,14 @@ public class OptionController {
 
     public void setVolume(double value) {
         volumeSlider.setValue(value);
+    }
+
+    public double getVolume1() {
+        return volumeSlider1.getValue();
+    }
+
+    public void setVolume1(double value) {
+        volumeSlider1.setValue(value);
     }
 
     @FXML
@@ -60,6 +87,7 @@ public class OptionController {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("New Game scene loaded successfully!");
         } catch (IOException e) {

@@ -54,7 +54,6 @@ public class GameController {
         root.requestFocus();
         root.setPrefWidth(Gameconfig.screen_width);
         root.setPrefHeight(Gameconfig.screen_height);
-        PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
         user = new User(3, 0);
         currentMap = 0;
         isPlaying = true;

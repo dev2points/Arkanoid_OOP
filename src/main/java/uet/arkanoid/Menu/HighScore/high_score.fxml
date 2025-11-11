@@ -5,12 +5,12 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/25" fx:controller="uet.arkanoid.Menu.HighScore.HighscoreController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.HighScore.HighscoreController">
 
     <Label layoutX="333.0" layoutY="75.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="High Scores" />
 
     <ListView fx:id="highscoreList" layoutX="63.0" layoutY="120.0" prefHeight="334.0" prefWidth="674.0" />
 
-    <Button layoutX="360.0" layoutY="521.0" onAction="#handleBack" prefHeight="35.0" prefWidth="79.0" text="Back" />
+    <Button layoutX="360.0" layoutY="521.0" onAction="#handleBack" onMouseClicked="#handleBack" prefHeight="35.0" prefWidth="79.0" text="Back" />
 
 </AnchorPane>

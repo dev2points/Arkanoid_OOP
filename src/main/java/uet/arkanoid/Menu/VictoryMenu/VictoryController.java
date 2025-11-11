@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import uet.arkanoid.GameController;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 import uet.arkanoid.Menu.HighScore.HighscoreController;
 import javafx.scene.Node;
@@ -99,6 +100,7 @@ public class VictoryController {
 
             stage.setScene(scene);
             stage.show();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Option menu scene loaded successfully!");
         } catch (IOException e) {
@@ -123,6 +125,7 @@ public class VictoryController {
             // Hiển thị giao diện Highscore
             stage.setScene(new Scene(root));
             stage.show();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Highscore scene loaded successfully!");
         } catch (IOException e) {
@@ -141,6 +144,7 @@ public class VictoryController {
         if (playerName != "") {
             victory_menu.getChildren().remove(input_pane);
         }
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     public void setGameController(GameController g) {

@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import uet.arkanoid.GameController;
 import uet.arkanoid.GameMap;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 import uet.arkanoid.User;
 import javafx.scene.Node;
@@ -66,6 +67,7 @@ public class LoadGameController {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Process saved loaded successfully!");
         } catch (IOException e) {
@@ -106,6 +108,7 @@ public class LoadGameController {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
             System.out.println("Return menu from loadGame!");
         } catch (IOException e) {

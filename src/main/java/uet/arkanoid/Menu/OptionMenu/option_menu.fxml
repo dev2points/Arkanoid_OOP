@@ -11,23 +11,34 @@
 <AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.OptionMenu.OptionController">
 
     <children>
-      <Pane layoutX="300.0" layoutY="209.0" prefHeight="52.0" prefWidth="200.0">
+      <Pane layoutX="300.0" layoutY="266.0" prefHeight="52.0" prefWidth="200.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" />
+            <Label fx:id="volumeLabel" prefHeight="23.0" prefWidth="172.0" text="0%" />
+            <Slider fx:id="volumeSlider" prefHeight="69.0" prefWidth="202.0" value="10.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Slider>
          </children>
       </Pane>
       <Pane fx:id="optionsButton" layoutX="332.0" layoutY="415.0" onMouseClicked="#returnHome" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
          <children>
             <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="-1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
-            <Text fill="WHITE" layoutX="12.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
+            <Text fill="WHITE" layoutX="12.0" layoutY="23.0" onMouseClicked="#returnHome" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
          </children>
       </Pane>
-      <Label fx:id="volumeLabel" layoutX="332.0" layoutY="321.0" prefHeight="23.0" prefWidth="172.0" text="0%" />
-      <Slider fx:id="volumeSlider" layoutX="310.0" layoutY="321.0" prefHeight="69.0" prefWidth="202.0" value="10.0">
-         <cursor>
-            <Cursor fx:constant="HAND" />
-         </cursor>
-      </Slider>
+      <Pane layoutX="300.0" layoutY="341.0" prefHeight="52.0" prefWidth="200.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ffffff00" height="52.0" width="200.0" />
+            <Label fx:id="volumeLabel1" prefHeight="23.0" prefWidth="172.0" text="0%" />
+            <Slider fx:id="volumeSlider1" prefHeight="69.0" prefWidth="202.0" value="10.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Slider>
+         </children>
+      </Pane>
 
     </children>
 </AnchorPane>

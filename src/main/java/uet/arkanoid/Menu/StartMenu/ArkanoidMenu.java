@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import uet.arkanoid.PlaySound;
 
 import java.io.IOException;
 
@@ -21,6 +22,7 @@ public class ArkanoidMenu extends Application {
             primaryStage.setScene(scene);
             primaryStage.setResizable(false);
             primaryStage.show();
+            PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
             
 
         } catch (IOException e) {
