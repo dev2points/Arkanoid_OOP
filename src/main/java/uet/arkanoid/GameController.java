@@ -80,7 +80,7 @@ public class GameController {
         this.num = num;
         isMultiPlayer = true;
         user = new User(3, 0);
-        currentMap = 4;
+        currentMap = 1;
         init_lable();
         isPlaying = true;
         MainLoop();
