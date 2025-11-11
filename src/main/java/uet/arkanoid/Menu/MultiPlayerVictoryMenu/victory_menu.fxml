@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="victory_menu" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.MuliPlayerVictoryMenu.VictoryController">
+
+    <children>
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text fx:id="winner_text" layoutX="165.0" layoutY="313.0" stroke="black" strokeWidth="1.0" style="-fx-font-size: 48px; -fx-fill: gold; -fx-font-weight: bold;" text="" wrappingWidth="461.59991455078125" />
+
+        <!-- NEW GAME -->
+        <Pane fx:id="continueButton" layoutX="96.0" layoutY="447.0" onMouseClicked="#playagain" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
+            <children>
+                <Rectangle fx:id="continue_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+                <Text fill="WHITE" layoutX="13.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="PLAY AGAIN" textAlignment="CENTER" wrappingWidth="109.6" />
+            <ImageView fitHeight="67.0" fitWidth="67.0" layoutX="33.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@load.png" />
+               </image>
+            </ImageView>
+            </children>
+        </Pane>
+      <Pane fx:id="high_score" layoutX="353.0" layoutY="447.0" onMouseClicked="#handleHighScore" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
+         <children>
+                <Rectangle fx:id="option_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+            <Text fill="WHITE" layoutX="14.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="HIGH SCORE" textAlignment="CENTER" wrappingWidth="109.6" />
+            <ImageView fitHeight="67.0" fitWidth="79.0" layoutX="29.0" layoutY="14.0">
+               <image>
+                  <Image url="@high_score.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+
+              <!-- OPTIONS -->
+        <Pane fx:id="optionsButton" layoutX="613.0" layoutY="447.0" onMouseClicked="#returnHome" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
+         <children>
+            <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+            <ImageView fitHeight="67.0" fitWidth="87.0" layoutX="37.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@home.png" />
+               </image>
+            </ImageView>
+            <Text fill="WHITE" layoutX="14.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
+         </children>
+        </Pane>
+
+    </children>
+</AnchorPane>
