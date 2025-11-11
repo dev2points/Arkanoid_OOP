@@ -35,47 +35,46 @@ public class MenuController {
 
     @FXML
     private void handleNewGame(MouseEvent event) {
-        // try {
-        // FXMLLoader loader = new
-        // FXMLLoader(getClass().getResource("/assets/maps/main.fxml"));
-        // Parent root = loader.load();
-        // Scene scene = new Scene(root);
-        // GameController controller = loader.getController();
-        // controller.setScene(scene);
-
-        // // Get the current stage
-        // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        // stage.setScene(scene);
-        // stage.show();
-
-        // System.out.println("New Game scene loaded successfully!");
-        // } catch (IOException e) {
-        // e.printStackTrace();
-        // System.err.println("Failed to load game.fxml");
-        // }
-
         try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/assets/maps/main.fxml"));
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            GameController controller = loader.getController();
+            controller.setScene(scene);
 
-            // Root cho cả 2 người chơi
-            Pane root = new Pane();
-            // root.getChildren().addAll(player1Pane, player2Pane);
-
-            // Tạo scene
-            Scene scene = new Scene(root, Gameconfig.screen_width * 2,
-                    Gameconfig.screen_height);
-
-            // Khởi tạo MultiplayerController
-            MultiplayerController multiplayerController = new MultiplayerController(root,
-                    scene);
-            // Lấy stage hiện tại
+            // Get the current stage
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
             stage.setScene(scene);
             stage.show();
 
-        } catch (Exception e) {
+            System.out.println("New Game scene loaded successfully!");
+        } catch (IOException e) {
             e.printStackTrace();
+            System.err.println("Failed to load game.fxml");
         }
+
+        // try {
+
+        // // Root cho cả 2 người chơi
+        // Pane root = new Pane();
+        // // root.getChildren().addAll(player1Pane, player2Pane);
+
+        // // Tạo scene
+        // Scene scene = new Scene(root, Gameconfig.screen_width * 2,
+        // Gameconfig.screen_height);
+
+        // // Khởi tạo MultiplayerController
+        // MultiplayerController multiplayerController = new MultiplayerController(root,
+        // scene);
+        // // Lấy stage hiện tại
+        // Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        // stage.setScene(scene);
+        // stage.show();
+
+        // } catch (Exception e) {
+        // e.printStackTrace();
+        // }
     }
 
     @FXML
