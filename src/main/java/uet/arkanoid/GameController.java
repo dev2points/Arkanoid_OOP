@@ -44,6 +44,9 @@ public class GameController {
     private Label scoreLabel;
     private Label livesLabel;
     private static boolean isPlaying = false;
+    private int num = 2;
+    private boolean isVictory = false;
+    private boolean isMultiPlayer = false;
 
     @FXML
     public void initialize() {
@@ -67,8 +70,22 @@ public class GameController {
 
     }
 
+    public GameController() {
+    }
+
+    public GameController(int num, Pane pane, Scene scene) {
+        this.scene = scene;
+        this.root = pane;
+        this.num = num;
+        isMultiPlayer = true;
+        user = new User(3, 0);
+        currentMap = 4;
+        init_lable();
+        isPlaying = true;
+        MainLoop();
+    }
+
     private void LevelLoader(int level) {
-        BaseObject.setRootPane(root);
         gameMap = new GameMap(level, root);
         background = gameMap.getBackground();
         paddle = gameMap.getPaddle();
@@ -117,7 +134,10 @@ public class GameController {
 
         }
         if (boss != null && boss.getHealthpoint() <= 0) {
+            isVictory = true;
             gameloop.stop();
+            if (!isMultiPlayer)
+                return;
             try {
                 FXMLLoader loader = new FXMLLoader(
                         getClass().getResource("/uet/arkanoid/Menu/VictoryMenu/victory_menu.fxml"));
@@ -137,7 +157,6 @@ public class GameController {
     }
 
     public void loadProcess(Pair<GameMap, User> process) {
-        BaseObject.setRootPane(root);
         gameMap = process.getKey();
         currentMap = gameMap.getLevel();
         System.out.println(currentMap);
@@ -148,10 +167,10 @@ public class GameController {
         user = process.getValue();
         if (currentMap <= Gameconfig.TOTAL_MAP) {
             bricks = gameMap.getBricks();
-            background = new Background(3);
+            background = new Background(3, root);
         } else {
             boss = gameMap.getBoss();
-            background = new Background(1);
+            background = new Background(1, root);
         }
         restoreView();
         init_lable();
@@ -182,13 +201,13 @@ public class GameController {
         gameloop = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                // System.out.println("game start");
                 if (lastUpdate > 0) {
                     double deltaTime = (now - lastUpdate) / 1e9; // convert ns → seconds
                     BaseObject.setDeltatime(deltaTime);
                     if (scene != null) {
-                        // HandleInput.check_input(paddle, ball, scene, GameController.this);
-                        HandleInput.check_input(paddle, ballManager, scene, GameController.this);
-                        HandleInput.testSaveGame(scene, GameController.this);
+
+                        HandleInput.check_input(num, scene, GameController.this);
                     }
                     // Check va chạm
                     Collision.checkPaddleCollision(GameController.this);
@@ -374,6 +393,10 @@ public class GameController {
         this.currentMap = currentMap;
     }
 
+    public Pane getPane() {
+        return root;
+    }
+
     public Label getScoreLabel() {
         return this.scoreLabel;
     }
@@ -406,4 +429,7 @@ public class GameController {
         return isPlaying;
     }
 
+    public boolean IsVictory() {
+        return isVictory;
+    }
 }

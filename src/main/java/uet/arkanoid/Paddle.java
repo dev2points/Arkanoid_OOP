@@ -2,6 +2,7 @@ package uet.arkanoid;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Pane;
 
 public class Paddle extends BaseObject {
 
@@ -13,11 +14,11 @@ public class Paddle extends BaseObject {
 
     private int state = 0; // -1 = shrink, 0 = normal, 1 = extend
 
-    public Paddle() {
+    public Paddle(Pane pane) {
         super(SCREEN_WIDTH / 2 - Gameconfig.width_paddle / 2,
                 SCREEN_HEIGHT - Gameconfig.height_paddle,
                 Gameconfig.width_paddle,
-                Gameconfig.height_paddle);
+                Gameconfig.height_paddle, pane);
         loadImage();
     }
 

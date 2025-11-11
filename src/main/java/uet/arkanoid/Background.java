@@ -1,10 +1,12 @@
 package uet.arkanoid;
 
+import javafx.scene.layout.Pane;
+
 public class Background extends BaseObject {
     private int type;
 
-    Background(int type) {
-        super(0, 0, Gameconfig.screen_width, Gameconfig.screen_height, BaseObject.getRootPane());
+    Background(int type, Pane pane) {
+        super(0, 0, Gameconfig.screen_width, Gameconfig.screen_height, pane);
         this.type = type;
         loadImage();
     }

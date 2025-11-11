@@ -12,7 +12,7 @@ public class BaseObject implements Serializable {
 
     protected double x, y, width, height;
     protected transient Node view;
-    protected static transient Pane pane;
+    protected transient Pane pane;
     protected static double deltatime;
 
     public BaseObject(double x, double y, double width, double height, Pane pane) {
@@ -42,7 +42,7 @@ public class BaseObject implements Serializable {
         // pane.getChildren().add(view);
     }
 
-    public static void setRootPane(Pane _pane) {// set màn hình chính để hiển thị
+    public void setRootPane(Pane _pane) {// set màn hình chính để hiển thị
         pane = _pane;
     }
 
@@ -51,7 +51,7 @@ public class BaseObject implements Serializable {
 
     }
 
-    public static Pane getRootPane() {// set màn hình chính để hiển thị
+    public Pane getRootPane() {// set màn hình chính để hiển thị
         return pane;
     }
 

@@ -204,7 +204,8 @@ public class Collision {
         String[] types = {
                 "Extend paddle",
                 "Multi ball",
-                "Shrink paddle"
+                "Shrink paddle",
+                "Extra HP"
         };
 
         // Chọn ngẫu nhiên một loại
@@ -217,14 +218,16 @@ public class Collision {
         Powerup newPowerup = null;
         switch (randomType) {
             case "Extend paddle":
-                newPowerup = new ExtendPaddlePowerup(x, y, width, height, paddle);
+                newPowerup = new ExtendPaddlePowerup(x, y, width, height, paddle, gameController.getPane());
                 break;
             case "Shrink paddle":
-                newPowerup = new ShrinkPaddlePowerup(x, y, width, height, paddle);
+                newPowerup = new ShrinkPaddlePowerup(x, y, width, height, paddle, gameController.getPane());
                 break;
             case "Multi ball":
                 newPowerup = new MultiBallPowerup(x, y, width, height, gameController);
                 break;
+            case "Extra HP":
+                newPowerup = new ExtraHpPowerup(x, y, width, height, gameController);
             default:
                 return null;
         }

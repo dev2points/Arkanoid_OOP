@@ -34,7 +34,7 @@ public class PauseController {
     private void initialize() {
         // Optional hover effects or setup code
         System.out.println("Menu loaded successfully!");
-        GameController.setIsplaying(false);
+        gamecontroller.setIsplaying(false);
     }
 
     @FXML
@@ -135,7 +135,7 @@ public class PauseController {
             System.out.println("Game saved for user: " + name);
             returnHome(event);
         }
-        
+
     }
 
     public void setGameController(GameController g) {

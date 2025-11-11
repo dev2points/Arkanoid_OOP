@@ -9,13 +9,12 @@ import java.util.List;
 public class MultiBallPowerup extends Powerup {
 
     private static final Image IMAGE = new Image(
-        MultiBallPowerup.class.getResource("/assets/image/powerups/extend_paddle.png").toExternalForm()
-    );
+            MultiBallPowerup.class.getResource("/assets/image/powerups/hihi.png").toExternalForm());
 
     private GameController controller;
 
     public MultiBallPowerup(double x, double y, double width, double height, GameController controller) {
-        super(x, y, width, height);
+        super(x, y, width, height, controller.getPane());
         this.controller = controller;
     }
 
@@ -38,8 +37,8 @@ public class MultiBallPowerup extends Powerup {
             double dy = mainBall.getDy();
 
             // Tạo 2 quả bóng mới lệch hướng nhau nhẹ
-            Ball ball1 = new Ball(x, y, dx * 0.8, dy);
-            Ball ball2 = new Ball(x, y, -dx * 0.8, dy);
+            Ball ball1 = new Ball(x, y, dx * 0.8, dy, pane);
+            Ball ball2 = new Ball(x, y, -dx * 0.8, dy, pane);
 
             newBalls.add(ball1);
             newBalls.add(ball2);
