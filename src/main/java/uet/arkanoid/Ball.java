@@ -20,7 +20,7 @@ public class Ball extends BaseObject {
 
     // Load ảnh 1 lần cho tất cả Ball
     private static final Image FIREBALL_IMAGE = new Image(
-            Ball.class.getResource("/assets/image/balls/hp.png").toExternalForm());
+            Ball.class.getResource("/assets/image/balls/fireball.png").toExternalForm());
     private static final Image BALL_IMAGE = new Image(
             Ball.class.getResource("/assets/image/balls/ball.png").toExternalForm());
     public void setFireBall(boolean fire) {

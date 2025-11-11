@@ -9,7 +9,7 @@ import java.util.List;
 public class FireBallPowerup extends Powerup {
 
     private static final Image IMAGE = new Image(
-            FireBallPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm()
+            FireBallPowerup.class.getResource("/assets/image/powerups/fireball.png").toExternalForm()
     );
 
     private final GameController controller;

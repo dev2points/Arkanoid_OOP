@@ -102,12 +102,23 @@ public class GameController {
         scoreLabel = new Label("Score: 0");
         scoreLabel.setLayoutX(20);
         scoreLabel.setLayoutY(10);
-        scoreLabel.setStyle("-fx-text-fill: black; -fx-font-size: 18px;");
+        scoreLabel.setStyle("""
+            -fx-font-size: 24px;
+            -fx-font-weight: bold;
+            -fx-text-fill: linear-gradient(to right, #ff6600, #ffff00);
+            -fx-effect: dropshadow(gaussian, rgba(255,120,0,0.8), 10, 0.5, 0, 0);
+        """);
+
 
         livesLabel = new Label("Lives: 3");
         livesLabel.setLayoutX(20);
         livesLabel.setLayoutY(50);
-        livesLabel.setStyle("-fx-text-fill: black; -fx-font-size: 18px;");
+        livesLabel.setStyle("""
+            -fx-font-size: 24px;
+            -fx-font-weight: bold;
+            -fx-text-fill: linear-gradient(to right, #ff6600, #ffff00);
+            -fx-effect: dropshadow(gaussian, rgba(255,120,0,0.8), 10, 0.5, 0, 0);
+        """);
 
         root.getChildren().addAll(scoreLabel, livesLabel);
     }

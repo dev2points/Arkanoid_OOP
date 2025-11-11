@@ -9,7 +9,7 @@ import java.util.List;
 public class MultiBallPowerup extends Powerup {
 
     private static final Image IMAGE = new Image(
-            MultiBallPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm());
+            MultiBallPowerup.class.getResource("/assets/image/powerups/mutiball.png").toExternalForm());
 
     private GameController controller;
 
