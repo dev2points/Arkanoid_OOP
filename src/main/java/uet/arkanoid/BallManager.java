@@ -3,7 +3,6 @@ package uet.arkanoid;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 
 public class BallManager implements Serializable {
@@ -11,7 +10,7 @@ public class BallManager implements Serializable {
     private final Paddle paddle;
     private boolean waitingForLaunch = false; // ← cờ chờ bắt đầu
     private final List<Ball> toRemove = new ArrayList<>();
-    private Pane pane;
+    private transient Pane pane;
 
     public BallManager(Paddle paddle, Pane pane) {
         this.pane = pane;

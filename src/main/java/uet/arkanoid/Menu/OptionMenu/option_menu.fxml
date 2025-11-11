@@ -3,8 +3,6 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Rectangle?>
@@ -18,15 +16,10 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" />
          </children>
       </Pane>
-      <Pane fx:id="optionsButton" layoutX="332.0" layoutY="457.0" onMouseClicked="#returnHome" prefHeight="121.0" prefWidth="137.0" styleClass="menu_pane">
+      <Pane fx:id="optionsButton" layoutX="332.0" layoutY="415.0" onMouseClicked="#returnHome" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
          <children>
-            <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="121.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
-            <ImageView fitHeight="67.0" fitWidth="87.0" layoutX="37.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../VictoryMenu/home.png" />
-               </image>
-            </ImageView>
-            <Text fill="WHITE" layoutX="14.0" layoutY="105.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
+            <Rectangle fx:id="return_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="-1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+            <Text fill="WHITE" layoutX="12.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="RETURN HOME" textAlignment="CENTER" wrappingWidth="109.6" />
          </children>
       </Pane>
       <Label fx:id="volumeLabel" layoutX="332.0" layoutY="321.0" prefHeight="23.0" prefWidth="172.0" text="0%" />

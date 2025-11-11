@@ -1,9 +1,7 @@
 package uet.arkanoid;
 
 import java.util.List;
-
 import uet.arkanoid.Powerups.*;
-
 import java.util.Iterator;
 
 public class Collision {

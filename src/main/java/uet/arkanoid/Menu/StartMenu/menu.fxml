@@ -4,120 +4,47 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Polygon?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="root"
-            prefHeight="600.0"
-            prefWidth="800.0"
-            style="-fx-background-color: white;"
-            stylesheets="@style.css"
-            xmlns="http://javafx.com/javafx/25"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="uet.arkanoid.Menu.StartMenu.MenuController">
+<AnchorPane fx:id="root" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;" stylesheets="@style.css" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.StartMenu.MenuController">
 
     <children>
 
         <!-- NEW GAME -->
-        <Pane fx:id="newGameButton"
-              layoutX="43.0" layoutY="447.0"
-              prefHeight="121.0" prefWidth="137.0"
-              styleClass="menu_pane"
-              onMouseClicked="#handleNewGame">
+        <Pane fx:id="newGameButton" layoutX="321.0" layoutY="337.0" onMouseClicked="#handleNewGame" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0"
-                           fill="#002557" height="121.0" width="136.0"
-                           stroke="BLACK" strokeType="INSIDE"
-                           opacity="0.9" styleClass="menu_button" />
-                <Text fill="WHITE" layoutX="13.0" layoutY="105.0"
-                      strokeType="OUTSIDE" strokeWidth="0.0"
-                      styleClass="menu_text" text="NEW GAME"
-                      textAlignment="CENTER" wrappingWidth="109.6" />
-                <Polygon fill="WHITE" layoutX="96.0" layoutY="50.0"
-                         points="-50.0, 26.0, 3.5, -3.0, -50.0, -33.5"
-                         stroke="BLACK" strokeType="INSIDE" />
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="-2.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="138.0" />
+                <Text fill="WHITE" layoutX="13.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="NEW GAME" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
 
         <!-- LOAD GAME -->
-        <Pane fx:id="loadGameButton"
-              layoutX="237.0" layoutY="447.0"
-              prefHeight="121.0" prefWidth="137.0"
-              styleClass="menu_pane"
-              onMouseClicked="#handleLoadGame">
+        <Pane fx:id="loadGameButton" layoutX="321.0" layoutY="394.0" onMouseClicked="#handleLoadGame" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0"
-                           fill="#002557" height="121.0" width="136.0"
-                           stroke="BLACK" strokeType="INSIDE"
-                           opacity="0.9" styleClass="menu_button" />
-                <ImageView fitHeight="60.0" fitWidth="60.0"
-                           layoutX="36.0" layoutY="20.0"
-                           pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@load.png" />
-                    </image>
-                </ImageView>
-                <Text fill="WHITE" layoutX="13.0" layoutY="105.0"
-                      strokeType="OUTSIDE" strokeWidth="0.0"
-                      styleClass="menu_text" text="LOAD GAME"
-                      textAlignment="CENTER" wrappingWidth="109.6" />
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="-2.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="138.0" />
+                <Text fill="WHITE" layoutX="13.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="LOAD GAME" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
 
         <!-- OPTIONS -->
-        <Pane fx:id="optionsButton"
-              layoutX="439.0" layoutY="447.0"
-              prefHeight="121.0" prefWidth="137.0"
-              styleClass="menu_pane"
-              onMouseClicked="#handleOptions">
+        <Pane fx:id="optionsButton" layoutX="320.0" layoutY="447.0" onMouseClicked="#handleOptions" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0"
-                           fill="#002557" height="121.0" width="136.0"
-                           stroke="BLACK" strokeType="INSIDE"
-                           opacity="0.9" styleClass="menu_button" />
-                <ImageView fitHeight="60.0" fitWidth="60.0"
-                           layoutX="38.0" layoutY="18.0"
-                           pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@option.png" />
-                    </image>
-                </ImageView>
-                <Text fill="WHITE" layoutX="13.0" layoutY="105.0"
-                      strokeType="OUTSIDE" strokeWidth="0.0"
-                      styleClass="menu_text" text="OPTIONS"
-                      textAlignment="CENTER" wrappingWidth="109.6" />
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="-2.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="138.0" />
+                <Text fill="WHITE" layoutX="14.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OPTIONS" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
 
         <!-- HIGH SCORE -->
-        <Pane fx:id="highScoreButton"
-              layoutX="628.0" layoutY="447.0"
-              prefHeight="121.0" prefWidth="137.0"
-              styleClass="menu_pane"
-              onMouseClicked="#handleHighScore">
+        <Pane fx:id="highScoreButton" layoutX="320.0" layoutY="505.0" onMouseClicked="#handleHighScore" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
             <children>
-                <Rectangle arcHeight="20.0" arcWidth="20.0"
-                           fill="#002557" height="121.0" width="136.0"
-                           stroke="BLACK" strokeType="INSIDE"
-                           opacity="0.9" styleClass="menu_button" />
-                <ImageView fitHeight="60.0" fitWidth="60.0"
-                           layoutX="37.0" layoutY="10.0"
-                           pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@high-score.png" />
-                    </image>
-                </ImageView>
-                <Text fill="WHITE" layoutX="13.0" layoutY="105.0"
-                      strokeType="OUTSIDE" strokeWidth="0.0"
-                      styleClass="menu_text" text="HIGH SCORE"
-                      textAlignment="CENTER" wrappingWidth="109.6" />
+                <Rectangle arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
+                <Text fill="WHITE" layoutX="14.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="HIGH SCORE" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
 
         <!-- TITLE IMAGE -->
-        <ImageView fitHeight="206.0" fitWidth="707.0"
-                   layoutX="69.0" layoutY="88.0">
+        <ImageView fitHeight="206.0" fitWidth="707.0" layoutX="69.0" layoutY="88.0">
             <image>
                 <Image url="@title.png" />
             </image>

@@ -21,7 +21,7 @@ public class PlaySound {
             }
             clip.play();
         } catch (Exception e) {
-            System.err.println("⚠️ Lỗi phát âm thanh: " + path);
+            System.err.println("Lỗi phát âm thanh: " + path);
         }
     }
 
@@ -36,7 +36,7 @@ public class PlaySound {
             bgPlayer.setVolume(0.5);
             bgPlayer.play();
         } catch (Exception e) {
-            System.err.println("⚠️ Lỗi phát nhạc nền: " + path);
+            System.err.println("Lỗi phát nhạc nền: " + path);
         }
     }
 

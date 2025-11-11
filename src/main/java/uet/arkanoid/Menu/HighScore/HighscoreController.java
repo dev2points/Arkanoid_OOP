@@ -83,13 +83,13 @@ public class HighscoreController {
         // Đưa dữ liệu vào ListView
         ObservableList<String> items = FXCollections.observableArrayList();
         // Thêm tiêu đề bảng
-        items.add(String.format("%-4s %-20s %8s", "STT", "Tên người chơi", "Điểm"));
-        items.add("----------------------------------------------------");
+        items.add(String.format("%-20s %-50s %8s", "STT", "Tên người chơi", "Điểm"));
+        items.add("-----------------------------------------------------------------------------------");
 
         // Thêm dữ liệu người chơi
         for (int i = 0; i < players.size(); i++) {
             Pair<String, Integer> p = players.get(i);
-            items.add(String.format("%-4d %-20s %8d", i + 1, p.getKey(), p.getValue()));
+            items.add(String.format("%-20d %-50s %8d", i + 1, p.getKey(), p.getValue()));
         }
         highscoreList.setItems(items);
         // Căn chỉnh thẳng hàng dữ liệu
