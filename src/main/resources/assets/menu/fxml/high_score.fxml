@@ -5,11 +5,7 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<<<<<<< Updated upstream:src/main/java/uet/arkanoid/Menu/HighScore/high_score.fxml
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.HighScore.HighscoreController">
-=======
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uet.arkanoid.Menu.HighScoreController">
->>>>>>> Stashed changes:src/main/resources/assets/menu/fxml/high_score.fxml
 
     <Label layoutX="333.0" layoutY="75.0" style="-fx-font-size: 24px; -fx-font-weight: bold;" text="High Scores" />
 

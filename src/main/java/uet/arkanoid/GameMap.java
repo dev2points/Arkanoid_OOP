@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 
 public class GameMap implements Serializable {
     // private static final long serialVersionUID = 1L;
