@@ -15,14 +15,24 @@ public class ShrinkPaddlePowerup extends Powerup {
         this.paddle = paddle;
     }
 
+    // Constructor cho khi deserialized
+    public ShrinkPaddlePowerup(double x, double y, double width, double height, double fallSpeed) {
+        super(x, y, width, height, fallSpeed);
+        // paddle sẽ được gán lại
+    }
+
     @Override
     public Image loadImage() {
-        // Không load lại mỗi lần nữa
         return IMAGE;
     }
 
     @Override
     public void active() {
         paddle.shrink();
+    }
+
+    // Setter cho paddle khi khôi phục game
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
     }
 }

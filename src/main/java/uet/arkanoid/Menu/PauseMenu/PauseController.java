@@ -133,10 +133,14 @@ public class PauseController {
             System.out.println("No name entered, game not saved.");
         } else {
             gamecontroller.getUser().setName(name);
-            SaveGame.saveGame(gamecontroller);
-            SaveGame.saveScore(name, gamecontroller.getUser().getScore());
-            System.out.println("Game saved for user: " + name);
-            returnHome(event);
+            try {
+                SaveGame.saveGame(gamecontroller.getGameMap(), gamecontroller.getUser());
+                SaveGame.saveScore(name, gamecontroller.getUser().getScore());
+                System.out.println("Game saved for user: " + name);
+                returnHome(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
     }

@@ -9,23 +9,30 @@ import java.util.List;
 public class MultiBallPowerup extends Powerup {
 
     private static final Image IMAGE = new Image(
-            MultiBallPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm());
+            MultiBallPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm()); // Dùng tạm hp.png
 
-    private GameController controller;
+    private transient GameController controller; // Transient vì không serialize GameController
 
     public MultiBallPowerup(double x, double y, double width, double height, GameController controller) {
         super(x, y, width, height, controller.getPane());
         this.controller = controller;
     }
 
+    // Constructor cho khi deserialized
+    public MultiBallPowerup(double x, double y, double width, double height, double fallSpeed) {
+        super(x, y, width, height, fallSpeed);
+        // controller sẽ được gán lại sau
+    }
+
     @Override
     public Image loadImage() {
-        // Dùng ảnh cache thay vì load lại mỗi lần
         return IMAGE;
     }
 
-   @Override
+    @Override
     public void active() {
+        if (controller == null)
+            return; // Đảm bảo controller đã được gán lại
         // Lấy danh sách bóng hiện có
         List<Ball> currentBalls = new ArrayList<>(controller.getBalls());
         List<Ball> newBalls = new ArrayList<>();
@@ -36,8 +43,9 @@ public class MultiBallPowerup extends Powerup {
             double dx = mainBall.getDx();
             double dy = mainBall.getDy();
             double offset = 5; // khoảng cách tách bóng
-            Ball ball1 = new Ball(x - offset, y, dx * 0.8 + 1, dy * 0.8, pane);
-            Ball ball2 = new Ball(x + offset, y, -dx * 0.8, dy * 0.8, pane);
+            // Điều chỉnh dx, dy để bóng bay theo các hướng khác nhau
+            Ball ball1 = new Ball(x - offset, y, dx * 0.8 + 50, dy * 0.8, pane); // Điều chỉnh dx, dy
+            Ball ball2 = new Ball(x + offset, y, -dx * 0.8 - 50, dy * 0.8, pane); // Điều chỉnh dx, dy
             if (mainBall.isFireBall()) {
                 ball1.setFireBall(true);
                 ball2.setFireBall(true);
@@ -53,4 +61,8 @@ public class MultiBallPowerup extends Powerup {
         }
     }
 
+    // // Setter cho controller khi khôi phục game
+    // public void setGameController(GameController controller) {
+    // this.controller = controller;
+    // }
 }

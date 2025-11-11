@@ -12,55 +12,47 @@ public class BaseObject implements Serializable {
 
     protected double x, y, width, height;
     protected transient Node view;
-    protected transient Pane pane;
+    protected transient Pane pane; // Đánh dấu transient
     protected static double deltatime;
 
+    // Constructor có Pane (dùng khi tạo mới)
     public BaseObject(double x, double y, double width, double height, Pane pane) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.pane = pane;
-        // Rectangle rect = new Rectangle(width, height, Color.BLUE);
-        // rect.setLayoutX(x);
-        // rect.setLayoutY(y);
-
-        // this.view = rect;
-        // pane.getChildren().add(view);
     }
 
+    // Constructor không có Pane (dùng khi deserialized, rồi sau đó setPane)
     public BaseObject(double x, double y, double width, double height) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        // Rectangle rect = new Rectangle(width, height, Color.BLUE);
-        // rect.setLayoutX(x);
-        // rect.setLayoutY(y);
-
-        // this.view = rect;
-        // pane.getChildren().add(view);
+        // Pane sẽ được set sau khi đối tượng được load từ file
     }
 
-    public void setRootPane(Pane _pane) {// set màn hình chính để hiển thị
+    public void setRootPane(Pane _pane) {
         pane = _pane;
     }
 
-    public static void setDeltatime(double _deltatime) {// set thời gian mỗi
-        deltatime = _deltatime;
-
-    }
-
-    public Pane getRootPane() {// set màn hình chính để hiển thị
+    public Pane getRootPane() {
         return pane;
     }
 
-    public void removeFromPane(Pane pane) {
-        pane.getChildren().remove(view);
+    public static void setDeltatime(double _deltatime) {
+        deltatime = _deltatime;
+    }
+
+    public void removeFromPane() { // Sửa tên hàm để dễ gọi hơn
+        if (view != null && pane != null && pane.getChildren().contains(view)) {
+            pane.getChildren().remove(view);
+        }
     }
 
     public void destroy() {
-        removeFromPane(pane);
+        removeFromPane();
         view = null;
     }
 
@@ -109,6 +101,8 @@ public class BaseObject implements Serializable {
         this.width = width;
         if (view instanceof Rectangle)
             ((Rectangle) view).setWidth(width);
+        else if (view instanceof ImageView)
+            ((ImageView) view).setFitWidth(width);
     }
 
     public double getHeight() {
@@ -119,12 +113,14 @@ public class BaseObject implements Serializable {
         this.height = height;
         if (view instanceof Rectangle)
             ((Rectangle) view).setHeight(height);
+        else if (view instanceof ImageView)
+            ((ImageView) view).setFitHeight(height);
     }
 
     public void update() {
     }
 
-    public void loadImage(String imagePath, Pane pane) {
+    public void loadImage(String imagePath) { // Bỏ pane khỏi tham số
         java.net.URL resource = getClass().getResource(imagePath);
 
         if (resource == null) {
@@ -140,12 +136,23 @@ public class BaseObject implements Serializable {
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
 
-        if (view != null) {
-            pane.getChildren().remove(view);
+        if (view != null) { // Nếu đã có view cũ, xóa đi
+            if (pane != null && pane.getChildren().contains(view)) {
+                pane.getChildren().remove(view);
+            }
         }
 
         view = imageView;
-        pane.getChildren().add(view);
+        if (pane != null) { // Chỉ thêm vào pane nếu nó đã được set
+            pane.getChildren().add(view);
+        }
     }
 
+    // Phương thức này sẽ được gọi khi deserialize để khôi phục các thành phần hiển
+    // thị
+    public void restoreView(Pane parentPane) {
+        this.pane = parentPane;
+        // Các lớp con sẽ override phương thức này để tự load ảnh hoặc tạo lại view của
+        // chúng
+    }
 }

@@ -1,6 +1,6 @@
 package uet.arkanoid;
 
-import uet.arkanoid.Powerups.Powerup;
+import uet.arkanoid.Powerups.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,10 @@ public class GameMap implements Serializable {
     private int level;
     private Boss boss;
 
+    // Constructor khi tạo mới map
     public GameMap(int level, Pane root) {
         this.level = level;
-        this.background = new Background(1, root);
+        this.background = new Background(1, root); // Hoặc dựa vào level
         this.paddle = new Paddle(root);
         this.ballManager = new BallManager(paddle, root);
         this.ballManager.addDefaultBall();
@@ -30,14 +31,17 @@ public class GameMap implements Serializable {
             this.bricks = ReadMapFile.readMapFXML(level, root);
     }
 
-    // public GameMap(Pane root) {
-    // this.level = 6;
-    // this.background = new Background(3);
-
-    // this.paddle = new Paddle();
-    // this.ballManager = new BallManager(paddle);
-    // this.ballManager.addDefaultBall();
-    // }
+    // Constructor cho việc deserialized
+    public GameMap(Background background, Paddle paddle, BallManager ballManager, List<Brick> bricks,
+            List<Powerup> powerups, int level, Boss boss) {
+        this.background = background;
+        this.paddle = paddle;
+        this.ballManager = ballManager;
+        this.bricks = bricks;
+        this.powerups = powerups;
+        this.level = level;
+        this.boss = boss;
+    }
 
     // Getter & Setter
     public Background getBackground() {
@@ -96,4 +100,43 @@ public class GameMap implements Serializable {
         this.boss = boss;
     }
 
+    // Phương thức để khôi phục tất cả các thành phần UI của GameMap sau khi
+    // deserialized
+    public void restoreGameMap(Pane parentPane, GameController gameController) {
+        if (background != null) {
+            background.restoreView(parentPane);
+        }
+        if (paddle != null) {
+            paddle.restoreView(parentPane);
+        }
+        if (ballManager != null) {
+            ballManager.restoreView(parentPane);
+        }
+        if (level > Gameconfig.TOTAL_MAP) { // Boss level
+            if (boss != null) {
+                boss.restoreView(parentPane);
+            }
+        } else { // Brick level
+            for (Brick brick : bricks) {
+                brick.restoreView(parentPane);
+            }
+        }
+        // Powerups cần GameController để gán lại cho các powerup cụ thể
+        Powerup.setGameController(gameController);
+        for (Powerup powerup : powerups) {
+            powerup.restoreView(parentPane);
+            // Gán lại controller cho các powerup cụ thể
+            if (powerup instanceof MultiBallPowerup) {
+                ((MultiBallPowerup) powerup).setGameController(gameController);
+            } else if (powerup instanceof ExtraHpPowerup) {
+                ((ExtraHpPowerup) powerup).setGameController(gameController);
+            } else if (powerup instanceof FireBallPowerup) {
+                ((FireBallPowerup) powerup).setGameController(gameController);
+            } else if (powerup instanceof ExtendPaddlePowerup) {
+                ((ExtendPaddlePowerup) powerup).setPaddle(paddle);
+            } else if (powerup instanceof ShrinkPaddlePowerup) {
+                ((ShrinkPaddlePowerup) powerup).setPaddle(paddle);
+            }
+        }
+    }
 }

@@ -12,17 +12,16 @@ public class Ball extends BaseObject {
     private double dx;
     private double dy;
     private double radius;
-    private transient Pane pane;
     private transient LinkedList<ImageView> trailList = new LinkedList<>();
     private static final int MAX_TRAIL = 8; // số vệt tối đa
     private boolean isFireBall = false;
 
-
     // Load ảnh 1 lần cho tất cả Ball
     private static final Image FIREBALL_IMAGE = new Image(
-            Ball.class.getResource("/assets/image/balls/hp.png").toExternalForm());
+            Ball.class.getResource("/assets/image/balls/hp.png").toExternalForm()); // Dùng tạm hp.png
     private static final Image BALL_IMAGE = new Image(
             Ball.class.getResource("/assets/image/balls/ball.png").toExternalForm());
+
     public void setFireBall(boolean fire) {
         this.isFireBall = fire;
         if (super.getView() instanceof ImageView img) { // dùng view của BaseObject
@@ -34,32 +33,39 @@ public class Ball extends BaseObject {
         return isFireBall;
     }
 
+    // Constructor dùng khi tạo mới trong game
     public Ball(Pane pane) {
-        this.pane = pane;
-        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball);
+        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection();
         loadImage();
     }
 
     public Ball(double x, double y, double dx, double dy, Pane pane) {
-        this.pane = pane;
-        super(x, y, Gameconfig.size_ball, Gameconfig.size_ball);
+        super(x, y, Gameconfig.size_ball, Gameconfig.size_ball, pane);
+        this.dx = dx; // Gán trực tiếp dx, dy
+        this.dy = dy;
         this.radius = Gameconfig.size_ball / 2;
-        setInitialDirection(); // luôn đặt tổng vector bằng speed_ball
+        normalizeSpeed(Gameconfig.speed_ball); // Chuẩn hóa lại tốc độ
         loadImage();
     }
 
     public Ball(Paddle paddle, Pane pane) {
-        this.pane = pane;
         super(
                 paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2,
                 paddle.getY() - Gameconfig.size_ball,
                 Gameconfig.size_ball,
-                Gameconfig.size_ball);
+                Gameconfig.size_ball,
+                pane);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection();
         loadImage();
+    }
+
+    // Constructor cho khi deserialized (không có pane)
+    public Ball(double x, double y, double width, double height) {
+        super(x, y, width, height);
+        this.radius = Gameconfig.size_ball / 2;
     }
 
     /** Thiết lập hướng ban đầu: luôn chéo, ngẫu nhiên trái/phải */
@@ -71,14 +77,14 @@ public class Ball extends BaseObject {
     }
 
     /** Load ảnh */
-    public void loadImage() {
-        ImageView imageView = new ImageView(BALL_IMAGE);
+    public void loadImage() { // Bỏ pane khỏi tham số
+        ImageView imageView = new ImageView(isFireBall ? FIREBALL_IMAGE : BALL_IMAGE);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         setView(imageView);
-        if (pane != null) {
+        if (pane != null && !pane.getChildren().contains(imageView)) { // Chỉ thêm vào pane nếu chưa có
             pane.getChildren().add(imageView);
         }
     }
@@ -104,18 +110,21 @@ public class Ball extends BaseObject {
             PlaySound.soundEffect("/assets/sound/ballSound.mp3");
         }
 
-        if (view instanceof ImageView img) {
-            img.setLayoutX(x);
-            img.setLayoutY(y);
-        }
+        // Cập nhật vị trí hiển thị (UI)
+        // Đây là nơi cần `Platform.runLater` nếu update logic và UI trên 2 luồng khác
+        // nhau.
+        // Tuy nhiên, trong cấu trúc hiện tại, logic game sẽ tính toán `x`, `y` mới.
+        // Sau đó, một khối `Platform.runLater` lớn sẽ cập nhật tất cả UI.
+        // Tạm thời giữ nguyên `setLayoutX/Y` ở đây, nhưng nhớ rằng nó sẽ được gọi trong
+        // `Platform.runLater`.
 
         // tạo hiệu ứng vệt
         createTrail();
     }
 
     /** Hiệu ứng vệt mờ theo hướng di chuyển */
-   private void createTrail() {
-        if (!(view instanceof ImageView ballView))
+    private void createTrail() {
+        if (pane == null || !(view instanceof ImageView ballView))
             return;
 
         // Nếu danh sách trail chưa đủ, tạo sẵn vài ImageView để tái sử dụng
@@ -124,7 +133,13 @@ public class Ball extends BaseObject {
             trail.setFitWidth(width);
             trail.setFitHeight(height);
             trail.setOpacity(0.0); // ban đầu ẩn
-            pane.getChildren().add(pane.getChildren().indexOf(ballView), trail);
+            // Thêm vào pane ở vị trí trước ballView để vệt nằm dưới bóng
+            int ballViewIndex = pane.getChildren().indexOf(ballView);
+            if (ballViewIndex != -1) {
+                pane.getChildren().add(Math.max(0, ballViewIndex - 1), trail);
+            } else {
+                pane.getChildren().add(trail);
+            }
             trailList.add(trail);
         }
 
@@ -144,7 +159,6 @@ public class Ball extends BaseObject {
         fade.play();
     }
 
-
     /** Slow: giảm tốc nhưng vẫn đúng tổng vector */
     public void slow() {
         normalizeSpeed(Gameconfig.speed_ball * 0.8);
@@ -157,9 +171,12 @@ public class Ball extends BaseObject {
 
     /** Chuẩn hóa tổng vector giữ đúng speed, giữ hướng */
     private void normalizeSpeed(double targetSpeed) {
-        double angle = Math.atan2(dy, dx);
-        dx = Math.cos(angle) * targetSpeed;
-        dy = Math.sin(angle) * targetSpeed;
+        double currentSpeed = Math.sqrt(dx * dx + dy * dy);
+        if (currentSpeed == 0)
+            return; // Tránh chia cho 0
+        double ratio = targetSpeed / currentSpeed;
+        dx *= ratio;
+        dy *= ratio;
     }
 
     // getter/setter
@@ -169,7 +186,7 @@ public class Ball extends BaseObject {
 
     public void setDx(double dx) {
         this.dx = dx;
-        normalizeSpeed(Gameconfig.speed_ball);
+        normalizeSpeed(Gameconfig.speed_ball); // Giữ tốc độ tổng không đổi
     }
 
     public double getDy() {
@@ -178,7 +195,7 @@ public class Ball extends BaseObject {
 
     public void setDy(double dy) {
         this.dy = dy;
-        normalizeSpeed(Gameconfig.speed_ball);
+        normalizeSpeed(Gameconfig.speed_ball); // Giữ tốc độ tổng không đổi
     }
 
     public double getSpeed() {
@@ -195,5 +212,16 @@ public class Ball extends BaseObject {
 
     public double getCenterY() {
         return y + radius;
+    }
+
+    @Override
+    public void restoreView(Pane parentPane) {
+        super.restoreView(parentPane);
+        loadImage();
+        // Clear old trails and recreate if pane is new
+        for (ImageView trail : trailList) {
+            parentPane.getChildren().remove(trail);
+        }
+        trailList.clear();
     }
 }

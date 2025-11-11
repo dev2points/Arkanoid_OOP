@@ -135,11 +135,15 @@ public class VictoryController {
     private void save_score() {
         String playerName = player_name.getText().trim();
         // gamecontroller.getUser().setName(playerName);
-        SaveGame.saveScore(playerName, score);
-        System.out
-                .println("Saved highscore with Name: " + playerName + " Score: " + score);
-        if (playerName != "") {
-            victory_menu.getChildren().remove(input_pane);
+        try {
+            SaveGame.saveScore(playerName, score);
+            System.out
+                    .println("Saved highscore with Name: " + playerName + " Score: " + score);
+            if (playerName != "") {
+                victory_menu.getChildren().remove(input_pane);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

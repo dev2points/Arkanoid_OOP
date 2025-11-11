@@ -16,6 +16,13 @@ public class ExtendPaddlePowerup extends Powerup {
         this.paddle = paddle;
     }
 
+    // Constructor cho khi deserialized
+    public ExtendPaddlePowerup(double x, double y, double width, double height, double fallSpeed) {
+        super(x, y, width, height, fallSpeed);
+        // paddle sẽ được gán lại qua GameMap.setPaddle() hoặc
+        // GameController.restoreView()
+    }
+
     @Override
     public Image loadImage() {
         return IMAGE; // chỉ trả về ảnh đã load
@@ -24,5 +31,10 @@ public class ExtendPaddlePowerup extends Powerup {
     @Override
     public void active() {
         paddle.extend();
+    }
+
+    // Setter cho paddle khi khôi phục game
+    public void setPaddle(Paddle paddle) {
+        this.paddle = paddle;
     }
 }

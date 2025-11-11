@@ -29,7 +29,7 @@ public class LoadGameController {
 
     @FXML
     public void initialize() {
-        players = SaveGame.loadGame();
+        players = SaveGame.loadGameProcessFromFile();
         if (players == null)
             System.out.println("loadGame return null");
         else

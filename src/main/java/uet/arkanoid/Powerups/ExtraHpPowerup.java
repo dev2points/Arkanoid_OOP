@@ -9,11 +9,17 @@ public class ExtraHpPowerup extends Powerup {
     private static final Image IMAGE = new Image(
             ExtraHpPowerup.class.getResource("/assets/image/powerups/hp.png").toExternalForm());
 
-    private GameController controller;
+    private transient GameController controller; // Transient
 
     public ExtraHpPowerup(double x, double y, double width, double height, GameController controller) {
         super(x, y, width, height, controller.getPane());
         this.controller = controller;
+    }
+
+    // Constructor cho khi deserialized
+    public ExtraHpPowerup(double x, double y, double width, double height, double fallSpeed) {
+        super(x, y, width, height, fallSpeed);
+        // controller sẽ được gán lại sau
     }
 
     @Override
@@ -27,4 +33,9 @@ public class ExtraHpPowerup extends Powerup {
             controller.getUser().addHp(1);
         }
     }
+
+    // // Setter cho controller khi khôi phục game
+    // public void setGameController(GameController controller) {
+    // this.controller = controller;
+    // }
 }

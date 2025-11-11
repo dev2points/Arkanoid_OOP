@@ -14,12 +14,21 @@ public class Paddle extends BaseObject {
 
     private int state = 0; // -1 = shrink, 0 = normal, 1 = extend
 
+    // Constructor khi tạo mới
     public Paddle(Pane pane) {
         super(SCREEN_WIDTH / 2 - Gameconfig.width_paddle / 2,
                 SCREEN_HEIGHT - Gameconfig.height_paddle,
                 Gameconfig.width_paddle,
                 Gameconfig.height_paddle, pane);
         loadImage();
+    }
+
+    // Constructor khi deserialized
+    public Paddle(double x, double y, double width, double height, double speed, double moveDir, int state) {
+        super(x, y, width, height);
+        this.speed = speed;
+        this.moveDir = moveDir;
+        this.state = state;
     }
 
     /** Xử lý phóng to paddle theo state logic */
@@ -71,7 +80,7 @@ public class Paddle extends BaseObject {
     }
 
     /** Cập nhật hiển thị paddle */
-    private void updateView() {
+    public void updateView() {
         if (view instanceof ImageView img) {
             img.setFitWidth(width);
             img.setLayoutX(x);
@@ -79,7 +88,9 @@ public class Paddle extends BaseObject {
     }
 
     /** Load hình ảnh paddle */
-    public void loadImage() {
+    public void loadImage() { // Bỏ pane khỏi tham số
+        if (pane == null)
+            return;
         Image paddleImg = new Image(getClass().getResource("/assets/image/paddles/paddle_1.png").toExternalForm());
         ImageView imageView = new ImageView(paddleImg);
         imageView.setFitWidth(width);
@@ -87,7 +98,9 @@ public class Paddle extends BaseObject {
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         setView(imageView);
-        pane.getChildren().add(imageView);
+        if (!pane.getChildren().contains(imageView)) { // Chỉ thêm nếu chưa có
+            pane.getChildren().add(imageView);
+        }
     }
 
     /** Di chuyển paddle */
@@ -124,5 +137,12 @@ public class Paddle extends BaseObject {
     /** Lấy trạng thái paddle (-1,0,1) */
     public int getState() {
         return state;
+    }
+
+    @Override
+    public void restoreView(Pane parentPane) {
+        super.restoreView(parentPane); // Set lại pane
+        loadImage();
+        updateView(); // Cập nhật vị trí và kích thước
     }
 }

@@ -31,21 +31,36 @@ public class Boss extends BaseObject {
     private transient Rectangle healthBarBack;
     private transient Rectangle healthBarFront;
 
+    // Constructor khi tạo mới
     public Boss(int x, int y, int width, int height, Pane pane) {
         super(x, y, width, height, pane);
         initView();
         createHealthBar();
     }
 
+    // Constructor khi deserialize
+    public Boss(double x, double y, double width, double height, int healthpoint, int frameIndex, double dx,
+            double elapsedTime, double animationTime, boolean isAnimating, List<Energy> energies) {
+        super(x, y, width, height);
+        this.healthpoint = healthpoint;
+        this.frameIndex = frameIndex;
+        this.dx = dx;
+        this.elapsedTime = elapsedTime;
+        this.animationTime = animationTime;
+        this.isAnimating = isAnimating;
+        this.energies = energies;
+    }
+
     private void initView() {
-        ImageView imageView = new ImageView(FRAMES[0]);
+        if (pane == null)
+            return;
+        ImageView imageView = new ImageView(FRAMES[frameIndex % FRAMES.length]);
         imageView.setFitWidth(width);
         imageView.setFitHeight(height);
         imageView.setLayoutX(x);
         imageView.setLayoutY(y);
         setView(imageView);
-        if (pane != null)
-            pane.getChildren().add(imageView);
+        pane.getChildren().add(imageView);
     }
 
     public void update(double deltaTime) {
@@ -60,7 +75,8 @@ public class Boss extends BaseObject {
                     isAnimating = false;
                     frameIndex = 0;
                     elapsedTime = 0;
-                    shootEnergy();
+                    if (pane != null)
+                        shootEnergy(); // Chỉ bắn năng lượng nếu có pane
                     restoreHealthPoint();
                 }
                 updateLayout();
@@ -105,7 +121,13 @@ public class Boss extends BaseObject {
     private void updateEnergies(double deltaTime) {
         for (Energy e : energies)
             e.update(deltaTime);
-        energies.removeIf(e -> !e.isActive());
+        energies.removeIf(e -> {
+            if (!e.isActive()) {
+                e.destroy(); // Đảm bảo view được xóa khỏi pane
+                return true;
+            }
+            return false;
+        });
     }
 
     public void shootEnergy() {
@@ -143,7 +165,7 @@ public class Boss extends BaseObject {
     }
 
     private void updateHealthBar() {
-        if (healthBarFront == null)
+        if (healthBarFront == null || pane == null)
             return;
 
         double percent = (double) healthpoint / Gameconfig.Boss_HP;
@@ -156,13 +178,33 @@ public class Boss extends BaseObject {
         }
     }
 
-    public void restoreView() {
-        initView();
-        updateLayout(); // Chỉ cần cập nhật frame hiện tại
-        for (Energy e : energies)
-            e.initView();
-        createHealthBar();
-        updateHealthBar();
+    @Override
+    public void destroy() {
+        super.destroy(); // Xóa view chính
+        if (pane != null) {
+            if (healthBarBack != null && pane.getChildren().contains(healthBarBack)) {
+                pane.getChildren().remove(healthBarBack);
+            }
+            if (healthBarFront != null && pane.getChildren().contains(healthBarFront)) {
+                pane.getChildren().remove(healthBarFront);
+            }
+        }
+        for (Energy energy : energies) {
+            energy.destroy();
+        }
+        energies.clear();
+    }
+
+    @Override
+    public void restoreView(Pane parentPane) {
+        super.restoreView(parentPane); // Set lại pane
+        initView(); // Tạo lại ImageView cho Boss
+        updateLayout(); // Cập nhật hình ảnh Boss
+        createHealthBar(); // Tạo lại thanh máu
+        updateHealthBar(); // Cập nhật thanh máu
+        for (Energy e : energies) { // Khôi phục các Energy
+            e.restoreView(parentPane);
+        }
     }
 
     // Getters & setters

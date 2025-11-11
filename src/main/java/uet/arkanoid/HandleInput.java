@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.concurrent.Task; // Import Task
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -16,77 +17,81 @@ public class HandleInput {
     private static final Set<KeyCode> pressedKeys = new HashSet<>();
 
     public static void check_input(int num, Scene scene, GameController gamecontroller) {
+        // Đảm bảo event handlers chỉ được set một lần
+        if (scene.getOnKeyPressed() == null && scene.getOnKeyReleased() == null) {
+            scene.setOnKeyPressed(e -> {
+                synchronized (pressedKeys) { // Đồng bộ hóa truy cập vào pressedKeys
+                    pressedKeys.add(e.getCode());
+                }
+            });
+            scene.setOnKeyReleased(e -> {
+                synchronized (pressedKeys) { // Đồng bộ hóa truy cập vào pressedKeys
+                    pressedKeys.remove(e.getCode());
+                }
+            });
+        }
+
+        // Lấy trạng thái phím đã nhấn (cần đồng bộ hóa khi đọc)
+        Set<KeyCode> currentPressedKeys;
+        synchronized (pressedKeys) {
+            currentPressedKeys = new HashSet<>(pressedKeys); // Tạo bản sao an toàn
+        }
+
+        // --- Logic điều khiển Paddle và Ball ---
         Paddle paddle = gamecontroller.getPaddle();
         BallManager ballManager = gamecontroller.getBallManager();
-        if (scene.getOnKeyPressed() == null && scene.getOnKeyReleased() == null) {
-            scene.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
-            scene.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
-        }
-        // Người chơi thứ 2
-        if (num == 2) {
-            // Di chuyển paddle
-            if (pressedKeys.contains(KeyCode.LEFT)) {
+
+        if (num == 2) { // Người chơi thứ 2
+            if (currentPressedKeys.contains(KeyCode.LEFT)) {
                 paddle.moveLeft();
-            } else if (pressedKeys.contains(KeyCode.RIGHT)) {
+            } else if (currentPressedKeys.contains(KeyCode.RIGHT)) {
                 paddle.moveRight();
             } else {
                 paddle.stop();
             }
-
-            // Nhấn để bắn bóng
-            if (pressedKeys.contains(KeyCode.UP)) {
+            if (currentPressedKeys.contains(KeyCode.UP)) {
                 ballManager.launchBalls();
-                pressedKeys.remove(KeyCode.UP);
+                synchronized (pressedKeys) { // Xóa phím UP sau khi xử lý
+                    pressedKeys.remove(KeyCode.UP);
+                }
             }
-
-        } else if (num == 1) {
-            // Di chuyển paddle
-            if (pressedKeys.contains(KeyCode.A)) {
+        } else if (num == 1) { // Người chơi thứ 1
+            if (currentPressedKeys.contains(KeyCode.A)) {
                 paddle.moveLeft();
-            } else if (pressedKeys.contains(KeyCode.D)) {
+            } else if (currentPressedKeys.contains(KeyCode.D)) {
                 paddle.moveRight();
             } else {
                 paddle.stop();
             }
-
-            // Nhấn để bắn bóng
-            if (pressedKeys.contains(KeyCode.W)) {
+            if (currentPressedKeys.contains(KeyCode.W)) {
                 ballManager.launchBalls();
-                pressedKeys.remove(KeyCode.W);
+                synchronized (pressedKeys) { // Xóa phím W sau khi xử lý
+                    pressedKeys.remove(KeyCode.W);
+                }
             }
         }
-        if (pressedKeys.contains(KeyCode.ESCAPE)) {
-            pressedKeys.remove(KeyCode.ESCAPE);
+
+        // Xử lý phím ESCAPE cho Pause/Menu
+        if (currentPressedKeys.contains(KeyCode.ESCAPE)) {
+            synchronized (pressedKeys) { // Xóa phím ESCAPE sau khi xử lý
+                pressedKeys.remove(KeyCode.ESCAPE);
+            }
             gamecontroller.PauseGame();
         }
-    }
-
-    public static void testSaveGame(Scene scene, GameController gameController) {
-        if (scene.getOnKeyPressed() == null && scene.getOnKeyReleased() == null) {
-            scene.setOnKeyPressed(e -> pressedKeys.add(e.getCode()));
-            scene.setOnKeyReleased(e -> pressedKeys.remove(e.getCode()));
-        }
-        if (pressedKeys.contains(KeyCode.ENTER))
-            SaveGame.saveGame(gameController);
-        if (pressedKeys.contains(KeyCode.S))
-            SaveGame.saveScore(gameController.getUser().getName(), gameController.getUser().getScore());
     }
 
     public static void setOnCloseHandler(Stage stage, GameController gameController) {
         stage.setOnCloseRequest(event -> {
             if (!gameController.getIsplaying()) {
-                // Let it close normally if not playing (e.g., in pause menu, start menu)
+                // Để nó đóng bình thường nếu không đang chơi
                 return;
             }
-            event.consume(); // prevent immediate close
+            event.consume(); // Ngăn đóng ngay lập tức
 
-            // Step 1: Ask user if they want to save
             Alert confirmAlert = new Alert(Alert.AlertType.CONFIRMATION);
             confirmAlert.setTitle("Exit Game");
             confirmAlert.setHeaderText("Do you want to save your game before exiting?");
             confirmAlert.setContentText("Choose an option:");
-
-            // Define buttons in desired order
 
             ButtonType noSaveButton = new ButtonType("Exit without Saving", ButtonBar.ButtonData.NO);
             ButtonType saveButton = new ButtonType("Save & Exit", ButtonBar.ButtonData.OK_DONE);
@@ -96,32 +101,54 @@ public class HandleInput {
 
             confirmAlert.showAndWait().ifPresent(response -> {
                 if (response == saveButton) {
-                    // Step 2: Ask for username
                     TextInputDialog nameDialog = new TextInputDialog();
                     nameDialog.setTitle("Save Game");
                     nameDialog.setHeaderText("Enter your name to save your game:");
                     nameDialog.setContentText("Name:");
 
                     nameDialog.showAndWait().ifPresent(name -> {
-                        if (name.trim().isEmpty()) {
+                        String finalName = name.trim();
+                        if (finalName.isEmpty()) {
                             System.out.println("No name entered, game not saved.");
                             stage.close();
                         } else {
-                            gameController.getUser().setName(name);
-                            SaveGame.saveGame(gameController);
-                            SaveGame.saveScore(name, gameController.getUser().getScore());
-                            System.out.println("Game saved for user: " + name);
-                            stage.close();
+                            // --- Chạy tác vụ lưu trên luồng nền ---
+                            Task<Void> saveTask = new Task<Void>() {
+                                @Override
+                                protected Void call() throws Exception {
+                                    gameController.getUser().setName(finalName);
+                                    SaveGame.saveGame(gameController.getGameMap(), gameController.getUser());
+                                    SaveGame.saveScore(finalName, gameController.getUser().getScore());
+                                    return null;
+                                }
+                            };
+
+                            saveTask.setOnSucceeded(e -> {
+                                System.out.println("Game saved for user: " + finalName);
+                                stage.close(); // Đóng cửa sổ sau khi lưu thành công
+                            });
+
+                            saveTask.setOnFailed(e -> {
+                                System.err.println("Error saving game: " + saveTask.getException().getMessage());
+                                // Hiển thị thông báo lỗi nếu cần
+                                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                                errorAlert.setTitle("Save Error");
+                                errorAlert.setHeaderText("Failed to save game!");
+                                errorAlert.setContentText(
+                                        "Please check console for details: " + saveTask.getException().getMessage());
+                                errorAlert.showAndWait();
+                                stage.close(); // Vẫn đóng cửa sổ
+                            });
+
+                            // Bắt đầu tác vụ trên một luồng riêng
+                            new Thread(saveTask).start();
                         }
                     });
 
                 } else if (response == noSaveButton) {
-                    // Exit without saving
                     System.out.println("Exited without saving.");
                     stage.close();
-
                 } else {
-                    // Cancel
                     System.out.println("Exit canceled by user.");
                 }
             });
@@ -129,7 +156,8 @@ public class HandleInput {
     }
 
     public static void clearKeys() {
-        pressedKeys.clear();
+        synchronized (pressedKeys) { // Đồng bộ hóa khi xóa
+            pressedKeys.clear();
+        }
     }
-
 }

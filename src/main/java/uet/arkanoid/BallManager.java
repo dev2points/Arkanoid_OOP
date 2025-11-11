@@ -7,14 +7,18 @@ import javafx.scene.layout.Pane;
 
 public class BallManager implements Serializable {
     private List<Ball> balls = new ArrayList<>();
-    private  Paddle paddle;
-    private boolean waitingForLaunch = false; 
-    private  List<Ball> toRemove = new ArrayList<>();
-    private transient Pane pane;
+    private Paddle paddle; // paddle không cần transient vì nó là một đối tượng BaseObject đã serialize
+    private boolean waitingForLaunch = false;
+    private transient List<Ball> toRemove = new ArrayList<>(); // vẫn là transient
+    private transient Pane pane; // vẫn là transient
 
     public BallManager(Paddle paddle, Pane pane) {
         this.pane = pane;
         this.paddle = paddle;
+    }
+
+    // Constructor cho khi deserialized, pane sẽ được set sau
+    public BallManager() {
     }
 
     public void addBall(double x, double y, double dx, double dy) {
@@ -39,6 +43,7 @@ public class BallManager implements Serializable {
     public List<Ball> getBalls() {
         return balls;
     }
+
     public int getSize() {
         return balls.size();
     }
@@ -52,8 +57,10 @@ public class BallManager implements Serializable {
     }
 
     public void updateAll(double deltaTime, GameController gameController) {
-        System.out.println(balls.size());
+        // System.out.println(balls.size()); // Comment dòng này để tránh spam console
         // Danh sách tạm để lưu bóng cần xoá
+        if (toRemove == null)
+            toRemove = new ArrayList<>(); // Khởi tạo lại nếu là null (sau deserialize)
         toRemove.clear();
         if (waitingForLaunch) {
             // Giữ bóng đứng yên trên paddle
@@ -75,6 +82,10 @@ public class BallManager implements Serializable {
 
         // Xoá các bóng rơi ra ngoài
         if (!toRemove.isEmpty()) {
+            // Cần xóa view của bóng khỏi pane trước khi xóa đối tượng
+            for (Ball ball : toRemove) {
+                ball.destroy();
+            }
             balls.removeAll(toRemove);
         }
 
@@ -102,14 +113,20 @@ public class BallManager implements Serializable {
         }
     }
 
-    public void restoreView() {
+    public void restoreView(Pane parentPane) { // Thêm parentPane
+        this.pane = parentPane; // Gán lại pane sau khi deserialized
+        if (paddle != null)
+            paddle.restoreView(parentPane); // Đảm bảo paddle cũng được restore
         for (Ball ball : balls) {
-            ball.loadImage();
+            ball.restoreView(parentPane);
         }
     }
-    public void reset(){
+
+    public void reset() {
+        for (Ball ball : balls) {
+            ball.destroy(); // Xóa view khỏi pane
+        }
         balls.clear();
         addDefaultBall();
     }
-
 }
