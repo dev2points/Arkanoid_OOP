@@ -27,9 +27,8 @@ public class MultiplayerController {
 
         player1Pane.setPrefSize(Gameconfig.screen_width, Gameconfig.screen_height);
         player2Pane.setPrefSize(Gameconfig.screen_width, Gameconfig.screen_height);
-        player1Pane.setLayoutX((Gameconfig.screen_width * 2 - (2 *
-                Gameconfig.screen_width)) / 2);
-        player2Pane.setLayoutX(player1Pane.getLayoutX() + Gameconfig.screen_width);
+        player1Pane.setLayoutX(0);
+        player2Pane.setLayoutX(Gameconfig.screen_width);
 
         rootPane.getChildren().addAll(player1Pane, player2Pane);
 
@@ -77,6 +76,7 @@ public class MultiplayerController {
                 stage.setScene(scene);
                 stage.setTitle("Multiplayer Victory Menu");
                 stage.show();
+                stage.centerOnScreen();
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Error loading multiplayer victory menu");

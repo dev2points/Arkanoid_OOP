@@ -62,6 +62,7 @@ public class HighscoreController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("Return menu from highscore");
         } catch (IOException e) {

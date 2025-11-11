@@ -10,11 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import uet.arkanoid.GameController;
-import uet.arkanoid.Gameconfig;
 import uet.arkanoid.*;
-import uet.arkanoid.MultiplayerController;
-import uet.arkanoid.SaveGame;
 import uet.arkanoid.Menu.HighScore.HighscoreController;
 import javafx.scene.Node;
 import javafx.scene.control.TextField;
@@ -72,6 +68,7 @@ public class VictoryController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,6 +87,7 @@ public class VictoryController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("New Game scene loaded successfully!");
         } catch (IOException e) {
@@ -111,6 +109,7 @@ public class VictoryController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("Option menu scene loaded successfully!");
         } catch (IOException e) {
@@ -135,6 +134,7 @@ public class VictoryController {
             // Hiển thị giao diện Highscore
             stage.setScene(new Scene(root));
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("Highscore scene loaded successfully!");
         } catch (IOException e) {

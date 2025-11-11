@@ -59,6 +59,7 @@ public class OptionController {
 
             stage.setScene(scene);
             stage.show();
+            stage.centerOnScreen();
 
             System.out.println("New Game scene loaded successfully!");
         } catch (IOException e) {
