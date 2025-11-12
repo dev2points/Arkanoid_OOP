@@ -1,23 +1,15 @@
 package uet.arkanoid.Menu;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ListView;
-import javafx.stage.Stage;
 import javafx.util.Pair;
-import uet.arkanoid.GameController;
 import uet.arkanoid.GameMap;
-import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 import uet.arkanoid.User;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.event.ActionEvent;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 

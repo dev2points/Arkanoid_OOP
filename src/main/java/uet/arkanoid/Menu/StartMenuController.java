@@ -1,9 +1,12 @@
 package uet.arkanoid.Menu;
 import javafx.fxml.FXML;
-
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-
+import javafx.stage.Stage;
+import uet.arkanoid.Gameconfig;
+import uet.arkanoid.MultiplayerController;
 
 public class StartMenuController extends BaseController{
 
@@ -25,33 +28,28 @@ public class StartMenuController extends BaseController{
     private void handleNewGame(MouseEvent event) {
         menumanager.playNewGame();
 
-        // try {
 
-        //     // Root cho cả 2 người chơi
-        //     Pane root = new Pane();
-        //     // root.getChildren().addAll(player1Pane, player2Pane);
+    }
 
-        //     // Tạo scene
-        //     Scene scene = new Scene(root, Gameconfig.screen_width * 2,
-        //             Gameconfig.screen_height);
+    @FXML 
+    private void handleNewGame2(MouseEvent event) {
+        try {
 
-        //     // Khởi tạo MultiplayerController
-        //     MultiplayerController multiplayerController = new MultiplayerController(root,
-        //             scene);
-        //     // Lấy stage hiện tại
-        //     Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Pane root = new Pane();
+            Scene scene = new Scene(root, Gameconfig.screen_width * 2,
+                    Gameconfig.screen_height);
 
-        //     // root.setLayoutX(0);
-        //     // root.setLayoutY(0);
-        //     // root.setTranslateX(0);
-        //     // root.setTranslateY(0);
-        //     stage.setScene(scene);
-        //     stage.show();
-        //     stage.centerOnScreen();
+            MultiplayerController multiplayerController = new MultiplayerController(root,
+                    scene);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        // } catch (Exception e) {
-        //     e.printStackTrace();
-        // }
+            stage.setScene(scene);
+            stage.show();
+            stage.centerOnScreen();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

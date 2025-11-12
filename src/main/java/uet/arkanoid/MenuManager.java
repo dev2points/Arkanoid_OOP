@@ -114,6 +114,7 @@ public class MenuManager {
 
     public void displayPauseMenu() {
         pushMenu("pause", "/assets/menu/fxml/pause_menu.fxml");
+        System.out.println(menuStack);
     }
 
     public void displayLoadGame() {

@@ -27,7 +27,7 @@ public class OptionMenuController extends BaseController{
     }
 
     private void updateVolumeLabel(double value) {
-        volumeLabel.setText(String.format("Volume: %.0f%%", value));
+        volumeLabel.setText(String.format("Music Volume: %.0f%%", value));
     }
 
     public double getVolume() {

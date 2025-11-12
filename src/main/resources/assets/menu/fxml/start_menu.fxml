@@ -11,30 +11,35 @@
         <!-- NEW GAME -->
         <Pane fx:id="newGameButton" layoutX="321.0" layoutY="337.0" onMouseClicked="#handleNewGame" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
             <children>
-                <Text fill="WHITE" layoutX="13.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="NEW GAME" textAlignment="CENTER" wrappingWidth="109.6" />
+                <Text fill="WHITE" layoutX="13.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="1 PLAYER" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
 
-        <!-- LOAD GAME -->
-        <Pane fx:id="loadGameButton" layoutX="321.0" layoutY="394.0" onMouseClicked="#handleLoadGame" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
+              <!-- LOAD GAME -->
+        <Pane fx:id="loadGameButton" layoutX="321.0" layoutY="438.0" onMouseClicked="#handleLoadGame" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
             <children>
                 <Text fill="WHITE" layoutX="13.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="LOAD GAME" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
 
         <!-- OPTIONS -->
-        <Pane fx:id="optionsButton" layoutX="320.0" layoutY="447.0" onMouseClicked="#handleOptions" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
+        <Pane fx:id="optionsButton" layoutX="320.0" layoutY="490.0" onMouseClicked="#handleOptions" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
             <children>
                 <Text fill="WHITE" layoutX="14.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OPTIONS" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
 
         <!-- HIGH SCORE -->
-        <Pane fx:id="highScoreButton" layoutX="320.0" layoutY="505.0" onMouseClicked="#handleHighScore" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
+        <Pane fx:id="highScoreButton" layoutX="320.0" layoutY="542.0" onMouseClicked="#handleHighScore" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
             <children>
                 <Text fill="WHITE" layoutX="14.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="HIGH SCORE" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
+      <Pane fx:id="newGameButton1" layoutX="320.0" layoutY="386.0" onMouseClicked="#handleNewGame2" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
+         <children>
+            <Text fill="WHITE" layoutX="14.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="2 PLAYERS" textAlignment="CENTER" wrappingWidth="109.6" />
+         </children>
+      </Pane>
 
     </children>
 </AnchorPane>

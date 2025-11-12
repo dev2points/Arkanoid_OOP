@@ -14,7 +14,7 @@
         <Pane fx:id="continueButton" layoutX="306.0" layoutY="300.0" onMouseClicked="#continueGame" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
             <children>
                 <Rectangle fx:id="continue_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" layoutX="1.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
-                <Text fill="WHITE" layoutX="15.0" layoutY="23.0" onMouseClicked="#continueGame" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="CONTINUE" textAlignment="CENTER" wrappingWidth="109.6" />
+                <Text fill="WHITE" layoutX="15.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="CONTINUE" textAlignment="CENTER" wrappingWidth="109.6" />
             </children>
         </Pane>
       <Pane fx:id="returnButton" layoutX="316.0" layoutY="355.0" onMouseClicked="#returnHome" prefHeight="36.0" prefWidth="136.0" styleClass="menu_pane">
