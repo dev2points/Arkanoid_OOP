@@ -96,66 +96,69 @@ public class Collision {
         }
     }
 
-   public static void checkBrickCollision(GameController gameController) {
-    List<Ball> balls = gameController.getBalls();
-    List<Brick> bricks = gameController.getBricks();
+    public static void checkBrickCollision(GameController gameController) {
+        List<Ball> balls = gameController.getBalls();
+        List<Brick> bricks = gameController.getBricks();
 
-    for (Ball ball : balls) {
-        double ballR = ball.getWidth() / 2.0;
-        double ballCenterX = ball.getX() + ballR;
-        double ballCenterY = ball.getY() + ballR;
-        double dx = ball.getDx();
-        double dy = ball.getDy();
-        double speed = Math.sqrt(dx * dx + dy * dy);
+        for (Ball ball : balls) {
+            double ballR = ball.getWidth() / 2.0;
+            double ballCenterX = ball.getX() + ballR;
+            double ballCenterY = ball.getY() + ballR;
+            double dx = ball.getDx();
+            double dy = ball.getDy();
+            double speed = Math.sqrt(dx * dx + dy * dy);
 
-        Iterator<Brick> it = bricks.iterator();
-        while (it.hasNext()) {
-            Brick brick = it.next();
-            double bx = brick.getX(), by = brick.getY(), bw = brick.getWidth(), bh = brick.getHeight();
+            Iterator<Brick> it = bricks.iterator();
+            while (it.hasNext()) {
+                Brick brick = it.next();
+                double bx = brick.getX(), by = brick.getY(), bw = brick.getWidth(), bh = brick.getHeight();
 
-            boolean hit = ballCenterX + ballR >= bx && ballCenterX - ballR <= bx + bw &&
-                          ballCenterY + ballR >= by && ballCenterY - ballR <= by + bh;
+                boolean hit = ballCenterX + ballR >= bx && ballCenterX - ballR <= bx + bw &&
+                        ballCenterY + ballR >= by && ballCenterY - ballR <= by + bh;
 
-            if (!hit) continue;
+                if (!hit)
+                    continue;
 
-            // nếu là FireBall, phá gạch luôn, không phản xạ
-            if (ball.isFireBall()) {
-                brick.destroy();
-            } else {
-                // tính va chạm và phản xạ bình thường
-                double overlapLeft = (ballCenterX + ballR) - bx;
-                double overlapRight = (bx + bw) - (ballCenterX - ballR);
-                double overlapTop = (ballCenterY + ballR) - by;
-                double overlapBottom = (by + bh) - (ballCenterY - ballR);
+                // nếu là FireBall, phá gạch luôn, không phản xạ
+                if (ball.isFireBall()) {
+                    brick.destroy();
+                } else {
+                    // tính va chạm và phản xạ bình thường
+                    double overlapLeft = (ballCenterX + ballR) - bx;
+                    double overlapRight = (bx + bw) - (ballCenterX - ballR);
+                    double overlapTop = (ballCenterY + ballR) - by;
+                    double overlapBottom = (by + bh) - (ballCenterY - ballR);
 
-                double minOverlapX = Math.min(overlapLeft, overlapRight);
-                double minOverlapY = Math.min(overlapTop, overlapBottom);
+                    double minOverlapX = Math.min(overlapLeft, overlapRight);
+                    double minOverlapY = Math.min(overlapTop, overlapBottom);
 
-                if (minOverlapX < minOverlapY) dx = (overlapLeft < overlapRight ? -1 : 1) * Math.abs(dx);
-                else dy = (overlapTop < overlapBottom ? -1 : 1) * Math.abs(dy);
+                    if (minOverlapX < minOverlapY)
+                        dx = (overlapLeft < overlapRight ? -1 : 1) * Math.abs(dx);
+                    else
+                        dy = (overlapTop < overlapBottom ? -1 : 1) * Math.abs(dy);
 
-                // chuẩn hóa tốc độ
-                double newSpeed = Math.sqrt(dx * dx + dy * dy);
-                ball.setDx(dx / newSpeed * speed);
-                ball.setDy(dy / newSpeed * speed);
+                    // chuẩn hóa tốc độ
+                    double newSpeed = Math.sqrt(dx * dx + dy * dy);
+                    ball.setDx(dx / newSpeed * speed);
+                    ball.setDy(dy / newSpeed * speed);
 
-                PlaySound.soundEffect("/assets/sound/ballSound.mp3");
+                    PlaySound.soundEffect("/assets/sound/ballSound.mp3");
+                }
+
+                // Xóa gạch nếu hết frame, tạo Powerup
+                if (brick.frames_isEmpty()) {
+                    it.remove();
+                    Powerup p = dropPowerup(bx + bw / 2.0, by + bh / 2.0, gameController.getPaddle(), gameController);
+                    if (p != null)
+                        gameController.addPowerup(p);
+                }
+
+                brick.update();
+                gameController.getUser().addScore(1);
+                break; // 1 lần va chạm cho 1 ball
             }
-
-            // Xóa gạch nếu hết frame, tạo Powerup
-            if (brick.frames_isEmpty()) {
-                it.remove();
-                Powerup p = dropPowerup(bx + bw / 2.0, by + bh / 2.0, gameController.getPaddle(), gameController);
-                if (p != null) gameController.addPowerup(p);
-            }
-
-            brick.update();
-            gameController.getUser().addScore(1);
-            break; // 1 lần va chạm cho 1 ball
         }
     }
-}
-
 
     public static Powerup dropPowerup(double x, double y, Paddle paddle, GameController gameController) {
         double dropRate = Gameconfig.dropRate; // xác suất rơi power-up
@@ -165,10 +168,10 @@ public class Collision {
 
         // Danh sách các loại Powerup có thể rơi
         String[] types = {
-               // "Extend paddle",
+                "Extend paddle",
                 "Multi ball",
-                //"Shrink paddle",
-                //"Extra HP",
+                "Shrink paddle",
+                "Extra HP",
                 "Fire Ball"
         };
 
