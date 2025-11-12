@@ -14,7 +14,7 @@ public class DefeatController extends BaseController{
     @FXML
     private Text player_score;
     @FXML
-    private Pane victory_menu;
+    private Pane defeat_menu;
     @FXML
     private Pane continueButton;
     @FXML
@@ -69,7 +69,7 @@ public class DefeatController extends BaseController{
         System.out
                 .println("Saved highscore with Name: " + playerName + " Score: " + score);
         if (playerName != "") {
-            victory_menu.getChildren().remove(input_pane);
+            defeat_menu.getChildren().remove(input_pane);
         }
         PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }

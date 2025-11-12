@@ -110,7 +110,7 @@ public class Ball extends BaseObject {
         }
 
         // tạo hiệu ứng vệt
-      //  createTrail();
+       createTrail();
     }
 
     /** Hiệu ứng vệt mờ theo hướng di chuyển */
