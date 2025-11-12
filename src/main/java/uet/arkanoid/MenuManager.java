@@ -6,6 +6,7 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Pair;
 import uet.arkanoid.Menu.BaseController;
 import uet.arkanoid.Menu.DefeatController;
+import uet.arkanoid.Menu.OptionMenuController;
 import uet.arkanoid.Menu.PauseMenuController;
 import uet.arkanoid.Menu.VictoryController;
 
@@ -65,6 +66,9 @@ public class MenuManager {
                 if (controller instanceof DefeatController) {
                     ((DefeatController) controller).setScore(5);
                 }
+                if (controller instanceof OptionMenuController){
+                    
+                }
 
             
 
@@ -111,11 +115,11 @@ public class MenuManager {
 
     public void displayOptionMenu() {
         pushMenu("option", "/assets/menu/fxml/option_menu.fxml");
+        System.out.println(menuStack);
     }
 
     public void displayPauseMenu() {
         pushMenu("pause", "/assets/menu/fxml/pause_menu.fxml");
-        System.out.println(menuStack);
     }
 
     public void displayLoadGame() {

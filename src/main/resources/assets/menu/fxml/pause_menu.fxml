@@ -26,7 +26,7 @@
       <Pane fx:id="optionsButton" layoutX="315.0" layoutY="411.0" onMouseClicked="#handleOptions" prefHeight="36.0" prefWidth="138.0" styleClass="menu_pane">
          <children>
                 <Rectangle fx:id="option_button" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="36.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="136.0" />
-                <Text fill="WHITE" layoutX="13.0" layoutY="23.0" onMouseClicked="#handleOptions" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OPTIONS" textAlignment="CENTER" wrappingWidth="109.6" />
+                <Text fill="WHITE" layoutX="13.0" layoutY="23.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OPTIONS" textAlignment="CENTER" wrappingWidth="109.6" />
          </children>
       </Pane>
 
