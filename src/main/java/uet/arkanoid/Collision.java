@@ -205,23 +205,24 @@ public class Collision {
         return newPowerup;
     }
 
-    public static void checkPowerUpCollision(Paddle paddle, List<Powerup> Powerup, GameController gameController) {
-        Iterator<Powerup> iterator = Powerup.iterator();
+    public static void checkPowerUpCollision(Paddle paddle, List<Powerup> powerups, GameController gameController) {
+        Iterator<Powerup> iterator = powerups.iterator();
 
         while (iterator.hasNext()) {
             Powerup p = iterator.next();
             double px = p.getX(),
-                    py = p.getY(),
-                    pw = p.getWidth(),
-                    ph = p.getHeight();
+                py = p.getY(),
+                pw = p.getWidth(),
+                ph = p.getHeight();
 
             double padX = paddle.getX(),
-                    padY = paddle.getY(),
-                    padW = paddle.getWidth(),
-                    padH = paddle.getHeight();
+                padY = paddle.getY(),
+                padW = paddle.getWidth(),
+                padH = paddle.getHeight();
 
+            // Kiểm tra va chạm paddle
             if (px + pw >= padX && px <= padX + padW &&
-                    py + ph >= padY && py <= padY + padH) {
+                py + ph >= padY && py <= padY + padH) {
 
                 p.active();
                 p.destroy();
@@ -229,9 +230,17 @@ public class Collision {
                 gameController.deletePowerup(p);
             } else {
                 p.update();
+
+                // 🔥 Nếu power-up rơi khỏi màn hình thì xóa
+                if (p.getY() > Gameconfig.screen_height) {
+                    p.destroy();
+                    iterator.remove();
+                    gameController.deletePowerup(p);
+                }
             }
         }
     }
+
 
     public static void checkBossCollision(GameController gameController) {
         List<Ball> balls = gameController.getBalls();
@@ -274,7 +283,11 @@ public class Collision {
                 PlaySound.soundEffect("/assets/sound/ballSound.mp3");
                 boss.subHealthPoint();
                 gameController.getUser().addScore(1);
-
+                if (ball.isFireBall()) {
+                    boss.subHealthPoint3(); // bóng lửa trừ 3 HP
+                } else {
+                    boss.subHealthPoint(); // bóng thường trừ 1 HP
+                }
                 if (boss.getHealthpoint() <= 0) {
                     boss.destroy();
                     break;

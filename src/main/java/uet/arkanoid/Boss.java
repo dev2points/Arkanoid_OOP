@@ -120,6 +120,9 @@ public class Boss extends BaseObject {
     public void subHealthPoint() {
         healthpoint--;
     }
+    public void subHealthPoint3() {
+        healthpoint-=3;
+    }
 
     private void restoreHealthPoint() {
         healthpoint = Math.min(healthpoint + 10, Gameconfig.Boss_HP);
