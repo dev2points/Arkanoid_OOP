@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.util.Pair;
 import uet.arkanoid.GameMap;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 import uet.arkanoid.User;
 import javafx.scene.control.Alert;
@@ -45,6 +46,7 @@ public class LoadGameController extends BaseController {
         System.out.println("Selected index: " + selectedIndex);
         menumanager.loadSavedGame(players.get(selectedIndex));
         SaveGame.processChoosed(selectedIndex);
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     // Lớp tạm lưu dữ liệu người chơi
@@ -69,6 +71,7 @@ public class LoadGameController extends BaseController {
     @FXML
     private void handleBack(ActionEvent event) {
         menumanager.popMenu();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
 }

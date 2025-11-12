@@ -3,6 +3,7 @@ package uet.arkanoid.Menu;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListView;
 import javafx.util.Pair;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -46,6 +47,7 @@ public class HighScoreController extends BaseController{
     @FXML
     private void handleBack(ActionEvent event) {
         menumanager.popMenu();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     // Dùng để test nhanh nếu chạy riêng scene HighScore

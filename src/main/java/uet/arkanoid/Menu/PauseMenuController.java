@@ -6,6 +6,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import uet.arkanoid.GameController;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 
 public class PauseMenuController extends BaseController{
@@ -34,27 +35,26 @@ public class PauseMenuController extends BaseController{
     private void continueGame(MouseEvent event) {
         menumanager.popMenu();
         gamecontroller.ContinueGame();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void returnHome(MouseEvent event) {
         menumanager.clearMenus();
         menumanager.displayStartMenu();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void handleOptions(MouseEvent event) {
         menumanager.displayOptionMenu();
-    }
-
-    @FXML
-    private void handleHighScore(MouseEvent event) {
-        
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void saveAndExit(MouseEvent event) {
         input_pane.setVisible(true);
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
@@ -69,6 +69,7 @@ public class PauseMenuController extends BaseController{
             System.out.println("Game saved for user: " + name);
             returnHome(event);
         }
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
     }
 

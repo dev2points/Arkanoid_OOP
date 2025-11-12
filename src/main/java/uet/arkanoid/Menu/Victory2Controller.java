@@ -11,6 +11,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import uet.arkanoid.Gameconfig;
 import uet.arkanoid.MultiplayerController;
+import uet.arkanoid.PlaySound;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -64,6 +65,7 @@ public class Victory2Controller {
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -80,6 +82,7 @@ public class Victory2Controller {
             stage.setScene(scene);
             stage.setTitle("Test Paddl11e");
             stage.show();
+            PlaySound.soundEffect("/assets/sound/clickSound.mp3");
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -96,26 +99,5 @@ public class Victory2Controller {
     private void handleHighScore(MouseEvent event) {
         
     }
-
-    // @FXML
-    // private void save_score() {
-    // String playerName = player_name.getText().trim();
-    // // gamecontroller.getUser().setName(playerName);
-    // SaveGame.saveScore(playerName, score);
-    // System.out
-    // .println("Saved highscore with Name: " + playerName + " Score: " + score);
-    // if (playerName != "") {
-    // victory_menu.getChildren().remove(input_pane);
-    // }
-    // }
-
-    // public void setGameController(GameController g) {
-    // gamecontroller = g;
-    // }
-
-    // public void setScore(int score) {
-    // player_score.setText("Your Score: " + score);
-    // this.score = score;
-    // }
 
 }

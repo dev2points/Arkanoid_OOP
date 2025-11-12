@@ -7,6 +7,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import uet.arkanoid.Gameconfig;
 import uet.arkanoid.MultiplayerController;
+import uet.arkanoid.PlaySound;
 
 public class StartMenuController extends BaseController{
 
@@ -21,14 +22,12 @@ public class StartMenuController extends BaseController{
 
     @FXML
     private void initialize() {
-
+             PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
     }
 
     @FXML
     private void handleNewGame(MouseEvent event) {
         menumanager.playNewGame();
-
-
     }
 
     @FXML 
@@ -46,6 +45,7 @@ public class StartMenuController extends BaseController{
             stage.setScene(scene);
             stage.show();
             stage.centerOnScreen();
+            PlaySound.soundBackground("/assets/sound/backgroundSound.mp3");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,16 +55,19 @@ public class StartMenuController extends BaseController{
     @FXML
     private void handleLoadGame(MouseEvent event) {
         menumanager.displayLoadGame();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void handleOptions(MouseEvent event) {
         menumanager.displayOptionMenu();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void handleHighScore(MouseEvent event) {
         menumanager.displayHighScore();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
 }

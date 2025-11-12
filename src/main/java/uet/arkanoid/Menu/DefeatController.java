@@ -7,6 +7,7 @@ import javafx.scene.text.Text;
 import javafx.scene.control.TextField;
 
 import uet.arkanoid.GameController;
+import uet.arkanoid.PlaySound;
 import uet.arkanoid.SaveGame;
 
 public class DefeatController extends BaseController{
@@ -39,21 +40,25 @@ public class DefeatController extends BaseController{
     @FXML
     private void playagain(MouseEvent event) {
         menumanager.playNewGame();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void returnHome(MouseEvent event) {
         menumanager.displayStartMenu();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void handleOptions(MouseEvent event) {
         menumanager.displayOptionMenu();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
     private void handleHighScore(MouseEvent event) {
         menumanager.displayHighScore();
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
     @FXML
@@ -66,6 +71,7 @@ public class DefeatController extends BaseController{
         if (playerName != "") {
             victory_menu.getChildren().remove(input_pane);
         }
+        PlaySound.soundEffect("/assets/sound/clickSound.mp3");
     }
 
 
