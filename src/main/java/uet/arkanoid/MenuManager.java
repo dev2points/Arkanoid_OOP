@@ -49,6 +49,11 @@ public class MenuManager {
                     gamecontroller = loader.getController();
                     gamecontroller.setScene(rootPane.getScene());
                     gamecontroller.setMenumanager(this);
+                    if (save_flag) {
+                        System.out.println("im being load");
+                        save_flag = false;
+                        gamecontroller.loadProcess(process);
+                    }
                     
                 }
                 if (controller instanceof PauseMenuController) {
@@ -69,11 +74,7 @@ public class MenuManager {
             
             menuStack.push(menu);
             rootPane.getChildren().add(menu);
-            if (save_flag) {
-                System.out.println("im being load");
-                save_flag = false;
-                gamecontroller.loadProcess(process);
-            }
+            
         } catch (IOException e) {
             e.printStackTrace();
         }

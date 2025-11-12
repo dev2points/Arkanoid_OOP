@@ -38,22 +38,22 @@ public class VictoryController extends BaseController{
 
     @FXML
     private void playagain(MouseEvent event) {
-        
+        menumanager.playNewGame();
     }
 
     @FXML
     private void returnHome(MouseEvent event) {
-        
+        menumanager.displayStartMenu();
     }
 
     @FXML
     private void handleOptions(MouseEvent event) {
-
+        menumanager.displayOptionMenu();
     }
 
     @FXML
     private void handleHighScore(MouseEvent event) {
-
+        menumanager.displayHighScore();
     }
 
     @FXML

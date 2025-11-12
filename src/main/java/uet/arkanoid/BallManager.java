@@ -116,6 +116,7 @@ public class BallManager implements Serializable {
     }
 
     public void restoreView(Pane pane) {
+        this.pane = pane;
         for (Ball ball : balls) {
 
             ball.setRootPane(pane);
