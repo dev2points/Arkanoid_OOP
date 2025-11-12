@@ -110,7 +110,7 @@ public class Ball extends BaseObject {
         }
 
         // tạo hiệu ứng vệt
-        createTrail();
+      //  createTrail();
     }
 
     /** Hiệu ứng vệt mờ theo hướng di chuyển */
@@ -199,4 +199,10 @@ public class Ball extends BaseObject {
     public double getCenterY() {
         return y + radius;
     }
+    public void destroy() {
+        if (pane != null && view != null) {
+            pane.getChildren().remove(view);
+        }
+    }
+
 }

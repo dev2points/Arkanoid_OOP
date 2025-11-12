@@ -10,7 +10,7 @@ import uet.arkanoid.Gameconfig;
 public abstract class Powerup extends BaseObject {
     private double fallSpeed = Gameconfig.speed_powerup;
     public static transient GameController controller;
-
+    private boolean destroyed = false; // đánh dấu đã destroy
     public Powerup(double x, double y, double width, double height, Pane pane) {
         super(x, y, width, height, pane);
         loadPowerup(loadImage());
@@ -39,9 +39,22 @@ public abstract class Powerup extends BaseObject {
 
     // Cập nhật vị trí của powerup.
     public void update() {
+        if (destroyed) return;
+
         y += fallSpeed * deltatime;
         if (view instanceof ImageView img) {
             img.setLayoutY(y);
+        }
+
+        // Nếu rơi ra ngoài màn hình thì destroy
+        if (y > Gameconfig.screen_height) {
+            destroy();
+        }
+    }
+    public void destroy() {
+        if (!destroyed && view != null) {
+            pane.getChildren().remove(view);
+            destroyed = true;
         }
     }
 }

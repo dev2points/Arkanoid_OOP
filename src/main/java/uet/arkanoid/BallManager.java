@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.layout.Pane;
+import uet.arkanoid.Powerups.Powerup;
 
 public class BallManager implements Serializable {
     private List<Ball> balls = new ArrayList<>();
@@ -75,21 +76,32 @@ public class BallManager implements Serializable {
         }
 
         // Xoá các bóng rơi ra ngoài
+        
         if (!toRemove.isEmpty()) {
-            balls.removeAll(toRemove);
+            for (Ball b : toRemove) {
+                b.destroy(); // gỡ ImageView khỏi Pane
+            }
+            balls.removeAll(toRemove); // xóa khỏi danh sách
         }
 
+
+        // Nếu không còn bóng nào → tạo lại bóng mặc định
         // Nếu không còn bóng nào → tạo lại bóng mặc định
         if (balls.isEmpty()) {
             User user = gameController.getUser();
             user.loseHp(1);
             int hp = user.getHp();
+
+            for (Powerup p : gameController.getPowerups()) {
+                p.destroy(); // nếu destroy() đã remove view khỏi Pane, ok
+            }
+
             if (hp > 0)
                 addDefaultBall();
             if (hp == 0)
                 System.out.println(user.getScore());
-
         }
+
     }
 
     // Gọi khi nhấn SPACE

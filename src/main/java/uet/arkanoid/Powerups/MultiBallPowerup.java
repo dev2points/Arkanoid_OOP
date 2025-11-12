@@ -29,8 +29,9 @@ public class MultiBallPowerup extends Powerup {
         // Lấy danh sách bóng hiện có
         List<Ball> currentBalls = new ArrayList<>(controller.getBalls());
         List<Ball> newBalls = new ArrayList<>();
-
+        int MAX_BALLS = 30;
         for (Ball mainBall : currentBalls) {
+            if (controller.getBalls().size() + newBalls.size() >= MAX_BALLS) break;
             double x = mainBall.getX();
             double y = mainBall.getY();
             double dx = mainBall.getDx();

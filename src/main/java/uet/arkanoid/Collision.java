@@ -274,7 +274,11 @@ public class Collision {
                 PlaySound.soundEffect("/assets/sound/ballSound.mp3");
                 boss.subHealthPoint();
                 gameController.getUser().addScore(1);
-
+                if (ball.isFireBall()) {
+                    boss.subHealthPoint3(); // bóng lửa trừ 3 HP
+                } else {
+                    boss.subHealthPoint(); // bóng thường trừ 1 HP
+                }
                 if (boss.getHealthpoint() <= 0) {
                     boss.destroy();
                     break;
