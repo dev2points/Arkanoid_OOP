@@ -12,17 +12,17 @@ public class Ball extends BaseObject {
     private double dx;
     private double dy;
     private double radius;
-    private transient Pane pane;
+    // private transient Pane pane;
     private transient LinkedList<ImageView> trailList = new LinkedList<>();
     private static final int MAX_TRAIL = 8; // số vệt tối đa
     private boolean isFireBall = false;
-
 
     // Load ảnh 1 lần cho tất cả Ball
     private static final Image FIREBALL_IMAGE = new Image(
             Ball.class.getResource("/assets/image/balls/fireball.png").toExternalForm());
     private static final Image BALL_IMAGE = new Image(
             Ball.class.getResource("/assets/image/balls/ball.png").toExternalForm());
+
     public void setFireBall(boolean fire) {
         this.isFireBall = fire;
         if (super.getView() instanceof ImageView img) { // dùng view của BaseObject
@@ -35,28 +35,28 @@ public class Ball extends BaseObject {
     }
 
     public Ball(Pane pane) {
-        this.pane = pane;
-        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball);
+        // this.pane = pane;
+        super(400, 400, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection();
         loadImage();
     }
 
     public Ball(double x, double y, double dx, double dy, Pane pane) {
-        this.pane = pane;
-        super(x, y, Gameconfig.size_ball, Gameconfig.size_ball);
+        // .pane = pane;
+        super(x, y, Gameconfig.size_ball, Gameconfig.size_ball, pane);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection(); // luôn đặt tổng vector bằng speed_ball
         loadImage();
     }
 
     public Ball(Paddle paddle, Pane pane) {
-        this.pane = pane;
+        // this.pane = pane;
         super(
                 paddle.getX() + paddle.getWidth() / 2 - Gameconfig.size_ball / 2,
                 paddle.getY() - Gameconfig.size_ball,
                 Gameconfig.size_ball,
-                Gameconfig.size_ball);
+                Gameconfig.size_ball, pane);
         this.radius = Gameconfig.size_ball / 2;
         setInitialDirection();
         loadImage();
@@ -114,7 +114,7 @@ public class Ball extends BaseObject {
     }
 
     /** Hiệu ứng vệt mờ theo hướng di chuyển */
-   private void createTrail() {
+    private void createTrail() {
         if (!(view instanceof ImageView ballView))
             return;
 
@@ -144,7 +144,6 @@ public class Ball extends BaseObject {
         fade.play();
     }
 
-
     /** Slow: giảm tốc nhưng vẫn đúng tổng vector */
     public void slow() {
         normalizeSpeed(Gameconfig.speed_ball * 0.8);
@@ -160,6 +159,10 @@ public class Ball extends BaseObject {
         double angle = Math.atan2(dy, dx);
         dx = Math.cos(angle) * targetSpeed;
         dy = Math.sin(angle) * targetSpeed;
+    }
+
+    public void resetTrails() {
+        trailList = new LinkedList<>();
     }
 
     // getter/setter

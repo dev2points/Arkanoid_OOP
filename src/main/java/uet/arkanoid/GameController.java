@@ -94,22 +94,21 @@ public class GameController {
         scoreLabel.setLayoutX(20);
         scoreLabel.setLayoutY(10);
         scoreLabel.setStyle("""
-            -fx-font-size: 24px;
-            -fx-font-weight: bold;
-            -fx-text-fill: linear-gradient(to right, #ff6600, #ffff00);
-            -fx-effect: dropshadow(gaussian, rgba(255,120,0,0.8), 10, 0.5, 0, 0);
-        """);
-
+                    -fx-font-size: 24px;
+                    -fx-font-weight: bold;
+                    -fx-text-fill: linear-gradient(to right, #ff6600, #ffff00);
+                    -fx-effect: dropshadow(gaussian, rgba(255,120,0,0.8), 10, 0.5, 0, 0);
+                """);
 
         livesLabel = new Label("Lives: 3");
         livesLabel.setLayoutX(20);
         livesLabel.setLayoutY(50);
         livesLabel.setStyle("""
-            -fx-font-size: 24px;
-            -fx-font-weight: bold;
-            -fx-text-fill: linear-gradient(to right, #ff6600, #ffff00);
-            -fx-effect: dropshadow(gaussian, rgba(255,120,0,0.8), 10, 0.5, 0, 0);
-        """);
+                    -fx-font-size: 24px;
+                    -fx-font-weight: bold;
+                    -fx-text-fill: linear-gradient(to right, #ff6600, #ffff00);
+                    -fx-effect: dropshadow(gaussian, rgba(255,120,0,0.8), 10, 0.5, 0, 0);
+                """);
 
         root.getChildren().addAll(scoreLabel, livesLabel);
     }
@@ -156,16 +155,27 @@ public class GameController {
 
     private void restoreView() {
         if (currentMap <= Gameconfig.TOTAL_MAP)
-            for (Brick brick : bricks)
+            for (Brick brick : bricks) {
+                brick.setRootPane(root);
                 brick.restoreFrame();
-        else
+
+            }
+        else {
+            boss.setRootPane(root);
             boss.restoreView();
+
+        }
+        paddle.setRootPane(root);
         paddle.loadImage();
+
         Powerup.setGameController(GameController.this);
         for (Powerup powerup : powerups) {
+            powerup.setRootPane(root);
             powerup.loadPowerup(powerup.loadImage());
+
         }
-        ballManager.restoreView();
+
+        ballManager.restoreView(root);
 
     }
 
@@ -215,11 +225,11 @@ public class GameController {
     }
 
     // public Pane getRoot() {
-    //     return this.root;
+    // return this.root;
     // }
 
     // public void setRoot(Pane root) {
-    //     this.root = root;
+    // this.root = root;
     // }
 
     public Background getBackground() {
