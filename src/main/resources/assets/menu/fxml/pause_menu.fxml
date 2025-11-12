@@ -41,7 +41,7 @@
          <children>
             <Text fx:id="player_score" fill="WHITE" layoutX="14.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="ENTER YOUR NAME:" wrappingWidth="254.6" />
             <TextField fx:id="player_name" layoutX="169.0" layoutY="18.0" prefHeight="25.0" prefWidth="178.0" />
-            <Pane fx:id="submit_button" layoutX="368.0" layoutY="14.0" onMouseClicked="#save_game" prefHeight="39.0" prefWidth="42.0" styleClass="menu_pane">
+            <Pane fx:id="submit_button" layoutX="368.0" layoutY="14.0" prefHeight="39.0" prefWidth="42.0" styleClass="menu_pane">
                <children>
                   <Rectangle fx:id="continue_button1" arcHeight="20.0" arcWidth="20.0" fill="#002557" height="35.0" opacity="0.9" stroke="BLACK" strokeType="INSIDE" styleClass="menu_button" width="42.0" />
                   <Text fill="WHITE" layoutX="-34.0" layoutY="24.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="menu_text" text="OK" textAlignment="CENTER" wrappingWidth="109.6" />
